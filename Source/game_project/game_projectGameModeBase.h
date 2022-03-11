@@ -13,5 +13,6 @@ UCLASS()
 class GAME_PROJECT_API Agame_projectGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+		virtual void StartPlay() override;
 };

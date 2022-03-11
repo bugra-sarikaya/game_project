@@ -1,0 +1,20 @@
+An empty map is created and tried to build every component but failed.
+To find solutions, forum pages were searched and found Blueprints solutions.
+Preference of making this game, was C++ coding and because Blueprints is visual scripting, those solutions weren't preferred.
+Lack of C++ solutions, that situtation was searched and found that programming a game using completely C++ is possible but it's not recommended [1][2].
+However, searching C++ solutions were continued.
+An unofficial tutorial was found but it didn't worked [3].
+Lack of C++ solutions, a Blueprints solution were tried and to make a retro game with no shadows, attempted to play the game with unlit mode by using a bluprint solution but it didn't worked [4].
+An official C++ tutorial from Unreal Engine was found and its first step was skipped to pass level setup because a map and its simple constructions were already set up [5].
+Implementing second step on existing map, failed and the project was recreated to start with first step.
+First step of official tutorial, was applied successfully [6].
+After fixing a problem which was encountered by using a forum solution, second step was applied successfully [7][8].
+Because in second step of official C++ tutorial a Blueprint class was created for editor to recognize, impossibility of programming a game without Blueprints, was understood.
+[1] https://forums.unrealengine.com/t/creating-a-whole-game-without-using-blueprint/20015
+[2] https://gamedev.stackexchange.com/questions/178310/unreal-engine-without-blueprints
+[3] https://medium.com/techiepedia/create-a-first-person-character-in-unreal-engine-using-c-from-scratch-291cfef5c194
+[4] https://forums.unrealengine.com/t/executing-console-commands-at-game-start/278070/5
+[5] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/CPPTutorials/FirstPersonShooter/
+[6] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/CPPTutorials/FirstPersonShooter/1/
+[7] https://forums.unrealengine.com/t/mesh-setownernosee-question/32120/2
+[8] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/CPPTutorials/FirstPersonShooter/2/
