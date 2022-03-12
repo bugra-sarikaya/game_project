@@ -1,0 +1,4 @@
+Completing fourth step of the official tutorial was started [1].
+Because of learning Blueprint Visual Scripting instructions in fourth step of the C++ tutorial, a mixed programming method was determined to develop the project.
+The fourth step was succeeded.
+[1] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/CPPTutorials/FirstPersonShooter/4/
