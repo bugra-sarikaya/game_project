@@ -64,6 +64,8 @@ void Afps_character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	// Set up "action" bindings.
 	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Afps_character::start_jump);
 	PlayerInputComponent->BindAction("jump", IE_Released, this, &Afps_character::stop_jump);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &Afps_character::fire);
+
 }
 void Afps_character::move_forward(float value) {
 	// Find out which way is "forward" and rectod that the player wants to move that way.
@@ -80,4 +82,33 @@ void Afps_character::start_jump() {
 }
 void Afps_character::stop_jump() {
 	bPressedJump = false;
+}
+void Afps_character::fire() {
+	// Attempt to fire a projectile.
+	if (ProjectileClass) {
+		// Get the camera transform.
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation);
+		// Set MuzzleOffset projectiles slightly in front of the camera.
+		MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
+		// Transform MuzzleOffset from camera space to world space.
+		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+		// Skew the aim to be slightly upwards.
+		FRotator MuzzleRotation = CameraRotation;
+		MuzzleRotation.Pitch += 10.0f;
+		UWorld* World = GetWorld();
+		if (World) {
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = GetInstigator();
+			// Spawn the projectile at the muzzle.
+			Aprojectile* projectile = World->SpawnActor<Aprojectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (projectile) {
+				// Set the projectile's initial trajectory.
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
 }

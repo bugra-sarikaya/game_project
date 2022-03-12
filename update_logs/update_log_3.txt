@@ -1,0 +1,6 @@
+Applying third step of the official tutorial was continued [1].
+In third step, "Projectile Class" options didn't contain the coded projectile and editor was restarted to fix this solution.
+After writing fire projectile codes, projectiles didn't appear in play mode and "GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("ProjectileTest."));" line was inserted into fire function for testing.
+Testing showed that fire function wasn't working properly and to fix this, key binding of fire function was moved to Action Mappings from Axis Mappings in settings of Engine - Input.
+The third step was completed.
+[1] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/CPPTutorials/FirstPersonShooter/3/

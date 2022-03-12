@@ -7,6 +7,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "projectile.h"
 
 #include "fps_character.generated.h"
 
@@ -24,6 +25,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Projectile class to spawn.
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class Aprojectile> ProjectileClass;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -43,10 +47,16 @@ public:
 	// Clears jump flag when key is released.
 	UFUNCTION()
 		void stop_jump();
+	// Function that handles firing projectiles.
+	UFUNCTION()
+		void fire();
 	// FPS camera
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
 	// First-person mesh (arms), visible only to the owning player.
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		USkeletalMeshComponent* FPSMesh;
+	// Gun muzzle offset from the camera location.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		FVector MuzzleOffset;
 };
