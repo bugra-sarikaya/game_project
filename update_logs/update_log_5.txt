@@ -1,0 +1,22 @@
+A dark theme was installed to Aseprite for better motivation [1].
+A YouTube video playlist which is about Aseprite tutorial, was watched for learning pixel art basics [2].
+A test gun image [3] from a tweet [4], was added into the project contents for testing.
+The image was converted to flipbook in the editor and it was attached to camera by using Blueprint.
+When "FPSMesh(FirstPersonMesh) (Inherited)" component could not be deleted from blueprint of the character, it was noticed that the component have written in C++ class.
+Also, while examining "fps_character" C++ class, it was noticed that C++ classes are recognizable without their blueprint files for the editor, because in Project Settings, changing "bp_fps_character" to "fps_character" for "Default Pawn Class", was witnessed.
+Instead of changing codes of "fps_character" class, a new C++ class whose parent class is PaperCharacters was created.
+Source files of the new C++ class whose name is "paper_character", was edited by copying the codes of "fps_character" class.
+Instead of "USkeletalMeshComponent", "UPaperFlipbookComponent" was written, according to a YouTube tutorial video [5].
+After changing previous "FPSMesh" lines to "paper_component" lines, Visual Studio gave an error and it was fixed with the solution of including "PaperFlipbookComponent.h" file, which is found from a forum page [6].
+But after building the source codes, Unreal Engine crashed with some error messages two times and the project didn't opened.
+Current project files were replaced with previous project files from GitHub local repository.
+"paper_character" class was rewritten by using saved source files but after build the editor crashed again.
+Current project files were deleted and previous project files copied to deleted folder.
+"paper_character" class was rewritten again by using source files of "fps_character" class with only difference of no gap between "#include" lines and it surprisingly didn't crash.
+After this crashing situation, watching some Unreal Engine C++ tutorials, was planned.
+[1] https://github.com/Lyutria/aseprite-studio-theme
+[2] https://www.youtube.com/playlist?list=PLyClOU6y17URYm5gncu5hVKbQnm8W9zJb
+[3] https://pbs.twimg.com/media/EidseviXYAkQvE6.png
+[4] https://twitter.com/awesreek/status/1308133524260741128
+[5] https://www.youtube.com/watch?v=EPRTgWt-km0&ab_channel=adversarygames
+[6] https://forums.unrealengine.com/t/error-c2027-use-of-undefined-type-upaperflipbookcomponent/8798
