@@ -18,5 +18,5 @@ After this crashing situation, watching some Unreal Engine C++ tutorials, was pl
 [2] https://www.youtube.com/playlist?list=PLyClOU6y17URYm5gncu5hVKbQnm8W9zJb
 [3] https://pbs.twimg.com/media/EidseviXYAkQvE6.png
 [4] https://twitter.com/awesreek/status/1308133524260741128
-[5] https://www.youtube.com/watch?v=EPRTgWt-km0&ab_channel=adversarygames
+[5] https://www.youtube.com/watch?v=EPRTgWt-km0&
 [6] https://forums.unrealengine.com/t/error-c2027-use-of-undefined-type-upaperflipbookcomponent/8798
