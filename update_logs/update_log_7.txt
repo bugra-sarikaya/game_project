@@ -1,0 +1,39 @@
+"check(GEngine != nullptr);" line was deleted from "paper_character.cpp" because internet tutors who were watched, was not writing that.
+"paper_component->bCastDynamicShadow = false;" line was deleted from "paper_character.cpp" because its redundancy when "CastShadow" is set true, was learned from the documentation [1].
+EMG Mark V pistol [2] from a concept art [3] of DOOM (2016), was decided to draw as pixel version.
+A photograph [4] from a webpage [5], was taken as a reference to draw a holding hand.
+While colorizing the artwork, a method which was found in a forum page [6], was implemented for working with two windows in Aseprite.
+To choose a hand color, main protagonist of Viscerafest, was inspired and her hand's image [7] was found in a news website [8].
+A new folder was created and it has Aseprite projects.
+The artwork's canvas size was 256x256px and the image was exported as resizing to 600%.
+"paper_character" was changed to "paper_player" by renaming file names, constructors and including directives but Unreal Engine did not recognize it and to solve that, a method which have found [9] and used for deleting C++ classes before, was implemented.
+Two codes which are from two videos [10] [11], was tried to implemented for building "paper_player" but compiler gave C2664 error.
+Solution was found in a forum webpage [12] and "PaperFlipbook.h" was included into "paper_player.h"
+While restarting project, Unreal Engine crashed and it gave "EXCEPTION_ACCESS_VIOLATION" error.
+Including "Engine.h" solution which was found a forum webpage [13], did not work but commenting the line of "GEngine", worked.
+Instead of "GEngine", "UE_LOG" function was used by benefiting forum answer [14] and this method was inspired from a monologue sentence in a forum webpage [15].
+"fps_hud" was changed to "combat_hud".
+After restarting project, default pawn and crosshair were disabled to be selected in Project Settings and to solve this, a default pawn class was added manually into "game_projectGameModeBase" by using a solution from a webpage [16].
+HUD Class was failed to add manually and the solution which is including "GameFramework/HUD.h", was applied in a forum webpage [17].
+A new crosshair was drawed by using Aseprite.
+Canvas size was 16x16px and image was exported as resizing to 200%.
+A useful source codes for building a HUD, was found on internet [18] but previous HUD codes was used for new crosshair.
+After many tries for locating the pistol by using "F8" (TPS mode), "F11" (Fullscreen for play mode) and "Shift + F11" (Fulscreen for window) shortcuts, its location, rotation and scale were adjusted successfully as "FVector(20.0f, 4.7f, -6.7f)", "(FRotator(0.0f, 90.0, 0.0f))" and "FVector(0.008f)".
+[1] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/Components/UPrimitiveComponent/bCastDynamicShadow/
+[2] https://cdna.artstation.com/p/assets/images/images/005/472/168/large/bryan-flynn-weapon-pistol-emg-pistol.jpg?1491281502
+[3] https://www.artstation.com/artwork/zo50Z
+[4] https://preview.redd.it/2x1ezbe1f0o61.jpg?width=1080&format=pjpg&auto=webp&s=6025b145bc4e530ab46228f8a95e7af956b15816
+[5] https://www.reddit.com/r/Bioshock/comments/m8kqsz/here_it_is_the_fully_upgraded_bioshock_pistol/
+[6] https://community.aseprite.org/t/reference-tab-for-your-artworks/2138
+[7] https://www.dreadxp.com/wp-content/uploads/2021/06/Viscerafest-3.jpg
+[8] https://www.dreadxp.com/review/viscerafest-early-access-review-the-great-space-race-to-put-a-fist-in-your-face/
+[9] https://www.orfeasel.com/deleting-a-c-class/
+[10] https://youtu.be/ZEmFrlL_1t4
+[11] https://youtu.be/EPRTgWt-km0
+[12] https://forums.unrealengine.com/t/ue4-15-fobjectfinder-compile-error/385348/2
+[13] https://forums.unrealengine.com/t/crash-report-cant-run-the-engine-via-code/319275
+[14] https://forums.unrealengine.com/t/how-to-simply-print-a-log/428859
+[15] https://forums.unrealengine.com/t/unrealengine-cpp-crash-xcode-debug/278640/3
+[16] https://forums.unrealengine.com/t/how-to-set-default-pawn-and-player-class-without-blueprints/123720/2
+[17] https://forums.unrealengine.com/t/trouble-adding-blueprint-hud-to-c-project/294138
+[18] https://unrealcpp.com/health-bar-ui-hud/

@@ -7,20 +7,19 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "PaperFlipbook.h"
+#include "PaperSpriteComponent.h"
 #include "projectile.h"
-#include "paper_character.generated.h"
+#include "paper_player.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class GAME_PROJECT_API Apaper_character : public APaperCharacter
+class GAME_PROJECT_API Apaper_player : public APaperCharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	Apaper_character();
+	Apaper_player();
 
 protected:
 	// Called when the game starts or when spawned

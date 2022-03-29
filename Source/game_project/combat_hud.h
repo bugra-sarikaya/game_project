@@ -7,21 +7,20 @@
 
 #include "Engine/Canvas.h"
 
-#include "fps_hud.generated.h"
+#include "combat_hud.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAME_PROJECT_API Afps_hud : public AHUD
+class GAME_PROJECT_API Acombat_hud : public AHUD
 {
 	GENERATED_BODY()
 	
 public:
-	// Primary draw call for the HUD.
+	Acombat_hud();
 	virtual void DrawHUD() override;
 protected:
-	// This will be drawn at the center of the screen.
 	UPROPERTY(EditDefaultsOnly)
-		UTexture2D* CrosshairTexture;
+		UTexture2D* crosshair_texture;
 };
