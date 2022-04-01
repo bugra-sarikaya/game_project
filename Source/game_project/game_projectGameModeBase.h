@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/HUD.h"
+#include "GameFramework/InputSettings.h"
+#include "GameFramework/GameUserSettings.h"
 #include "game_projectGameModeBase.generated.h"
 
 /**
@@ -17,4 +19,5 @@ class GAME_PROJECT_API Agame_projectGameModeBase : public AGameModeBase
 public:
 	Agame_projectGameModeBase();
 	virtual void StartPlay() override;
+	virtual void BeginPlay() override;
 };

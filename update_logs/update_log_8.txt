@@ -1,0 +1,19 @@
+Key bindings were added in "game_projectGameModeBase.cpp" by benefiting two internet sources [1] [2] [4].
+But while trying to remove previous key bindings, some errors happened.
+One of them was read in output log as "LogOutputDevice: Error: Array has changed during ranged-for iteration!".
+To solve them, two range_based for loops converted to two standart for loops by using two codes from a webpage [5][6].
+Output logs were used to see which elements were assigned by using "UE_LOG" and different usages of this functions, were learned from a tutorial webpage [7].
+Looking with mouse and jumping, was not working and solutions which are changing some "FInputAxisKeyMapping" paramaters and adding new looking functions, were found by examining a tutorial [8] and a source code [9].
+Two new variables were added for increasing looking rate after examining a source code [10].
+After changing Game Mode and key bindings, remaining previous key binding were noticed but this problem could not fixed.
+Unreal Engine crashed again after restarting the editor and the problem which is about "GEngine", was fixed by commenting "check(GEngine != nullptr);" line in "game_projectGameModeBase.cpp"
+[1] https://www.gamedev.net/blogs/entry/2265817-unreal-engine-4-dynamically-changing-input-bindings/
+[2] https://github.com/hsj2586/Development-Portfolios/blob/3b2d12160e3903829697f066e66012671cb30694/2019%20Internship%20PersonalProject/Source/Private/OptionWindow.cpp
+[3] https://www.reddit.com/r/unrealengine/comments/etazqx/question_how_do_i_change_the_scale_of_an_axis/
+[4] https://github.com/YutaNiitsu/Team327Project/blob/779b43bfdf472f59e70b67fed9cf502e72dc237b/Plugins/PSInputRemapper/Source/PSInputRemapper/PSInputFunctionLibrary.cpp
+[5] https://www.reddit.com/r/unrealengine/comments/ew3cqj/populate_tarray_with/
+[6] https://www.reddit.com/r/unrealengine/comments/etazqx/question_how_do_i_change_the_scale_of_an_axis/
+[7] https://nerivec.github.io/old-ue4-wiki/pages/logs-printing-messages-to-yourself-during-runtime.html#Log_an_Bool
+[8] https://www.youtube.com/watch?v=4HoJIgyclZ4&t=2788s&ab_channel=freeCodeCamp.org
+[9] https://github.com/drPDrum/UnrealPortfolio/blob/8cf95690af95af49c4f2b2d979b4dee257dcdd12/Source/Framework/UEBaseClass/FrameworkInputController.cpp
+[10] https://github.com/hoelzl/PatternGame/blob/03b1205ec06b686b1a2dd1db68606cd97e3f7fcd/Source/PG/Private/Characters/PGCharacter.cpp

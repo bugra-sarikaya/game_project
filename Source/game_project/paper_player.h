@@ -35,24 +35,18 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// Handles input for moving forward and backward.
-	UFUNCTION()
-		void move_forward(float value);
-	// Handels input for moving right and left.
-	UFUNCTION()
-		void move_right(float value);
-	// Sets jump flag when key is pressed.
-	UFUNCTION()
-		void start_jump();
-	// Clears jump flag when key is released.
-	UFUNCTION()
-		void stop_jump();
-	// Function that handles firing projectiles.
-	UFUNCTION()
-		void fire();
-	// FPS camera
-	UPROPERTY(VisibleAnywhere)
-		UCameraComponent* FPSCameraComponent;
+	UFUNCTION() void start_jump();
+	UFUNCTION() void stop_jump();
+	UFUNCTION() void fire();
+	UFUNCTION() void move_forward(float value);
+	UFUNCTION() void move_backward(float value);
+	UFUNCTION()	void move_right(float value);
+	UFUNCTION() void move_left(float value);
+	UFUNCTION() void look_right(float value);
+	UFUNCTION() void look_up(float value);
+	UPROPERTY(VisibleAnywhere) float look_right_rate = 45.f;
+	UPROPERTY(VisibleAnywhere) float look_up_rate = 45.f;
+	UPROPERTY(VisibleAnywhere) UCameraComponent* FPSCameraComponent;
 	// First-person mesh (arms), visible only to the owning player.
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		UPaperFlipbookComponent* paper_component;

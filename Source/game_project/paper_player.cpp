@@ -25,7 +25,6 @@ Apaper_player::Apaper_player()
 		paper_component->SetOnlyOwnerSee(true);
 		paper_component->SetupAttachment(FPSCameraComponent);
 		paper_component->CastShadow = false;
-		UE_LOG(LogTemp, Warning, TEXT("Plane Succeeded"));
 	}
 	
 	//GetMesh()->SetOwnerNoSee(true);
@@ -50,30 +49,44 @@ void Apaper_player::Tick(float DeltaTime)
 void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis("move_forward", this, &Apaper_player::move_forward);
-	PlayerInputComponent->BindAxis("move_right", this, &Apaper_player::move_right);
-	PlayerInputComponent->BindAxis("turn", this, &Apaper_player::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("look_up", this, &Apaper_player::AddControllerPitchInput);
 	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Apaper_player::start_jump);
 	PlayerInputComponent->BindAction("jump", IE_Released, this, &Apaper_player::stop_jump);
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &Apaper_player::fire);
+	PlayerInputComponent->BindAction("fire", IE_Pressed, this, &Apaper_player::fire);
+	PlayerInputComponent->BindAxis("move_forward", this, &Apaper_player::move_forward);
+	PlayerInputComponent->BindAxis("move_backward", this, &Apaper_player::move_backward);
+	PlayerInputComponent->BindAxis("move_right", this, &Apaper_player::move_right);
+	PlayerInputComponent->BindAxis("move_left", this, &Apaper_player::move_left);
+	PlayerInputComponent->BindAxis("look_right", this, &Apaper_player::look_right);
+	PlayerInputComponent->BindAxis("look_up", this, &Apaper_player::look_up);
 
-}
-void Apaper_player::move_forward(float value) {
-	// Find out which way is "forward" and rectod that the player wants to move that way.
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
-	AddMovementInput(Direction, value);
-}
-void Apaper_player::move_right(float value) {
-	// Find out which way is "right" and rectod that the player wants to move that way.
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
-	AddMovementInput(Direction, value);
 }
 void Apaper_player::start_jump() {
 	bPressedJump = true;
 }
 void Apaper_player::stop_jump() {
 	bPressedJump = false;
+}
+void Apaper_player::move_forward(float value) {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, value);
+}
+void Apaper_player::move_backward(float value) {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, -value);
+}
+void Apaper_player::move_right(float value) {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, value);
+}
+void Apaper_player::move_left(float value) {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, -value);
+}
+void Apaper_player::look_right(float value) {
+	AddControllerYawInput(value * look_right_rate * GetWorld()->GetDeltaSeconds());
+}
+void Apaper_player::look_up(float value) {
+	AddControllerPitchInput(value * look_up_rate * GetWorld()->GetDeltaSeconds());
 }
 void Apaper_player::fire() {
 	// Attempt to fire a projectile.
