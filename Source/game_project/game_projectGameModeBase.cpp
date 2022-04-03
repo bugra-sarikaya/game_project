@@ -7,9 +7,9 @@ Agame_projectGameModeBase::Agame_projectGameModeBase() {
     if (pawn_class.Class != NULL) DefaultPawnClass = pawn_class.Class;
     static ConstructorHelpers::FClassFinder<AHUD> hud_class(TEXT("/Script/game_project.combat_hud"));
     if (hud_class.Class != NULL) HUDClass = hud_class.Class;
-    //UGameUserSettings* game_user_settings = const_cast<UGameUserSettings*>(GetDefault<UGameUserSettings>());
-    //game_user_settings->ResetToCurrentSettings();
-	/*check(GEngine != nullptr);*/
+    UGameUserSettings* game_user_settings = const_cast<UGameUserSettings*>(GetDefault<UGameUserSettings>());
+    //game_user_settings->SetAntiAliasingQuality(0);
+    //game_user_settings->ApplySettings(false);
     UInputSettings* input_settings = const_cast<UInputSettings*>(GetDefault<UInputSettings>());
     if (input_settings) {
         TArray<FInputActionKeyMapping> TArray_actions;
@@ -24,7 +24,7 @@ Agame_projectGameModeBase::Agame_projectGameModeBase() {
         for (int axis_index = 0; axis_index < TArray_axes.Num(); axis_index++) {
             input_settings->RemoveAxisMapping(FInputAxisKeyMapping(TArray_axes[axis_index].AxisName, TArray_axes[axis_index].Key, TArray_axes[axis_index].Scale));
         }
-        input_settings->AddActionMapping(FInputActionKeyMapping("fire", FKey(TEXT("Left Mouse Button"))));
+        input_settings->AddActionMapping(FInputActionKeyMapping("fire", FKey(TEXT("LeftMouseButton"))));
         input_settings->AddActionMapping(FInputActionKeyMapping("jump", FKey(TEXT("Spacebar"))));
         input_settings->AddAxisMapping(FInputAxisKeyMapping("move_forward", FKey(TEXT("W")), 1.f));
         input_settings->AddAxisMapping(FInputAxisKeyMapping("move_backward", FKey(TEXT("S")), 1.f));

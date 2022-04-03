@@ -8,26 +8,27 @@
 Apaper_player::Apaper_player()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
 	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
 	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	check(FPSCameraComponent != nullptr);
-	FPSCameraComponent->SetupAttachment(CastChecked<USceneComponent, UCapsuleComponent>(GetCapsuleComponent()));
-	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 50.0f + BaseEyeHeight));
+	FPSCameraComponent->SetupAttachment(GetCapsuleComponent());
+	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 65.0f));
 	FPSCameraComponent->bUsePawnControlRotation = true;
 	paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
 	check(paper_component != nullptr);
 	static ConstructorHelpers::FObjectFinder<UPaperFlipbook>plane_assset(TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
 	if (plane_assset.Succeeded()) {
 		paper_component->SetFlipbook(plane_assset.Object);
-		paper_component->SetRelativeLocation(FVector(20.0f, 4.7f, -6.7f));
-		paper_component->SetRelativeRotation(FRotator(0.0f, 90.0, 0.0f));
-		paper_component->SetWorldScale3D(FVector(0.008f));
+		paper_component->SetRelativeLocation(FVector(location_x, location_y, location_z));
+		paper_component->SetRelativeRotation(FRotator(rotation_pitch, rotation_yaw, rotation_roll));
+		paper_component->SetWorldScale3D(FVector(scale));
 		paper_component->SetOnlyOwnerSee(true);
 		paper_component->SetupAttachment(FPSCameraComponent);
 		paper_component->CastShadow = false;
 	}
-	
 	//GetMesh()->SetOwnerNoSee(true);
+
 }
 
 // Called when the game starts or when spawned
@@ -35,14 +36,38 @@ void Apaper_player::BeginPlay()
 {
 	Super::BeginPlay();
 
-	check(GEngine != nullptr);
+	//check(GEngine != nullptr);
+
 }
 
-// Called every frame
 void Apaper_player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	const APlayerController* controller = Cast<APlayerController>(GetController());
+	if (controller->IsInputKeyDown(FKey(TEXT("W")))) {
+		if (location_z_increment >= -increment_limit) location_z_increment = location_z_increment - location_z_increment_rate;
+	}
+	else {
+		if (location_z_increment <= 0.0f) location_z_increment = location_z_increment + location_z_increment_rate;
+	}
+	if (controller->IsInputKeyDown(FKey(TEXT("S")))) {
+		if (location_z_increment <= increment_limit) location_z_increment = location_z_increment + location_z_increment_rate;
+	}
+	else {
+		if (location_z_increment >= 0.0f) location_z_increment = location_z_increment - location_z_increment_rate;
+	}
+	if (controller->IsInputKeyDown(FKey(TEXT("D")))) {
+		if (location_y_increment >= -increment_limit) location_y_increment = location_y_increment - location_y_increment_rate;
+	}
+	else {
+		if (location_y_increment <= 0.0f) location_y_increment = location_y_increment + location_y_increment_rate;
+	}
+	if (controller->IsInputKeyDown(FKey(TEXT("A")))) {
+		if (location_y_increment <= increment_limit) location_y_increment = location_y_increment + location_y_increment_rate;
+	}
+	else {
+		if (location_y_increment >= 0.0f) location_y_increment = location_y_increment - location_y_increment_rate;
+	}
 }
 
 // Called to bind functionality to input
@@ -67,26 +92,38 @@ void Apaper_player::stop_jump() {
 	bPressedJump = false;
 }
 void Apaper_player::move_forward(float value) {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
-	AddMovementInput(Direction, value);
+	if (value != 0.0f) {
+		AddMovementInput(GetActorForwardVector(), value);
+	}
+	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
 }
 void Apaper_player::move_backward(float value) {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
-	AddMovementInput(Direction, -value);
+	if (value != 0.0f) {
+		AddMovementInput(GetActorForwardVector(), -value);
+	}
+	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
 }
 void Apaper_player::move_right(float value) {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
-	AddMovementInput(Direction, value);
+	if (value != 0.0f) {
+		AddMovementInput(GetActorRightVector(), value);
+	}
+	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
 }
 void Apaper_player::move_left(float value) {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
-	AddMovementInput(Direction, -value);
+	if (value != 0.0f) {
+		AddMovementInput(GetActorRightVector(), -value);
+	}
+	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
 }
 void Apaper_player::look_right(float value) {
-	AddControllerYawInput(value * look_right_rate * GetWorld()->GetDeltaSeconds());
+	if (value != 0.0f) {
+		AddControllerYawInput(value * look_right_rate * GetWorld()->GetDeltaSeconds());
+	}
 }
 void Apaper_player::look_up(float value) {
-	AddControllerPitchInput(value * look_up_rate * GetWorld()->GetDeltaSeconds());
+	if (value != 0.0f) {
+		AddControllerPitchInput(value * look_up_rate * GetWorld()->GetDeltaSeconds());
+	}
 }
 void Apaper_player::fire() {
 	// Attempt to fire a projectile.

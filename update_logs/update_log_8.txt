@@ -14,6 +14,6 @@ Unreal Engine crashed again after restarting the editor and the problem which is
 [5] https://www.reddit.com/r/unrealengine/comments/ew3cqj/populate_tarray_with/
 [6] https://www.reddit.com/r/unrealengine/comments/etazqx/question_how_do_i_change_the_scale_of_an_axis/
 [7] https://nerivec.github.io/old-ue4-wiki/pages/logs-printing-messages-to-yourself-during-runtime.html#Log_an_Bool
-[8] https://www.youtube.com/watch?v=4HoJIgyclZ4&t=2788s&ab_channel=freeCodeCamp.org
+[8] https://www.youtube.com/watch?v=4HoJIgyclZ4
 [9] https://github.com/drPDrum/UnrealPortfolio/blob/8cf95690af95af49c4f2b2d979b4dee257dcdd12/Source/Framework/UEBaseClass/FrameworkInputController.cpp
 [10] https://github.com/hoelzl/PatternGame/blob/03b1205ec06b686b1a2dd1db68606cd97e3f7fcd/Source/PG/Private/Characters/PGCharacter.cpp

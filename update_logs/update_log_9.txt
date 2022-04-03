@@ -1,0 +1,41 @@
+For acquiring a little realistic playing, adding a camera shake, was determined and some useful codes were found in a tutorial website [1].
+Video tutorial [2] of the webpage, was watched and the camera shaking was thought as an additional feature to implement.
+Viscerafest which is the inspired game, was examined and could not find any camera shaking.
+A weapon shaking feature was found instead of camera shaking in Viscerafest and a video tutorial about retro game developing [3].
+To find a reason for ignoring camera shaking, some installed games which are "Blood: Fresh Supply", "Duke Nukem 3D: 20th Anniversary World Tour", "DOOM 64", "The Ultimate Doom" and "Borderlands 2", were observed.
+Because camera shaking features were found in observed games, adding weapon shaking and adding camera shaking together, were decided.
+A tutorial video[] watched briefly [4] and for adding multiple camera shaking features, creating multiple camera shaking classes is needed, was learnt from that tutorial.
+Firstly weapon shaking was decided to add and it was tried to implemented by using player location.
+"GetLastMovementInputVector()" was found in Unreal Engine documentation [5] and the animation was tried applied with that by benefited a source [6].
+After turning opposite direction by using mouse in game, the animation did not work properly and implementing weapon shaking with keyboard events, was decided.
+After obtain some successes with "InputKeyDown()" function by benefited a source [7], it was predicted that weapon shaking animation will continue when there is a wall opposite player and while pressing the "W" button for moving forward.
+To relive that worries, implementing the animation by using location with rotation was decided because rotating the location coordinates, might remove turning problems.
+For turning location coordinates, a function whih is "RotateVector()", for turning location coordinates was found in a forum webpage [8] but it did not work properly.
+In "UnrealMath.cpp" file which is source of "RotateVector()" function, "UnrotateVector()" function was found and after using that, it worked unexpectedly.
+But unfortunately, it was noticed that animation still works when there is a object in front of player.
+Adding "const" keyword to Unreal properties for location variables, was tried but compiler gave an error which is about that Unreal Engine does not support "const" keywords and also this was learnt in a forum webpage [9].
+While working with weapon shaking, adjusting weapon location according to dynamic screen resolution values, was thought because it was noticed that the paper player's hand ending line is at a too high position to not see, in editor's game screen.
+Becasuse a problem similar to that ending line issue, was noticed in created template FPS project, solving the issue was decided to be delayed.
+In "game_project", the player could not move while looking down but in template FPS project, it was noticed that player could move while looking down.
+Reason of the problem, was capsule and camera attachment and it was found in forum webpage [10].
+Character of templeate FPS project, was examined and some capsule codes were found in its codes.
+The capsule's shape values was provided from created Blueprint file of "paper_player".
+After setting a capsule, moving problem was not solved.
+Codes of the template FPS project's character, was examined again and different functions which are "GetActorForwardVector()" and "GetActorRightVector()", were noticed in moving sections.
+Those functions was wrote into codes of "paper_player" and problem was solved.
+For eliminating unnecessary usage of "AddMovementInput()" function, argument values of moving functions were checked as seen in codes of the template FPS project.
+In weapon sprite, a deformation was noticed and try to fix that, anti-aliasing quality was set to 0 but it did not worked.
+After getting another Unreal Engine crash, setting anti-aliasing quality codes were commented to fix issue.
+Rotation in "FVector rotated_last_vector = GetActorRotation().UnrotateVector(GetLastMovementInputVector());" line, did not work for X values of last input vectors.
+After struggling for a long time, it was given up and implementing weapon shaking with "InputKeyDown()" function, was decided again.
+Instead of weapon shaking feature, weapon sliding feature which is moving weapon just inverse direction, was applied successfully.
+[1] https://unrealcpp.com/camera-shake/
+[2] https://youtu.be/bkdXcjZZq7Y
+[3] https://youtu.be/6GX1A16kHF0
+[4] https://youtu.be/2NiduwFaq-E
+[5] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/APawn/
+[6] https://github.com/Pantong51/AdvancedMovementComponent/blob/master/Source/AMC/Source/AMC/Private/AMC_MovementComponent.cpp
+[7] https://github.com/Kuzgaroth/ProjectRevival/blob/5ef4c3554c177b717fadbe83c49761169d010dc3/Source/ProjectRevival/Private/AbilitySystem/Abilities/FlipAbility.cpp
+[8] https://forums.unrealengine.com/t/how-can-i-rotate-a-vector-in-c/308095
+[9] https://forums.unrealengine.com/t/uproperty-and-consts/17880/6
+[10] https://forums.unrealengine.com/t/my-player-stops-moving-when-looking-down-need-help/289302/3

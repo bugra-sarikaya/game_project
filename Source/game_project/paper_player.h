@@ -10,6 +10,8 @@
 #include "PaperFlipbook.h"
 #include "PaperSpriteComponent.h"
 #include "projectile.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/Engine.h"
 #include "paper_player.generated.h"
 
 UCLASS()
@@ -22,9 +24,7 @@ public:
 	Apaper_player();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 	// Projectile class to spawn.
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class Aprojectile> ProjectileClass;
@@ -46,6 +46,20 @@ public:
 	UFUNCTION() void look_up(float value);
 	UPROPERTY(VisibleAnywhere) float look_right_rate = 45.f;
 	UPROPERTY(VisibleAnywhere) float look_up_rate = 45.f;
+	UPROPERTY(VisibleAnywhere) float location_x = 20.0f;
+	UPROPERTY(VisibleAnywhere) float location_y = 6.0f;
+	UPROPERTY(VisibleAnywhere) float location_z = -7.5f;
+	UPROPERTY(VisibleAnywhere) float increment_limit = 0.5f;
+	UPROPERTY(VisibleAnywhere) float location_x_increment = 0.0f;
+	UPROPERTY(VisibleAnywhere) float location_y_increment = 0.0f;
+	UPROPERTY(VisibleAnywhere) float location_z_increment = 0.0f;
+	UPROPERTY(VisibleAnywhere) float location_x_increment_rate = 0.05f;
+	UPROPERTY(VisibleAnywhere) float location_y_increment_rate = 0.05f;
+	UPROPERTY(VisibleAnywhere) float location_z_increment_rate = 0.05f;
+	UPROPERTY(VisibleAnywhere) float rotation_pitch = 0.0f;
+	UPROPERTY(VisibleAnywhere) float rotation_yaw = 90.0f;
+	UPROPERTY(VisibleAnywhere) float rotation_roll = 0.0f;
+	UPROPERTY(VisibleAnywhere) float scale = 0.007f;
 	UPROPERTY(VisibleAnywhere) UCameraComponent* FPSCameraComponent;
 	// First-person mesh (arms), visible only to the owning player.
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
