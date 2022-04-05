@@ -8,8 +8,9 @@ Agame_projectGameModeBase::Agame_projectGameModeBase() {
     static ConstructorHelpers::FClassFinder<AHUD> hud_class(TEXT("/Script/game_project.combat_hud"));
     if (hud_class.Class != NULL) HUDClass = hud_class.Class;
     UGameUserSettings* game_user_settings = const_cast<UGameUserSettings*>(GetDefault<UGameUserSettings>());
-    //game_user_settings->SetAntiAliasingQuality(0);
-    //game_user_settings->ApplySettings(false);
+    game_user_settings->SetDynamicResolutionEnabled(true);
+    game_user_settings->SetVSyncEnabled(true);
+    game_user_settings->SetAntiAliasingQuality(0);
     UInputSettings* input_settings = const_cast<UInputSettings*>(GetDefault<UInputSettings>());
     if (input_settings) {
         TArray<FInputActionKeyMapping> TArray_actions;

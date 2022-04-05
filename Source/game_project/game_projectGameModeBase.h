@@ -7,6 +7,7 @@
 #include "GameFramework/HUD.h"
 #include "GameFramework/InputSettings.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Engine/Engine.h"
 #include "game_projectGameModeBase.generated.h"
 
 /**

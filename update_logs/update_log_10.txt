@@ -1,0 +1,34 @@
+While jumping, it was noticed that weapon sliding was not working.
+Weapon sliding with actor location and rotation, was dediced to applied again.
+To implement it while jumping, "GetVelocity()" function was written instead of "GetLastMovementInputVector()" function.
+Vector values were observed with "UE_LOG" and it was found that "UnrotateVector()" function was giving error less 0.01f value.
+Tolerances were determined to 0.01f and -0.01 values for X and Y axes and after adding previous codes, a successful result was obtained finally.
+A tutorial [1] for camera shaking have be found before, but its "Camera Shake" class did not found in current Unreal Engine version which is 4.27.2.
+A tutorial video [2] was found and it was learned that choosing "MatineeCameraShake" class is proper way.
+For adding a camera shake, some useful codes were found in several sources but any direct solution was not found because most of solutions were Blueprint methods.
+By inspiring generic class declarations in "game_projectGameModeBase.cpp" file an benefiting "LoadClass()" function which was found in a forum page [3], a "TSubclassOf<UMatineeCameraShake>" variable was declared in header file of "paper_player" and created camera shake class was loaded to it. 
+For using "StartMatineeCameraShake()" function without the scope resolution operator, a class pointer declared in header file.
+After struggling to implement a camera shake for a long time, a direct solution was found in a GitHub repository [4], hilariously.
+For implementing camera shake while moving on ground, "Is Moving On Ground" function was found in Unreal Engine documentation [5].
+Because the function is for Blueprint, C++ version of the function was obtained in "CharacterMovementComponent.cpp" file after pressing "Goto Definition" option on the function's node in Level Blueprint and its usage example from a forum page [6], was utilized.
+But it was learnt that function does not check actor's moving as its name and it just checks actor to be on ground.
+"Velocity.Size()" function for checking moving, was found in forum webpage [7].
+"Velocity.Size()" and IsMovingOnGround()" functions were used in a "if" condition for checking movement on the ground.
+A source code from a forum webpage [8] and A video [9] which have camera shake paramaters, was benefited but the parameters of the video, did not work as expected.
+A simple camera shake which is similar to the first source [1], was applied but it was not liked.
+While observing camera shake, a disruption on display was detected and it was solved by enabling Vsync.
+Project Warlock game was watched in YouTube [10], it was noticed that it has a walking animation similar to Viscerafest's animation
+After observing game, a walking animation on weapon sprite, was decided to add.
+While restarting the project, the engine gave an error about dynamic resolution and to solve, "SetDynamicResolutionEnabled()" was used and alsoe "SetAntiAliasingQuality(0)" function beacome available again.
+After spending some time in play mode that display corruption was noticed again and it was ignored.
+Oscillation walking feature which is similar to walking animation of Project Warlock, was added successfully for camera and weapon.
+[1] https://unrealcpp.com/camera-shake/
+[2] https://youtu.be/6TEiRI2B0xA
+[3] https://forums.unrealengine.com/t/load-a-tsubclassof-at-runtime/459125/2
+[4] https://github.com/SkyStich/SpaceWar/blob/8d633bde6d945066b37a140dd1c38c0dadf42ca0/Source/SpaceWar/CameraManager/MatchPlayerCameraManager.cpp
+[5] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/AI/Components/NavMovement/IsMovingonGround/
+[6] https://forums.unrealengine.com/t/how-to-check-whether-character-is-on-ground/395981/6
+[7] https://forums.unrealengine.com/t/how-to-check-if-acharacter-is-moving/124841
+[8] https://forums.epicgames.com/udk/udk-development/udk-programming-and-unrealscript/226930-playcamerashake
+[9] https://youtu.be/1_Zsl0GClu4
+[10] https://youtu.be/VJB_jst8PxQ

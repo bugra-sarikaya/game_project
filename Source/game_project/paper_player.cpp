@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "paper_player.h"
 
 
@@ -10,26 +9,25 @@ Apaper_player::Apaper_player()
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
 	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
-	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
-	check(FPSCameraComponent != nullptr);
-	FPSCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 65.0f));
-	FPSCameraComponent->bUsePawnControlRotation = true;
+	fps_camera_component = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	check(fps_camera_component != nullptr);
+	fps_camera_component->SetupAttachment(GetCapsuleComponent());
+	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y, camera_location_z));
+	fps_camera_component->bUsePawnControlRotation = true;
 	paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
 	check(paper_component != nullptr);
 	static ConstructorHelpers::FObjectFinder<UPaperFlipbook>plane_assset(TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
 	if (plane_assset.Succeeded()) {
 		paper_component->SetFlipbook(plane_assset.Object);
-		paper_component->SetRelativeLocation(FVector(location_x, location_y, location_z));
-		paper_component->SetRelativeRotation(FRotator(rotation_pitch, rotation_yaw, rotation_roll));
-		paper_component->SetWorldScale3D(FVector(scale));
+		paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
+		paper_component->SetRelativeRotation(FRotator(weapon_rotation_pitch, weapon_rotation_yaw, weapon_rotation_roll));
+		paper_component->SetWorldScale3D(FVector(weapon_scale));
 		paper_component->SetOnlyOwnerSee(true);
-		paper_component->SetupAttachment(FPSCameraComponent);
+		paper_component->SetupAttachment(fps_camera_component);
 		paper_component->CastShadow = false;
 	}
-	//GetMesh()->SetOwnerNoSee(true);
-
-}
+	camera_shake_walking = LoadClass<UMatineeCameraShake>(GetWorld(), TEXT("/Script/game_project.camera_shake_walking"));
+}	
 
 // Called when the game starts or when spawned
 void Apaper_player::BeginPlay()
@@ -38,36 +36,16 @@ void Apaper_player::BeginPlay()
 
 	//check(GEngine != nullptr);
 
+		
 }
 
 void Apaper_player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	const APlayerController* controller = Cast<APlayerController>(GetController());
-	if (controller->IsInputKeyDown(FKey(TEXT("W")))) {
-		if (location_z_increment >= -increment_limit) location_z_increment = location_z_increment - location_z_increment_rate;
-	}
-	else {
-		if (location_z_increment <= 0.0f) location_z_increment = location_z_increment + location_z_increment_rate;
-	}
-	if (controller->IsInputKeyDown(FKey(TEXT("S")))) {
-		if (location_z_increment <= increment_limit) location_z_increment = location_z_increment + location_z_increment_rate;
-	}
-	else {
-		if (location_z_increment >= 0.0f) location_z_increment = location_z_increment - location_z_increment_rate;
-	}
-	if (controller->IsInputKeyDown(FKey(TEXT("D")))) {
-		if (location_y_increment >= -increment_limit) location_y_increment = location_y_increment - location_y_increment_rate;
-	}
-	else {
-		if (location_y_increment <= 0.0f) location_y_increment = location_y_increment + location_y_increment_rate;
-	}
-	if (controller->IsInputKeyDown(FKey(TEXT("A")))) {
-		if (location_y_increment <= increment_limit) location_y_increment = location_y_increment + location_y_increment_rate;
-	}
-	else {
-		if (location_y_increment >= 0.0f) location_y_increment = location_y_increment - location_y_increment_rate;
-	}
+	slide_weapon();
+	oscillate_walking();
+	//if (GetCharacterMovement()->IsMovingOnGround() && GetCharacterMovement()->Velocity.Size()) matinee_camera_shake->StartMatineeCameraShake(GetWorld()->GetFirstPlayerController()->PlayerCameraManager, camera_shake_walking, 1.0f);
+
 }
 
 // Called to bind functionality to input
@@ -95,25 +73,29 @@ void Apaper_player::move_forward(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorForwardVector(), value);
 	}
-	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
+	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
+	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_backward(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorForwardVector(), -value);
 	}
-	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
+	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
+	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_right(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorRightVector(), value);
 	}
-	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
+	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
+	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_left(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorRightVector(), -value);
 	}
-	paper_component->SetRelativeLocation(FVector(location_x, location_y + location_y_increment, location_z + location_z_increment));
+	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
+	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::look_right(float value) {
 	if (value != 0.0f) {
@@ -124,6 +106,128 @@ void Apaper_player::look_up(float value) {
 	if (value != 0.0f) {
 		AddControllerPitchInput(value * look_up_rate * GetWorld()->GetDeltaSeconds());
 	}
+}
+void Apaper_player::slide_weapon() {
+	FVector unrotated_last_vector = GetActorRotation().UnrotateVector(GetVelocity());
+	if (unrotated_last_vector.X < tolerance && unrotated_last_vector.X > -tolerance) unrotated_last_vector.X = 0.0f;
+	if (unrotated_last_vector.Y < tolerance && unrotated_last_vector.Y > -tolerance) unrotated_last_vector.Y = 0.0f;
+	if (unrotated_last_vector.X > 0.0f) { // Beginning of the X slide.
+		if (sliding_weapon_z_increment > -sliding_weapon_increment_limit) {
+			sliding_weapon_z_increment = sliding_weapon_z_increment - sliding_weapon_z_increment_rate;
+			if (sliding_weapon_z_increment < -sliding_weapon_increment_limit) sliding_weapon_z_increment = -sliding_weapon_increment_limit;
+		}
+	}
+	else {
+		if (sliding_weapon_z_increment < 0.0f) {
+			sliding_weapon_z_increment = sliding_weapon_z_increment + sliding_weapon_z_increment_rate;
+			if(sliding_weapon_z_increment > 0.0f) sliding_weapon_z_increment = 0.0f;
+		}
+	}
+	if (unrotated_last_vector.X < 0.0f) {
+		if (sliding_weapon_z_increment < sliding_weapon_increment_limit) {
+			sliding_weapon_z_increment = sliding_weapon_z_increment + sliding_weapon_z_increment_rate;
+			if (sliding_weapon_z_increment > sliding_weapon_increment_limit) sliding_weapon_z_increment = sliding_weapon_increment_limit;
+		}
+	}
+	else {
+		if (sliding_weapon_z_increment > 0.0f) {
+			sliding_weapon_z_increment = sliding_weapon_z_increment - sliding_weapon_z_increment_rate;
+			if (sliding_weapon_z_increment < 0.0f) sliding_weapon_z_increment = 0.0f;
+		}
+	}
+	if (unrotated_last_vector.Y > 0.0f) { // Beginning of the Y slide.
+		if (sliding_weapon_y_increment > -sliding_weapon_increment_limit) {
+			sliding_weapon_y_increment = sliding_weapon_y_increment - sliding_weapon_y_increment_rate;
+			if (sliding_weapon_y_increment < -sliding_weapon_increment_limit) sliding_weapon_y_increment = -sliding_weapon_increment_limit;
+		}
+	}
+	else {
+		if (sliding_weapon_y_increment < 0.0f) {
+			sliding_weapon_y_increment = sliding_weapon_y_increment + sliding_weapon_y_increment_rate;
+			if (sliding_weapon_y_increment > 0.0f) sliding_weapon_y_increment = 0.0f;
+		}
+	}
+	if (unrotated_last_vector.Y < 0.0f) {
+		if (sliding_weapon_y_increment < sliding_weapon_increment_limit) {
+			sliding_weapon_y_increment = sliding_weapon_y_increment + sliding_weapon_y_increment_rate;
+			if (sliding_weapon_y_increment > sliding_weapon_increment_limit) sliding_weapon_y_increment = sliding_weapon_increment_limit;
+		}
+	}
+	else {
+		if (sliding_weapon_y_increment > 0.0f) {
+			sliding_weapon_y_increment = sliding_weapon_y_increment - sliding_weapon_y_increment_rate;
+			if (sliding_weapon_y_increment < 0.0f) sliding_weapon_y_increment = 0.0f;
+		}
+	}
+}
+void Apaper_player::oscillate_walking() {
+	if (GetCharacterMovement()->IsMovingOnGround() && GetCharacterMovement()->Velocity.Size() > 0.0f) {
+		if (oscillating_walking_y_increment >= 0 && oscillating_walking_y_increment < oscillating_walking_y_increment_limit && !reached_positive_oscillating_walking_y_increment_limit && !reached_negative_oscillating_walking_y_increment_limit) { // Beginning of the Y loop.
+			oscillating_walking_y_increment = oscillating_walking_y_increment + oscillating_walking_y_increment_rate;
+			if (oscillating_walking_y_increment > oscillating_walking_y_increment_limit) {
+				oscillating_walking_y_increment = oscillating_walking_y_increment_limit;
+				reached_positive_oscillating_walking_y_increment_limit = true;
+			}
+		}
+		if (oscillating_walking_y_increment <= oscillating_walking_y_increment_limit && reached_positive_oscillating_walking_y_increment_limit && !reached_negative_oscillating_walking_y_increment_limit) {
+			oscillating_walking_y_increment = oscillating_walking_y_increment - oscillating_walking_y_increment_rate;
+			if (oscillating_walking_y_increment < -oscillating_walking_y_increment_limit) {
+				oscillating_walking_y_increment = -oscillating_walking_y_increment_limit;
+				reached_negative_oscillating_walking_y_increment_limit = true;
+			}
+		}
+		if (oscillating_walking_y_increment >= -oscillating_walking_y_increment_limit && reached_positive_oscillating_walking_y_increment_limit && reached_negative_oscillating_walking_y_increment_limit) {
+			oscillating_walking_y_increment = oscillating_walking_y_increment + oscillating_walking_y_increment_rate;
+			if (oscillating_walking_y_increment > 0) {
+				reached_positive_oscillating_walking_y_increment_limit = false;
+				reached_negative_oscillating_walking_y_increment_limit = false;
+			}
+		}
+		if (oscillating_walking_z_increment >= 0 && oscillating_walking_z_increment < oscillating_walking_z_increment_limit && !reached_positive_walking_z_increment_limit && !reached_negative_walking_z_increment_limit) { // Beginning of the Z loop.
+			oscillating_walking_z_increment = oscillating_walking_z_increment + oscillating_walking_y_increment_rate;
+			if (oscillating_walking_z_increment > oscillating_walking_z_increment_limit) {
+				oscillating_walking_z_increment = oscillating_walking_z_increment_limit;
+				reached_positive_walking_z_increment_limit = true;
+			}
+		}
+		if (oscillating_walking_z_increment <= oscillating_walking_z_increment_limit && reached_positive_walking_z_increment_limit && !reached_negative_walking_z_increment_limit) {
+			oscillating_walking_z_increment = oscillating_walking_z_increment - oscillating_walking_y_increment_rate;
+			if (oscillating_walking_z_increment < -oscillating_walking_z_increment_limit) {
+				oscillating_walking_z_increment = -oscillating_walking_z_increment_limit;
+				reached_negative_walking_z_increment_limit = true;
+			}
+		}
+		if (oscillating_walking_z_increment >= -oscillating_walking_z_increment_limit && reached_positive_walking_z_increment_limit && reached_negative_walking_z_increment_limit) {
+			oscillating_walking_z_increment = oscillating_walking_z_increment + oscillating_walking_y_increment_rate;
+			if (oscillating_walking_z_increment > 0) {
+				reached_positive_walking_z_increment_limit = false;
+				reached_negative_walking_z_increment_limit = false;
+			}
+		}
+	}
+	else if (GetCharacterMovement()->IsMovingOnGround() && GetCharacterMovement()->Velocity.Size() == 0.0f) {
+		if (oscillating_walking_y_increment > 0.0f) {
+			oscillating_walking_y_increment = oscillating_walking_y_increment - oscillating_walking_y_increment_rate;
+			if (oscillating_walking_y_increment < 0.0f) oscillating_walking_y_increment = 0.0f;
+		}
+		else if (oscillating_walking_y_increment < 0.0f) {
+			oscillating_walking_y_increment = oscillating_walking_y_increment + oscillating_walking_y_increment_rate;
+			if (oscillating_walking_y_increment > 0.0f) oscillating_walking_y_increment = 0.0f;
+		}
+		if (oscillating_walking_z_increment > 0.0f) {
+			oscillating_walking_z_increment = oscillating_walking_z_increment - oscillating_walking_z_increment_rate;
+			if (oscillating_walking_z_increment < 0.0f) oscillating_walking_z_increment = 0.0f;
+		}
+		else if (oscillating_walking_z_increment < 0.0f) {
+			oscillating_walking_z_increment = oscillating_walking_z_increment + oscillating_walking_z_increment_rate;
+			if (oscillating_walking_z_increment > 0.0f) oscillating_walking_z_increment = 0.0f;
+		}
+		if (reached_positive_oscillating_walking_y_increment_limit && reached_negative_oscillating_walking_y_increment_limit) {
+			reached_positive_oscillating_walking_y_increment_limit = false;
+			reached_negative_oscillating_walking_y_increment_limit = false;
+		}
+	}
+
 }
 void Apaper_player::fire() {
 	// Attempt to fire a projectile.
