@@ -28,27 +28,29 @@ Aprojectile::Aprojectile()
 		// Use this component to drive this projectile's movement.
 		ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 		ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
-		ProjectileMovementComponent->InitialSpeed = 3000.0f;
-		ProjectileMovementComponent->MaxSpeed = 3000.0f;
+		ProjectileMovementComponent->InitialSpeed = 4000.0f;
+		ProjectileMovementComponent->MaxSpeed = 4000.0f;
 		ProjectileMovementComponent->bRotationFollowsVelocity = true;
 		ProjectileMovementComponent->bShouldBounce = true;
 		ProjectileMovementComponent->Bounciness = 0.3f;
 		ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
 	}
-	if (!ProjectileMeshComponent) {
-		ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
-		static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("'/Game/Sphere.Sphere'"));
-		if (Mesh.Succeeded()) {
-			ProjectileMeshComponent->SetStaticMesh(Mesh.Object);
+		//ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
+		paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
+		check(paper_component != nullptr);
+		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_v1_flipbook.projectile_v1_flipbook"));
+		if (paper.Succeeded()) {
+			paper_component->SetFlipbook(paper.Object);
+			paper_component->SetWorldScale3D(FVector(1.0f));
+			paper_component->SetupAttachment(RootComponent);
+		//	//ProjectileMeshComponent->SetStaticMesh(Mesh.Object);
+		//}
+		//static ConstructorHelpers::FObjectFinder<UMaterial>Material(TEXT("'/Game/sphere_material.sphere_material'"));
+		//if (Material.Succeeded()) {
+		//	ProjectileMaterialInstance = UMaterialInstanceDynamic::Create(Material.Object, ProjectileMeshComponent);
 		}
-		static ConstructorHelpers::FObjectFinder<UMaterial>Material(TEXT("'/Game/sphere_material.sphere_material'"));
-		if (Material.Succeeded()) {
-			ProjectileMaterialInstance = UMaterialInstanceDynamic::Create(Material.Object, ProjectileMeshComponent);
-		}
-		ProjectileMeshComponent->SetMaterial(0, ProjectileMaterialInstance);
-		ProjectileMeshComponent->SetRelativeScale3D(FVector(0.09f, 0.09f, 0.09f));
-		ProjectileMeshComponent->SetupAttachment(RootComponent);
-	}
+		//paper_component->SetMaterial(0, ProjectileMaterialInstance);
+
 	// Delete the projectile after 3 seconds.
 	InitialLifeSpan = 3.0f;
 }
@@ -64,6 +66,17 @@ void Aprojectile::BeginPlay()
 void Aprojectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//FRotator rotation = GetActorRotation();
+	//paper_component->SetRelativeRotation(FRotator(0.0f, -rotation.Yaw, 0.0f));
+	//class USceneComponent* ThisComponent;
+	//FVector actor_location = ThisComponent->GetRelativeTransform().GetTranslation();
+	//FVector actor_location = GetActorLocation();
+	//FRotator rotation = UKismetMathLibrary::FindLookAtRotation(camera_location, actor_location);
+	//FVector camera_location = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraLocation();
+	//FVector actor_location = GetActorLocation();
+	FRotator rotation = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
+	paper_component->SetWorldRotation(FRotator(0.0f, rotation.Yaw + 90.0f, rotation.Pitch));
+
 
 }
 

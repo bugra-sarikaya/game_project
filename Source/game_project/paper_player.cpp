@@ -6,6 +6,38 @@
 // Sets default values
 Apaper_player::Apaper_player()
 {
+	look_right_rate = 45.f;
+	look_up_rate = 45.f;
+	tolerance = 0.010000f;
+	camera_location_x = 0.0f;
+	camera_location_y = 0.0f;
+	camera_location_z = 65.0f;
+	weapon_location_x = 20.0f;
+	weapon_location_y = 7.5f;
+	weapon_location_z = -6.9f;
+	weapon_rotation_pitch = 0.0f;
+	weapon_rotation_yaw = 90.0f;
+	weapon_rotation_roll = 0.0f;
+	weapon_scale = 0.008f;
+	sliding_weapon_increment_limit = 0.2f;
+	sliding_weapon_x_increment = 0.0f;
+	sliding_weapon_y_increment = 0.0f;
+	sliding_weapon_z_increment = 0.0f;
+	sliding_weapon_x_increment_rate = 0.05f;
+	sliding_weapon_y_increment_rate = 0.05f;
+	sliding_weapon_z_increment_rate = 0.05f;
+	reached_positive_oscillating_walking_y_increment_limit = false;
+	reached_negative_oscillating_walking_y_increment_limit = false;
+	reached_positive_walking_z_increment_limit = false;
+	reached_negative_walking_z_increment_limit = false;
+	oscillating_walking_y_increment_limit = 0.6f;
+	oscillating_walking_z_increment_limit = 0.6f;
+	oscillating_walking_x_increment = 0.0f;
+	oscillating_walking_y_increment = 0.0f;
+	oscillating_walking_z_increment = 0.0f;
+	oscillating_walking_x_increment_rate = 0.05f;
+	oscillating_walking_y_increment_rate = 0.05f;
+	oscillating_walking_z_increment_rate = 0.05f;
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
 	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
@@ -16,17 +48,18 @@ Apaper_player::Apaper_player()
 	fps_camera_component->bUsePawnControlRotation = true;
 	paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
 	check(paper_component != nullptr);
-	static ConstructorHelpers::FObjectFinder<UPaperFlipbook>plane_assset(TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
-	if (plane_assset.Succeeded()) {
-		paper_component->SetFlipbook(plane_assset.Object);
-		paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
-		paper_component->SetRelativeRotation(FRotator(weapon_rotation_pitch, weapon_rotation_yaw, weapon_rotation_roll));
-		paper_component->SetWorldScale3D(FVector(weapon_scale));
-		paper_component->SetOnlyOwnerSee(true);
-		paper_component->SetupAttachment(fps_camera_component);
-		paper_component->CastShadow = false;
-	}
+	//static ConstructorHelpers::FObjectFinder<UPaperFlipbook>plane_assset(TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
+	pistol_idle_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
+	paper_component->SetFlipbook(pistol_idle_assset);
+	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
+	paper_component->SetRelativeRotation(FRotator(weapon_rotation_pitch, weapon_rotation_yaw, weapon_rotation_roll));
+	paper_component->SetWorldScale3D(FVector(weapon_scale));
+	paper_component->SetOnlyOwnerSee(true);
+	paper_component->SetupAttachment(fps_camera_component);
+	paper_component->CastShadow = false;
 	camera_shake_walking = LoadClass<UMatineeCameraShake>(GetWorld(), TEXT("/Script/game_project.camera_shake_walking"));
+	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
+	
 }	
 
 // Called when the game starts or when spawned
@@ -44,8 +77,9 @@ void Apaper_player::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	slide_weapon();
 	oscillate_walking();
-	//if (GetCharacterMovement()->IsMovingOnGround() && GetCharacterMovement()->Velocity.Size()) matinee_camera_shake->StartMatineeCameraShake(GetWorld()->GetFirstPlayerController()->PlayerCameraManager, camera_shake_walking, 1.0f);
-
+	if (paper_component->GetFlipbook() == pistol_fire_assset && paper_component->GetPlaybackPositionInFrames() == paper_component->GetFlipbookLengthInFrames() - 1) {
+		paper_component->SetFlipbook(pistol_idle_assset);
+	}
 }
 
 // Called to bind functionality to input
@@ -230,31 +264,27 @@ void Apaper_player::oscillate_walking() {
 
 }
 void Apaper_player::fire() {
-	// Attempt to fire a projectile.
-	if (ProjectileClass) {
-		// Get the camera transform.
-		FVector CameraLocation;
-		FRotator CameraRotation;
+	if (projectile_class) {
 		GetActorEyesViewPoint(CameraLocation, CameraRotation);
-		// Set MuzzleOffset projectiles slightly in front of the camera.
-		MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
-		// Transform MuzzleOffset from camera space to world space.
-		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
-		// Skew the aim to be slightly upwards.
-		FRotator MuzzleRotation = CameraRotation;
-		MuzzleRotation.Pitch += 10.0f;
+		MuzzleOffset.Set(100.0f, 30.0f, -18.0f);
+		MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+		MuzzleRotation = CameraRotation;
+		//MuzzleRotation.Pitch += 0.0f;
 		UWorld* World = GetWorld();
 		if (World) {
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
-			// Spawn the projectile at the muzzle.
-			Aprojectile* projectile = World->SpawnActor<Aprojectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			Aprojectile* projectile = World->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
+			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/projectiles/pistol_fire_flipbook.pistol_fire_flipbook"));
 			if (projectile) {
-				// Set the projectile's initial trajectory.
+				paper_component->SetFlipbook(pistol_fire_assset);
 				FVector LaunchDirection = MuzzleRotation.Vector();
 				projectile->FireInDirection(LaunchDirection);
 			}
 		}
 	}
+}
+void Apaper_player::change_flipbook(UPaperFlipbook* flipbook_asset) {
+	paper_component->SetFlipbook(flipbook_asset);
 }

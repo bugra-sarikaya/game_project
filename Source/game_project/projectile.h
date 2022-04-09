@@ -7,6 +7,9 @@
 
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "PaperFlipbookComponent.h"
+#include "PaperFlipbook.h"
+
 
 #include "projectile.generated.h"
 
@@ -42,5 +45,6 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Movement)
 		UMaterialInstanceDynamic* ProjectileMaterialInstance;
 	// Function that initializes the projectile's velocity in the shoot direction.
-	void FireInDirection(const FVector& ShootDirection);
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh) UPaperFlipbookComponent* paper_component;
+	UFUNCTION()void FireInDirection(const FVector& ShootDirection);
 };

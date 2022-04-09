@@ -1,0 +1,35 @@
+Initializations in "paper_player.h", were moved to "paper_player.cpp".
+"Paper_player" was not able to shoot a projectile and the reason of this which is unloaded class, was found.
+The projectile class was loaded by using "LoadClass()" function.
+After witnessing fired sphere projectiles, a simple pixel projectile was drawn.
+Canvas size of pixel projectile, was 32x32px and it was exported as resizing to 300%.
+The pixel projectile was added to game but its rotation was not convenient for viewing.
+"FindLookAtRotation()" function was found in a forum webpage [1] to solve the issue.
+Its usage example [2] which was found in Unreal Engine forum webpage [3], was used but it did not work.
+By inspring the example, "SetWorldRotation()" function which has an argument of camera rotation, was used instead of "SetRelativeRotation()", to change projectile's rotation and it worked.
+Also, for changing roll rotation of projectile, pitch rotation of camera, was used.
+"Duke Nukem 3D: 20th Anniversary World Tour" was played for examining rotations of paper enemies and it was decided that enemies of Duke Nukem game and the projectile have similar dynamic rotation.
+To draw a firing animation for pistol, a new layers and frames were added into Asepprite project.
+Angry Sun from Super Mario series [4], was inspired to draw a muzzle blast.
+Two videos about frames[5] and layers [6] in Aseprite, were watched.
+For drawing recoil animation, rotating method was tried and disruption which occured after rotating, was tried to fixed but the disruption could not fixed completely.
+Some gun sheets [7] [8] [9] on the internet, were examined, it was thought that reason of that disruption, is that image is izometric and pixelated.
+There was a solution which is drawing the image again as positioning to bottom middle of the screen like weapons of DOOM game but diagonal moving method, was preferred.
+A video [10] about exporting sprite sheets, was watched.
+A YouTube video [11] for remembering flipbook adjustment, was watched and a flipbook of pistol fire was created.
+Firing animation was added into C++ files by using "LoadObject()" function.
+Changing flipbook while firing, was succeeded but after firing, animation of paper gun, did not change to idle animation.
+Some solutions which are using timers with delegates, using "OnFinishedPlaying()" function and using "SetLooping()" function, were tried but they did not work.
+Solution was found in a website [12] and by using last frame position of playing flipbook, problem was solved.
+[1] https://forums.unrealengine.com/t/how-can-i-get-a-3d-object-to-always-face-player-camera/282682/7
+[2] https://d3kjluh73b9h9o.cloudfront.net/original/4X/3/6/e/36eb9182334ac8c5384eeded30b9f3104481486e.png
+[3] https://forums.unrealengine.com/t/sprite-face-camera/306492/4
+[4] https://www.mariowiki.com/Angry_Sun
+[5] https://youtu.be/5FdnEzTXzkw
+[6] https://youtu.be/N4Z4MdZ1KWY
+[7] https://red888guns.artstation.com/projects/0nnzv4
+[8] https://www.reddit.com/r/gameDevClassifieds/comments/ihn274/paid_retro_fps_weapons/
+[9] https://www.spriters-resource.com/pc_computer/blood/sheet/27051/
+[10] https://youtu.be/7NFlwwF5sxg
+[11] https://youtu.be/r41W7O22zgo
+[12] https://stackoverflow.com/questions/50280502/in-unreal-engine-4-is-there-a-way-to-stop-a-flipbook-after-it-has-completed-its
