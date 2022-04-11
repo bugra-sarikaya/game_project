@@ -34,6 +34,14 @@ public:
 	UFUNCTION()
 		void on_hit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	// Sphere collision component.
+	UPROPERTY(VisibleAnywhere) float collision_sphere_radius;
+	UPROPERTY(VisibleAnywhere) float initial_speed;
+	UPROPERTY(VisibleAnywhere) float max_speed;
+	UPROPERTY(VisibleAnywhere) bool following_velocity;
+	UPROPERTY(VisibleAnywhere) float world_scale;
+	UPROPERTY(VisibleAnywhere) float life_span;
+	UPROPERTY(VisibleAnywhere) bool bouncing;
+	UPROPERTY(VisibleAnywhere) float gravity_scale;
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
 		USphereComponent* CollisionComponent;
 	UPROPERTY(VisibleAnywhere, Category = Movement)

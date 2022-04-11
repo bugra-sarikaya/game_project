@@ -82,6 +82,7 @@ public:
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbook* pistol_idle_assset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay) FVector MuzzleOffset;
 	UPROPERTY(EditAnywhere) TSubclassOf<UMatineeCameraShake> camera_shake_walking;
+	//UPROPERTY(EditAnywhere) FTimerHandle MyHandle;
 	UFUNCTION() void start_jump();
 	UFUNCTION() void stop_jump();
 	UFUNCTION() void move_forward(float value);
@@ -94,4 +95,5 @@ public:
 	UFUNCTION() void oscillate_walking();
 	UFUNCTION() void fire();
 	UFUNCTION() void change_flipbook(UPaperFlipbook* flipbook_asset);
+	//UFUNCTION() void OnReleaseFire();
 };

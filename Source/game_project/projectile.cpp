@@ -6,42 +6,41 @@
 // Sets default values
 Aprojectile::Aprojectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	collision_sphere_radius = 10.0f;
+	initial_speed = 4000.0f;
+	max_speed = 4000.0f;
+	following_velocity = true;
+	world_scale = 0.2f;
+	life_span = 3.0f;
+	bouncing = false;
+	gravity_scale = 0.0f;
 	PrimaryActorTick.bCanEverTick = true;
-
 	if (!RootComponent) {
 		RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
 	}
 	if (!CollisionComponent) {
-		// Use a sphere as a simple collision representation.
 		CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-		// Set the sphere's collision profile name to "Projectile".
 		CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
-		// Even called when component hits something.
 		CollisionComponent->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
-		// Set the sphere's collision radius.
-		CollisionComponent->InitSphereRadius(15.0f);
-		// Set the root component to be the collision component.
+		CollisionComponent->InitSphereRadius(collision_sphere_radius);
 		RootComponent = CollisionComponent;
 	}
 	if (!ProjectileMovementComponent) {
-		// Use this component to drive this projectile's movement.
 		ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 		ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
-		ProjectileMovementComponent->InitialSpeed = 4000.0f;
-		ProjectileMovementComponent->MaxSpeed = 4000.0f;
-		ProjectileMovementComponent->bRotationFollowsVelocity = true;
-		ProjectileMovementComponent->bShouldBounce = true;
-		ProjectileMovementComponent->Bounciness = 0.3f;
-		ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
+		ProjectileMovementComponent->InitialSpeed = initial_speed;
+		ProjectileMovementComponent->MaxSpeed = max_speed;
+		ProjectileMovementComponent->bRotationFollowsVelocity = following_velocity;
+		ProjectileMovementComponent->bShouldBounce = bouncing;
+		ProjectileMovementComponent->ProjectileGravityScale = gravity_scale;
 	}
 		//ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
 		paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
 		check(paper_component != nullptr);
-		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_v1_flipbook.projectile_v1_flipbook"));
+		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_v2_flipbook.projectile_v2_flipbook"));
 		if (paper.Succeeded()) {
 			paper_component->SetFlipbook(paper.Object);
-			paper_component->SetWorldScale3D(FVector(1.0f));
+			paper_component->SetWorldScale3D(FVector(world_scale));
 			paper_component->SetupAttachment(RootComponent);
 		//	//ProjectileMeshComponent->SetStaticMesh(Mesh.Object);
 		//}
@@ -51,8 +50,7 @@ Aprojectile::Aprojectile()
 		}
 		//paper_component->SetMaterial(0, ProjectileMaterialInstance);
 
-	// Delete the projectile after 3 seconds.
-	InitialLifeSpan = 3.0f;
+		InitialLifeSpan = life_span;
 }
 
 // Called when the game starts or when spawned
@@ -86,8 +84,8 @@ void Aprojectile::FireInDirection(const FVector& ShootDirection) {
 }
 // Function that is called when the projectile hits something.
 void Aprojectile::on_hit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	if (OtherActor != this && OtherComponent->IsAnySimulatingPhysics()) {
-		OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
-	}
+	//if (OtherActor != this && OtherComponent->IsAnySimulatingPhysics()) {
+	//	OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
+	//}
 	Destroy();
 }

@@ -69,7 +69,7 @@ void Apaper_player::BeginPlay()
 
 	//check(GEngine != nullptr);
 
-		
+
 }
 
 void Apaper_player::Tick(float DeltaTime)
@@ -80,6 +80,9 @@ void Apaper_player::Tick(float DeltaTime)
 	if (paper_component->GetFlipbook() == pistol_fire_assset && paper_component->GetPlaybackPositionInFrames() == paper_component->GetFlipbookLengthInFrames() - 1) {
 		paper_component->SetFlipbook(pistol_idle_assset);
 	}
+	const APlayerController* controller = Cast<APlayerController>(GetController());
+	if (controller->IsInputKeyDown(FKey(TEXT("LeftMouseButton")))) fire();
+	
 }
 
 // Called to bind functionality to input
@@ -89,6 +92,7 @@ void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Apaper_player::start_jump);
 	PlayerInputComponent->BindAction("jump", IE_Released, this, &Apaper_player::stop_jump);
 	PlayerInputComponent->BindAction("fire", IE_Pressed, this, &Apaper_player::fire);
+	//PlayerInputComponent->BindAction("fire", IE_Released, this, &Apaper_player::OnReleaseFire);
 	PlayerInputComponent->BindAxis("move_forward", this, &Apaper_player::move_forward);
 	PlayerInputComponent->BindAxis("move_backward", this, &Apaper_player::move_backward);
 	PlayerInputComponent->BindAxis("move_right", this, &Apaper_player::move_right);
@@ -264,9 +268,10 @@ void Apaper_player::oscillate_walking() {
 
 }
 void Apaper_player::fire() {
-	if (projectile_class) {
+	//GetWorldTimerManager().SetTimer(MyHandle, this, &Apaper_player::fire, 0.5f, true);
+	if (projectile_class && paper_component->GetFlipbook() == pistol_idle_assset) {
 		GetActorEyesViewPoint(CameraLocation, CameraRotation);
-		MuzzleOffset.Set(100.0f, 30.0f, -18.0f);
+		MuzzleOffset.Set(200.0f, 45.0f, -30.0f);
 		MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
 		MuzzleRotation = CameraRotation;
 		//MuzzleRotation.Pitch += 0.0f;
@@ -276,7 +281,7 @@ void Apaper_player::fire() {
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
 			Aprojectile* projectile = World->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
-			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/projectiles/pistol_fire_flipbook.pistol_fire_flipbook"));
+			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_flipbook.pistol_fire_flipbook"));
 			if (projectile) {
 				paper_component->SetFlipbook(pistol_fire_assset);
 				FVector LaunchDirection = MuzzleRotation.Vector();
@@ -285,6 +290,10 @@ void Apaper_player::fire() {
 		}
 	}
 }
+//void Apaper_player::OnReleaseFire()
+//{
+//	GetWorldTimerManager().ClearTimer(MyHandle);
+//}
 void Apaper_player::change_flipbook(UPaperFlipbook* flipbook_asset) {
 	paper_component->SetFlipbook(flipbook_asset);
 }

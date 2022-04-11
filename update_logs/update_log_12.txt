@@ -1,0 +1,20 @@
+A video [1] about Cthon game which doesn't have any projectile trace like laser, was watched shortly.
+Fire rate of the pistol, was adjusted according to fire animation as adding "paper_component->GetFlipbook() == pistol_idle_assset" condition into "if" statement.
+A gameplay video [2] about alpha version of Viscerafest, was watched shortly and it was noticed that there was only pixelated projectiles.
+Projectile image was re-edited as 31x31px canvas size and it was exported as resizing to 300%.
+Many scale values for the projectile, was tried.
+To adding a automatic feature, timer method was found on internet [3] but it could not be adapted.
+Instead of timer method, a "do-while" loop which checks pressing left mouse button, was added into fire function but Unreal Engine did not respond like crashing.
+It was found that reason was from "while" loop and it was converted to simple "if" statement in "Tick" function of the class.
+After obtaining success, reason of crashing which is infinite loop, was found on an forum webpage [4].
+Previous timer method was tried again and after changing the location of "GetWorldTimerManager().SetTimer(MyHandle, this, &Apaper_player::fire, 0.5f, true);" line to "fire" function, it worked.
+Nevertheless, previous method which is checking holding left mouse button was preferred but codes of timer method were commented.
+Radius of projectile's collision sphere was changed to "10.0f" but it may be changed after next updates.
+Purpose of "PrimaryActorTick.bCanEverTick = true;" line was found by trying to change the value to false and the purpose was activating "Tick()" function of classes.
+After uninitializing gravity scale of projectile, it was witnessed that projectiles is falling.
+Some parameters of projectile were declared in "projectile.h" and various values were assigned to them in "projectile.cpp"
+Impulse feature of the projectile was removed but codes were commented.
+[1] https://youtu.be/cPDhTjZTL6w
+[2] https://youtu.be/2_-TUq_zUnI
+[3] https://forums.unrealengine.com/t/keep-shooting-while-left-mouse-button-is-pressed/342186/7
+[4] https://forums.unrealengine.com/t/while-loop-crashing-editor/436990
