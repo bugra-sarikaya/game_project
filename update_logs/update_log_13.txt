@@ -1,0 +1,22 @@
+Icon of Sin from DOOM Eternal [1], was inspired to draw an enemy.
+Concept art images of Doom Eternal was found [2] and images of , 
+Icon of Sin image [3] was referenced for drawing head and body parts, Hell Knight image [4] was referenced for drawing hands and Baron of Hell image [4], was referenced for drawing legs.
+Hell Knight and Baron of Hell images [4] were referenced to draw
+A video [5] about Aseprite, was watched for learning mirror feature and it was found that Aseprite has "Symmetry Options".
+A YouTube video [6] was watched to examine pixel art animation drawing.
+In drawing "Ready" animation phase, 2 werewolf images [7] [8] referenced from various sources [9] [10].
+In drawing "Attack" animation phase, a werewolf image [11] referenced from ArtStation [12].
+It was decided that the drawn enemy will be test enemy and next enemies' drawings will be simple because drawing the enemy sprites took a long time, absurdly.
+The Aseprite project was exported as resizing %600.
+[1] https://doom.fandom.com/wiki/Icon_of_Sin/Doom_Eternal
+[2] https://funnyjunk.com/Doom+eternal+art+book+leaked/cMphMpZ/
+[3] https://loginportal.funnyjunk.com/large/pictures/92/1f/921ff4_7543729.jpg
+[4] https://loginportal.funnyjunk.com/large/pictures/74/e9/74e95d_7543729.jpg
+[5] https://youtu.be/IJCRryUSGuI
+[6] https://youtu.be/A-9Qm2hsypU
+[7] https://cdna.artstation.com/p/assets/images/images/008/157/120/large/antonio-j-manzanedo-werewolf5.jpg
+[8] https://www.deviantart.com/download/289863090/d4skrsi-64d029ab-a2d3-4225-b956-07d373a857f5.jpg?token=13b72669bf85ef486c4017cad7f255f4eab765f6&ts=1651006726
+[9] https://ajmanzanedo.artstation.com/projects/L0GGA
+[10] https://www.deviantart.com/cryptid-man/art/WEREWOLF-ATTACK-289863090
+[11] https://cdnb.artstation.com/p/assets/images/images/010/388/943/large/dmitry-bolotov-bigbadwolfsmall.jpg
+[12] https://www.artstation.com/artwork/yOev8
