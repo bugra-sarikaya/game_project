@@ -6,6 +6,8 @@
 // Sets default values
 Apaper_player::Apaper_player()
 {
+	capsule_half_height = 88.0f;
+	capsule_radius = 34.0f;
 	look_right_rate = 45.f;
 	look_up_rate = 45.f;
 	tolerance = 0.010000f;
@@ -18,7 +20,7 @@ Apaper_player::Apaper_player()
 	weapon_rotation_pitch = 0.0f;
 	weapon_rotation_yaw = 90.0f;
 	weapon_rotation_roll = 0.0f;
-	weapon_scale = 0.008f;
+	weapon_scale = 0.05f;
 	sliding_weapon_increment_limit = 0.2f;
 	sliding_weapon_x_increment = 0.0f;
 	sliding_weapon_y_increment = 0.0f;
@@ -39,27 +41,31 @@ Apaper_player::Apaper_player()
 	oscillating_walking_y_increment_rate = 0.05f;
 	oscillating_walking_z_increment_rate = 0.05f;
 	PrimaryActorTick.bCanEverTick = true;
-	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
-	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
-	fps_camera_component = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
-	check(fps_camera_component != nullptr);
-	fps_camera_component->SetupAttachment(GetCapsuleComponent());
-	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y, camera_location_z));
-	fps_camera_component->bUsePawnControlRotation = true;
-	paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
+	capsule_component = GetCapsuleComponent();
+	capsule_component->InitCapsuleSize(capsule_radius, capsule_half_height);
+	//capsule_component->SetSimulatePhysics(true);
+	//capsule_component->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	//capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+	//capsule_component->SetEnableGravity(true);
+	RootComponent = capsule_component;
+	camera_component = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
+	check(camera_component != nullptr);
+	camera_component->SetupAttachment(RootComponent);
+	camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y, camera_location_z));
+	camera_component->bUsePawnControlRotation = true;
+	paper_component = (UPaperFlipbookComponent*)GetComponentByClass(UPaperFlipbookComponent::StaticClass());
 	check(paper_component != nullptr);
-	//static ConstructorHelpers::FObjectFinder<UPaperFlipbook>plane_assset(TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
-	pistol_idle_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_flipbook.pistol_flipbook"));
+	pistol_idle_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
+	paper_component->SetupAttachment(camera_component);
 	paper_component->SetFlipbook(pistol_idle_assset);
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
 	paper_component->SetRelativeRotation(FRotator(weapon_rotation_pitch, weapon_rotation_yaw, weapon_rotation_roll));
 	paper_component->SetWorldScale3D(FVector(weapon_scale));
 	paper_component->SetOnlyOwnerSee(true);
-	paper_component->SetupAttachment(fps_camera_component);
 	paper_component->CastShadow = false;
-	camera_shake_walking = LoadClass<UMatineeCameraShake>(GetWorld(), TEXT("/Script/game_project.camera_shake_walking"));
+	//camera_shake_walking = LoadClass<UMatineeCameraShake>(GetWorld(), TEXT("/Script/game_project.camera_shake_walking"));
 	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
-	
+	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
 }	
 
 // Called when the game starts or when spawned
@@ -112,28 +118,28 @@ void Apaper_player::move_forward(float value) {
 		AddMovementInput(GetActorForwardVector(), value);
 	}
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
-	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
+	camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_backward(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorForwardVector(), -value);
 	}
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
-	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
+	camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_right(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorRightVector(), value);
 	}
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
-	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
+	camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::move_left(float value) {
 	if (value != 0.0f) {
 		AddMovementInput(GetActorRightVector(), -value);
 	}
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y + sliding_weapon_y_increment + oscillating_walking_y_increment, weapon_location_z + sliding_weapon_z_increment + oscillating_walking_z_increment));
-	fps_camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
+	camera_component->SetRelativeLocation(FVector(camera_location_x, camera_location_y + oscillating_walking_y_increment * 20, camera_location_z + oscillating_walking_z_increment * 20));
 }
 void Apaper_player::look_right(float value) {
 	if (value != 0.0f) {
@@ -281,7 +287,7 @@ void Apaper_player::fire() {
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
 			Aprojectile* projectile = World->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
-			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_flipbook.pistol_fire_flipbook"));
+			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 			if (projectile) {
 				paper_component->SetFlipbook(pistol_fire_assset);
 				FVector LaunchDirection = MuzzleRotation.Vector();

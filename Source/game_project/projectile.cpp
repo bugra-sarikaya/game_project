@@ -10,7 +10,7 @@ Aprojectile::Aprojectile()
 	initial_speed = 4000.0f;
 	max_speed = 4000.0f;
 	following_velocity = true;
-	world_scale = 0.2f;
+	world_scale = 0.6f;
 	life_span = 3.0f;
 	bouncing = false;
 	gravity_scale = 0.0f;
@@ -23,6 +23,8 @@ Aprojectile::Aprojectile()
 		CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
 		CollisionComponent->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
 		CollisionComponent->InitSphereRadius(collision_sphere_radius);
+		CollisionComponent->bIgnoreRadialImpulse = true;
+		CollisionComponent->bIgnoreRadialForce = true;
 		RootComponent = CollisionComponent;
 	}
 	if (!ProjectileMovementComponent) {
@@ -37,7 +39,7 @@ Aprojectile::Aprojectile()
 		//ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
 		paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
 		check(paper_component != nullptr);
-		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_v2_flipbook.projectile_v2_flipbook"));
+		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_idle_v2.projectile_idle_v2"));
 		if (paper.Succeeded()) {
 			paper_component->SetFlipbook(paper.Object);
 			paper_component->SetWorldScale3D(FVector(world_scale));

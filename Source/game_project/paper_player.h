@@ -6,6 +6,8 @@
 #include "PaperCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/ArrowComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "PaperSpriteComponent.h"
@@ -14,7 +16,6 @@
 #include "Engine/Engine.h"
 #include "Math/Vector.h"
 #include "MatineeCameraShake.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "TimerManager.h"
 #include "paper_player.generated.h"
 
@@ -39,6 +40,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnywhere) float capsule_radius;
+	UPROPERTY(VisibleAnywhere) float capsule_half_height;
 	UPROPERTY(VisibleAnywhere) float look_right_rate;
 	UPROPERTY(VisibleAnywhere) float look_up_rate;
 	UPROPERTY(VisibleAnywhere) float tolerance;
@@ -71,13 +74,16 @@ public:
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_x_increment_rate;
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_y_increment_rate;
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_z_increment_rate;
-	UPROPERTY(VisibleAnywhere) UCameraComponent* fps_camera_component;
+	UPROPERTY(VisibleAnywhere) UCameraComponent* camera_component;
+	UPROPERTY(VisibleDefaultsOnly) UCapsuleComponent* capsule_component;
+	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbookComponent* paper_component;
+	UPROPERTY(VisibleDefaultsOnly) UCharacterMovementComponent* movement_component;
+	UPROPERTY(VisibleDefaultsOnly) UArrowComponent* arrow_component;
 	UPROPERTY(VisibleAnywhere) UMatineeCameraShake* matinee_camera_shake;
 	UPROPERTY(VisibleAnywhere) FVector MuzzleLocation;
 	UPROPERTY(VisibleAnywhere) FRotator MuzzleRotation;
 	UPROPERTY(VisibleAnywhere) FVector CameraLocation;
 	UPROPERTY(VisibleAnywhere) FRotator CameraRotation;
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh) UPaperFlipbookComponent* paper_component;
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbook* pistol_fire_assset;
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbook* pistol_idle_assset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay) FVector MuzzleOffset;

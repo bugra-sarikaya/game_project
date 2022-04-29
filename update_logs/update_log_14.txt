@@ -1,0 +1,27 @@
+Aseprite project of pistol was re-edited and some unused artwork files were deleted.
+A video about sprite options for UE4, was watched [1].
+While creating C++ class of enemy, top comment which is about reminding copyright, was noticed.
+The top commented line was changed to "Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved." line in Project Settings according to a license document of Unreal Engine [2].
+Importing the enemy's sprite sheet, was failed because of big file size.
+Rezising value changed to default value which is %100 for exporting Aseprite projects to solve big file size issue.
+After changing resized image files, scaling parameters were changed for pistol and projectile.
+Some initialization codes for creating capsule component, was found in GitHub [3] and they were written into the project codes.
+While writing a pointer initialization, previous written "check" macro with a "nullptr" condition was noticed and after some researching, its function was found in Unreal Engine documentation [4] and continuing to write it next to pointer initializations, was decided.
+After writing C++ class of the enemey, it was put into map but it was noticed that flipbook location was not in created capsule component.
+For examining enemey size, a Blueprint class was created but on the component list in Blueprint edtior, some default components was noticed.
+To delete default components, a method was found in a forum webpage [4] and it was used.
+Deleting default components also solved the flipbook location problem.
+While trying to create an arrow component with "Arrow" name, creating was failed because of creating subojects with same names and to solve this, components were created with different names than default names.
+A function for chaning frame rate of flipbook, was found in Unreal Engine Documentation [5] and it added into the project codes for slowing animations.
+A method for getting sprite size from flipbook, was not found and adding a feature to dynamically change capsule size, was suspended.
+Deleting all default component and creating custom component for "paper_player" class, was tried but it was failed.
+It was decided that getting default components and change their details.
+A function which is something like "GetPaperFlipbookComponent()" could not found and instead that, "GetComponentByClass()" function was used by benefiting a GitHub code [6].
+Previously, adding physics features which are only gravity and blocking the player, has struggled and maintaining default components solved this issue.
+Some unused code lines were commented.
+[1] https://youtu.be/y7cgP71wJy4
+[2] https://www.unrealengine.com/en-US/eula/unreal
+[3] https://github.com/moodyliu/BDemo/blob/a9d1470d2e0b74875d779d5ac4ae9cd501340717/Source/BDemo/Private/Attackable/Obstacle.cpp
+[4] https://forums.unrealengine.com/t/how-do-i-delete-an-arrow-component/332038/4
+[5] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/Components/Flipbook/SetPlayRate/
+[6] https://github.com/lkunic/Virtusonic/blob/8d2d19840ffb5e1fce84b8b005f426b67b1a6059/Source/Virtusonic/Instrument/BassInstrument.cpp

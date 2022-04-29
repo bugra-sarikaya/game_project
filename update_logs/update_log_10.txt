@@ -3,7 +3,7 @@ Weapon sliding with actor location and rotation, was dediced to applied again.
 To implement it while jumping, "GetVelocity()" function was written instead of "GetLastMovementInputVector()" function.
 Vector values were observed with "UE_LOG" and it was found that "UnrotateVector()" function was giving error less 0.01f value.
 Tolerances were determined to 0.01f and -0.01 values for X and Y axes and after adding previous codes, a successful result was obtained finally.
-A tutorial [1] for camera shaking have be found before, but its "Camera Shake" class did not found in current Unreal Engine version which is 4.27.2.
+A tutorial [1] for camera shaking has found before, but its "Camera Shake" class did not found in current Unreal Engine version which is 4.27.2.
 A tutorial video [2] was found and it was learned that choosing "MatineeCameraShake" class is proper way.
 For adding a camera shake, some useful codes were found in several sources but any direct solution was not found because most of solutions were Blueprint methods.
 By inspiring generic class declarations in "game_projectGameModeBase.cpp" file an benefiting "LoadClass()" function which was found in a forum page [3], a "TSubclassOf<UMatineeCameraShake>" variable was declared in header file of "paper_player" and created camera shake class was loaded to it. 
