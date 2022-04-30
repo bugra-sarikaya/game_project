@@ -1,53 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "paper_player.h"
+#include "enemy.h"
 
 
 // Sets default values
 Apaper_player::Apaper_player()
 {
-	capsule_half_height = 88.0f;
-	capsule_radius = 34.0f;
-	look_right_rate = 45.f;
-	look_up_rate = 45.f;
-	tolerance = 0.010000f;
-	camera_location_x = 0.0f;
-	camera_location_y = 0.0f;
-	camera_location_z = 65.0f;
-	weapon_location_x = 20.0f;
-	weapon_location_y = 7.5f;
-	weapon_location_z = -6.9f;
-	weapon_rotation_pitch = 0.0f;
-	weapon_rotation_yaw = 90.0f;
-	weapon_rotation_roll = 0.0f;
-	weapon_scale = 0.05f;
-	sliding_weapon_increment_limit = 0.2f;
-	sliding_weapon_x_increment = 0.0f;
-	sliding_weapon_y_increment = 0.0f;
-	sliding_weapon_z_increment = 0.0f;
-	sliding_weapon_x_increment_rate = 0.05f;
-	sliding_weapon_y_increment_rate = 0.05f;
-	sliding_weapon_z_increment_rate = 0.05f;
-	reached_positive_oscillating_walking_y_increment_limit = false;
-	reached_negative_oscillating_walking_y_increment_limit = false;
-	reached_positive_walking_z_increment_limit = false;
-	reached_negative_walking_z_increment_limit = false;
-	oscillating_walking_y_increment_limit = 0.6f;
-	oscillating_walking_z_increment_limit = 0.6f;
-	oscillating_walking_x_increment = 0.0f;
-	oscillating_walking_y_increment = 0.0f;
-	oscillating_walking_z_increment = 0.0f;
-	oscillating_walking_x_increment_rate = 0.05f;
-	oscillating_walking_y_increment_rate = 0.05f;
-	oscillating_walking_z_increment_rate = 0.05f;
 	PrimaryActorTick.bCanEverTick = true;
-	capsule_component = GetCapsuleComponent();
+	RootComponent = capsule_component = GetCapsuleComponent();
 	capsule_component->InitCapsuleSize(capsule_radius, capsule_half_height);
-	//capsule_component->SetSimulatePhysics(true);
-	//capsule_component->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-	//capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
-	//capsule_component->SetEnableGravity(true);
-	RootComponent = capsule_component;
 	camera_component = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
 	check(camera_component != nullptr);
 	camera_component->SetupAttachment(RootComponent);
@@ -55,17 +17,17 @@ Apaper_player::Apaper_player()
 	camera_component->bUsePawnControlRotation = true;
 	paper_component = (UPaperFlipbookComponent*)GetComponentByClass(UPaperFlipbookComponent::StaticClass());
 	check(paper_component != nullptr);
-	pistol_idle_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
+	pistol_idle_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
 	paper_component->SetupAttachment(camera_component);
-	paper_component->SetFlipbook(pistol_idle_assset);
+	paper_component->SetFlipbook(pistol_idle_asset);
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
 	paper_component->SetRelativeRotation(FRotator(weapon_rotation_pitch, weapon_rotation_yaw, weapon_rotation_roll));
 	paper_component->SetWorldScale3D(FVector(weapon_scale));
 	paper_component->SetOnlyOwnerSee(true);
 	paper_component->CastShadow = false;
-	//camera_shake_walking = LoadClass<UMatineeCameraShake>(GetWorld(), TEXT("/Script/game_project.camera_shake_walking"));
 	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
+	pistol_fire_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 }	
 
 // Called when the game starts or when spawned
@@ -78,17 +40,18 @@ void Apaper_player::BeginPlay()
 
 }
 
-void Apaper_player::Tick(float DeltaTime)
+void Apaper_player::Tick(float delta_time)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(delta_time);
 	slide_weapon();
 	oscillate_walking();
-	if (paper_component->GetFlipbook() == pistol_fire_assset && paper_component->GetPlaybackPositionInFrames() == paper_component->GetFlipbookLengthInFrames() - 1) {
-		paper_component->SetFlipbook(pistol_idle_assset);
+	if (paper_component->GetFlipbook() == pistol_fire_asset && !paper_component->IsPlaying()) {
+		paper_component->SetFlipbook(pistol_idle_asset);
+		paper_component->SetLooping(true);
+		paper_component->Play();
 	}
 	const APlayerController* controller = Cast<APlayerController>(GetController());
 	if (controller->IsInputKeyDown(FKey(TEXT("LeftMouseButton")))) fire();
-	
 }
 
 // Called to bind functionality to input
@@ -275,31 +238,30 @@ void Apaper_player::oscillate_walking() {
 }
 void Apaper_player::fire() {
 	//GetWorldTimerManager().SetTimer(MyHandle, this, &Apaper_player::fire, 0.5f, true);
-	if (projectile_class && paper_component->GetFlipbook() == pistol_idle_assset) {
+	if (projectile_class && paper_component->GetFlipbook() == pistol_idle_asset) {
 		GetActorEyesViewPoint(CameraLocation, CameraRotation);
 		MuzzleOffset.Set(200.0f, 45.0f, -30.0f);
 		MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
 		MuzzleRotation = CameraRotation;
-		//MuzzleRotation.Pitch += 0.0f;
 		UWorld* World = GetWorld();
 		if (World) {
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
 			Aprojectile* projectile = World->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
-			pistol_fire_assset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 			if (projectile) {
-				paper_component->SetFlipbook(pistol_fire_assset);
+				paper_component->SetFlipbook(pistol_fire_asset);
+				paper_component->SetLooping(false);
+				paper_component->Play();
 				FVector LaunchDirection = MuzzleRotation.Vector();
 				projectile->FireInDirection(LaunchDirection);
 			}
 		}
 	}
 }
-//void Apaper_player::OnReleaseFire()
-//{
-//	GetWorldTimerManager().ClearTimer(MyHandle);
-//}
-void Apaper_player::change_flipbook(UPaperFlipbook* flipbook_asset) {
-	paper_component->SetFlipbook(flipbook_asset);
+void Apaper_player::deal_damage(float damage_amount) {
+	health -= damage_amount;
+	if (health <= 0.0f) {
+		Destroy();
+	}
 }

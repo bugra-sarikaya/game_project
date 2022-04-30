@@ -2,57 +2,34 @@
 
 
 #include "projectile.h"
+#include "enemy.h"
 
 // Sets default values
-Aprojectile::Aprojectile()
-{
-	collision_sphere_radius = 10.0f;
-	initial_speed = 4000.0f;
-	max_speed = 4000.0f;
-	following_velocity = true;
-	world_scale = 0.6f;
-	life_span = 3.0f;
-	bouncing = false;
-	gravity_scale = 0.0f;
-	PrimaryActorTick.bCanEverTick = true;
-	if (!RootComponent) {
-		RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
-	}
-	if (!CollisionComponent) {
-		CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-		CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
-		CollisionComponent->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
-		CollisionComponent->InitSphereRadius(collision_sphere_radius);
-		CollisionComponent->bIgnoreRadialImpulse = true;
-		CollisionComponent->bIgnoreRadialForce = true;
-		RootComponent = CollisionComponent;
-	}
-	if (!ProjectileMovementComponent) {
-		ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
-		ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
-		ProjectileMovementComponent->InitialSpeed = initial_speed;
-		ProjectileMovementComponent->MaxSpeed = max_speed;
-		ProjectileMovementComponent->bRotationFollowsVelocity = following_velocity;
-		ProjectileMovementComponent->bShouldBounce = bouncing;
-		ProjectileMovementComponent->ProjectileGravityScale = gravity_scale;
-	}
-		//ProjectileMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMeshComponent"));
-		paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper"));
-		check(paper_component != nullptr);
-		static ConstructorHelpers::FObjectFinder<UPaperFlipbook>paper(TEXT("/Game/projectiles/projectile_idle_v2.projectile_idle_v2"));
-		if (paper.Succeeded()) {
-			paper_component->SetFlipbook(paper.Object);
-			paper_component->SetWorldScale3D(FVector(world_scale));
-			paper_component->SetupAttachment(RootComponent);
-		//	//ProjectileMeshComponent->SetStaticMesh(Mesh.Object);
-		//}
-		//static ConstructorHelpers::FObjectFinder<UMaterial>Material(TEXT("'/Game/sphere_material.sphere_material'"));
-		//if (Material.Succeeded()) {
-		//	ProjectileMaterialInstance = UMaterialInstanceDynamic::Create(Material.Object, ProjectileMeshComponent);
-		}
-		//paper_component->SetMaterial(0, ProjectileMaterialInstance);
+Aprojectile::Aprojectile() {
 
-		InitialLifeSpan = life_span;
+	PrimaryActorTick.bCanEverTick = true;
+	RootComponent = collision_component = CreateDefaultSubobject<USphereComponent>(TEXT("Collision Component"));
+	check(collision_component != nullptr);
+	collision_component->InitSphereRadius(collision_sphere_radius);
+	//collision_component->OnComponentBeginOverlap.AddDynamic(this, &Aprojectile::on_overlap);
+	collision_component->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
+	collision_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	collision_component->SetCollisionResponseToChannels(ECollisionResponse::ECR_Block);
+	projectile_movement_component = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+	check(projectile_movement_component != nullptr);
+	projectile_movement_component->SetUpdatedComponent(RootComponent);
+	projectile_movement_component->InitialSpeed = initial_speed;
+	projectile_movement_component->MaxSpeed = max_speed;
+	projectile_movement_component->bRotationFollowsVelocity = following_velocity;
+	projectile_movement_component->bShouldBounce = bouncing;
+	projectile_movement_component->ProjectileGravityScale = gravity_scale;
+	paper_component = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Paper Component"));
+	check(paper_component != nullptr);
+	paper_component->SetupAttachment(RootComponent);
+	projectile_idle_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/projectiles/projectile_idle_v2.projectile_idle_v2"));
+	paper_component->SetFlipbook(projectile_idle_asset);
+	paper_component->SetWorldScale3D(FVector(world_scale));
+	InitialLifeSpan = life_span;
 }
 
 // Called when the game starts or when spawned
@@ -79,15 +56,20 @@ void Aprojectile::Tick(float DeltaTime)
 
 
 }
-
-// Function that initializes the projectile's velocity in the shoot direction.
 void Aprojectile::FireInDirection(const FVector& ShootDirection) {
-	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	projectile_movement_component->Velocity = ShootDirection * projectile_movement_component->InitialSpeed;
 }
-// Function that is called when the projectile hits something.
-void Aprojectile::on_hit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	//if (OtherActor != this && OtherComponent->IsAnySimulatingPhysics()) {
-	//	OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
-	//}
+void Aprojectile::on_overlap(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_indecx, bool b_from_sweep, const FHitResult& hit) {
+	Aenemy* enemy = Cast<Aenemy>(other_actor);
+	if (enemy) {
+		enemy->deal_damage(damage_value);
+	}
+	Destroy();
+}
+void Aprojectile::on_hit(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, FVector normal_impulse, const FHitResult& hit) {
+	Aenemy* enemy = Cast<Aenemy>(other_actor);
+	if (enemy) {
+		enemy->deal_damage(damage_value);
+	}
 	Destroy();
 }
