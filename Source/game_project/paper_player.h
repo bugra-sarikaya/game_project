@@ -16,8 +16,10 @@
 #include "Math/Vector.h"
 #include "MatineeCameraShake.h"
 #include "TimerManager.h"
-#include "projectile.h"
 #include "paper_player.generated.h"
+
+class Aprojectile;
+class Aenemy;
 
 UCLASS()
 class GAME_PROJECT_API Apaper_player : public APaperCharacter
@@ -78,6 +80,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay) FVector MuzzleOffset;
 	UPROPERTY(EditAnywhere) TSubclassOf<UMatineeCameraShake> camera_shake_walking;
 	UPROPERTY() TSubclassOf<Aprojectile> projectile_class;
+	UPROPERTY() TSubclassOf<Aenemy> enemy_class;
 	UFUNCTION() void start_jump();
 	UFUNCTION() void stop_jump();
 	UFUNCTION() void move_forward(float value);
@@ -89,7 +92,6 @@ public:
 	UFUNCTION() void slide_weapon();
 	UFUNCTION() void oscillate_walking();
 	UFUNCTION() void fire();
-	UFUNCTION() void deal_damage(float damage_amount);
 protected:
 	virtual void BeginPlay() override;
 };

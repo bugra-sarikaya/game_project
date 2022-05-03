@@ -10,6 +10,8 @@
 #include "PaperFlipbook.h"
 #include "projectile.generated.h"
 
+class Aenemy;
+
 UCLASS()
 class GAME_PROJECT_API Aprojectile : public AActor
 {
@@ -27,14 +29,15 @@ public:
 	UPROPERTY(VisibleAnywhere) float life_span = 3.0f;
 	UPROPERTY(VisibleAnywhere) bool bouncing = false;
 	UPROPERTY(VisibleAnywhere) float gravity_scale = 0.0f;
-	UPROPERTY(VisibleAnywhere) float damage_value = 50.0f;
+	UPROPERTY(VisibleAnywhere) float damage_value = 20.0f;
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile) USphereComponent* collision_component;
 	UPROPERTY(VisibleAnywhere, Category = Movement) UProjectileMovementComponent* projectile_movement_component;
 	UPROPERTY() UPaperFlipbookComponent* paper_component;
 	UPROPERTY() UPaperFlipbook* projectile_idle_asset;
+	UPROPERTY() Aenemy* enemy;
 	UFUNCTION() void FireInDirection(const FVector& ShootDirection);
-	UFUNCTION() void on_overlap(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_indecx, bool b_from_sweep, const FHitResult& hit);
 	UFUNCTION()	void on_hit(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, FVector normal_impulse, const FHitResult& hit);
+	UFUNCTION() void deal_damage(Aenemy* attack_enemy, float damage_amount);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

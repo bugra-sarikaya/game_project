@@ -52,24 +52,18 @@ void Aprojectile::Tick(float DeltaTime)
 	//FVector camera_location = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraLocation();
 	//FVector actor_location = GetActorLocation();
 	FRotator rotation = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
-	paper_component->SetWorldRotation(FRotator(0.0f, rotation.Yaw + 90.0f, rotation.Pitch));
+	RootComponent->SetWorldRotation(FRotator(0.0f, rotation.Yaw + 90.0f, rotation.Pitch));
 
 
 }
 void Aprojectile::FireInDirection(const FVector& ShootDirection) {
 	projectile_movement_component->Velocity = ShootDirection * projectile_movement_component->InitialSpeed;
 }
-void Aprojectile::on_overlap(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_indecx, bool b_from_sweep, const FHitResult& hit) {
-	Aenemy* enemy = Cast<Aenemy>(other_actor);
-	if (enemy) {
-		enemy->deal_damage(damage_value);
-	}
+void Aprojectile::on_hit(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, FVector normal_impulse, const FHitResult& hit) {
+	enemy = Cast<Aenemy>(other_actor);
+	if (enemy) deal_damage(enemy, damage_value);
 	Destroy();
 }
-void Aprojectile::on_hit(UPrimitiveComponent* hit_component, AActor* other_actor, UPrimitiveComponent* other_component, FVector normal_impulse, const FHitResult& hit) {
-	Aenemy* enemy = Cast<Aenemy>(other_actor);
-	if (enemy) {
-		enemy->deal_damage(damage_value);
-	}
-	Destroy();
+void Aprojectile::deal_damage(Aenemy* attack_enemy, float damage_amount) {
+	attack_enemy->health -= damage_amount;
 }

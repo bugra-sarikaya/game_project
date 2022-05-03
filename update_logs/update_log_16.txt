@@ -1,0 +1,59 @@
+Instead of only default capsule component, using a second collision component was thought for damaging.
+A box component for enemy, was created according to a YouTube tutorial [1].
+Enable box component which was disabled while attacking, was decided by inspiring from a forum webpage of Unrel Engine [2].
+"pxvis collision" console command which shows collisions, was found in a forum webpage [3] and it was implemented in play mode.
+Instead of calculating distance between player and enemy, using multiple sense subobjects, was determined.
+"UAISenseConfig_Damage" subobject was found in Unreal Engine documentation but after watching a tutorial [5] shortly, it was not added because it was thought that subobject is not suitable for this 2.5D game project.
+AI Prediction sense was found in a webpage of Unreal Engine documentation [6] but after watching anoteher tutorial video [7] shortly, it was not added because of same reason.
+A second sight sense config was created but enemy did not work with first one.
+Creating multiple perception components which are parent classes of sight senses, was decided but enemy did not recognize second component.
+A suggested solution which is using an interface, was found in a forum webpage [8] and then a YouTube video [9] was watched for remembering interfaces.
+Last watched tutorial has watched previously in a playlist and 9 videos [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] of this playlist was watched again for learning better.
+A forum webpage [20] which has information about difference between casting and assigning, was read but it could not be understood completely.
+A webpage [21] was read for learning usage of "StartPlay()" function in Game Mode class and some log messages were used for testing "BeginPlay()" and "StartPlay()" functions.
+After the testing, functions run in this order: 1. Game Mode BeginPlay, 2. Player BeginPlay, 3. Game Mode StartPlay.
+It was learned that "StartPlay()" function of Game Mode class, runs after spawning actors.
+Previous solved cyclic dependency problem was tried to solve with another method which is using an interface file which has header files, but it failed.
+To solve with another method, forward declaration was chosen because it was seen in official Unreal Engine files while watching a tutorial video [23].
+But using only forward decleration could not solve the issue and after reading a forum webpage of Unreal Engine [24], it was decided to use that two methods which are including header files in cpp files and using forward decleration in header files.
+Another method which is using "#ifndef" and "#define" preprocessors for solving cyclic dependency, was found in a webpage of Stack Overflow [25] but it was not used because it was learned that method causes compiling unnecessary header files, from last read Unreal Engine forum webpage.
+Another webpage [26] of Unreal Engine forum about difference between "cast" and assigning, was read and it was learned that "cast" function should be used while turning a class pointer to a different class pointer which has same parent class.
+UPROPERTY and UFUNCTION macro have been used without new lines in this project and this issue was searched in webpages [27] [28] of Unreal Engine documentation but it could not be found.
+Although that macro issue could not found in coding standards webpage [27] of Unreal Engine and the webpage has a sentence which is that "Following the coding standards is mandatory.", following coding standarts issue was researched and it was learned that some coders do not follow standards, from a webpage of Stack Overflow [29].
+New lines were tried to add for making game project more similar to official code files but after they were deleted because they were not liked with reason of hard to find variables.
+Spawning enemy was set into "BeginPlay()" function of paper player class for testing enemy with less effort.
+A sphere collision component which has bigger radius than capsule's radius, was created for enemy and its overlapping events were set for attacking.
+"IsOverlappingActor()" function was used in an "if" statement to check sphere collision's overlapping for melee attacking.
+Previous flipbook dependant AI algorithm which is in "Tick()" function, was edited and it was moved into a new function whose name is "tick_AI()".
+Code lines of changing flipbook, were moved into a new function whose name is "change_flipbook()".
+Decreasing health functions were edited.
+In this update simple enemy AI was completed.
+[1] https://youtu.be/4HoJIgyclZ4
+[2] https://forums.unrealengine.com/t/overlapped-melee-collision-not-firing-paper2d/413786/3
+[3] https://forums.unrealengine.com/t/collision-box-visibility-in-play-mode/311069/6
+[4] https://docs.unrealengine.com/4.27/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Damage/
+[5] https://youtu.be/g8rz7aZyDMs
+[6] https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/AIPerception/
+[7] https://youtu.be/QcaHEW9M6K8
+[8] https://forums.unrealengine.com/t/ai-perception-more-sight-sources-on-one-actor/378587/6
+[9] https://youtu.be/GBomlczTRW0
+[10] https://youtu.be/shGzP5B9TBE
+[11] https://youtu.be/x5n_vS4hTaQ
+[12] https://youtu.be/6ReKV2NRuuc
+[13] https://youtu.be/MnTBpQtNWzk
+[14] https://youtu.be/EKrbhSGuiCY
+[15] https://youtu.be/MeKADBN0E10
+[16] https://youtu.be/3P9v-gay_VE
+[17] https://youtu.be/BGnvE11semo
+[18] https://youtu.be/gkprbgwthO0
+[19] https://youtu.be/4YeErXsNALg
+[20] https://forums.unrealengine.com/t/casting-vs-class-equal-to/128027/20
+[21] https://forums.unrealengine.com/t/gamemode-beginplay-vs-startplay/361006
+[22] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/AGameModeBase/StartPlay/
+[23] https://youtu.be/_fQi5T_sTv8
+[24] https://forums.unrealengine.com/t/circular-dependency-again/50280/16
+[25] https://stackoverflow.com/questions/625799/resolve-build-errors-due-to-circular-dependency-amongst-classes
+[26] https://forums.unrealengine.com/t/difference-between-casting-and-assigning-to-a-class/148925/3
+[27] https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/
+[28] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/GameplayArchitecture/Properties/
+[29] https://www.quora.com/Do-all-programmers-follow-coding-standards

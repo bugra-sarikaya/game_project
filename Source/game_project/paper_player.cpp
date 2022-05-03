@@ -2,6 +2,7 @@
 
 #include "paper_player.h"
 #include "enemy.h"
+#include "projectile.h"
 
 
 // Sets default values
@@ -26,6 +27,7 @@ Apaper_player::Apaper_player()
 	paper_component->SetOnlyOwnerSee(true);
 	paper_component->CastShadow = false;
 	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
+	enemy_class = LoadClass<Aenemy>(GetWorld(), TEXT("/Script/game_project.enemy"));
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
 	pistol_fire_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 }	
@@ -34,9 +36,9 @@ Apaper_player::Apaper_player()
 void Apaper_player::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//check(GEngine != nullptr);
-
+	FActorSpawnParameters enemy_spawn_parameters;
+	enemy_spawn_parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
 
 }
 
@@ -52,6 +54,7 @@ void Apaper_player::Tick(float delta_time)
 	}
 	const APlayerController* controller = Cast<APlayerController>(GetController());
 	if (controller->IsInputKeyDown(FKey(TEXT("LeftMouseButton")))) fire();
+	if (health <= 0.0f) Destroy();
 }
 
 // Called to bind functionality to input
@@ -257,11 +260,5 @@ void Apaper_player::fire() {
 				projectile->FireInDirection(LaunchDirection);
 			}
 		}
-	}
-}
-void Apaper_player::deal_damage(float damage_amount) {
-	health -= damage_amount;
-	if (health <= 0.0f) {
-		Destroy();
 	}
 }
