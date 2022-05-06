@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
+
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,6 +17,7 @@
 #include "Math/Vector.h"
 #include "MatineeCameraShake.h"
 #include "TimerManager.h"
+
 #include "paper_player.generated.h"
 
 class Aprojectile;

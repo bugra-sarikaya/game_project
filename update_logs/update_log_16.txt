@@ -8,7 +8,7 @@ AI Prediction sense was found in a webpage of Unreal Engine documentation [6] bu
 A second sight sense config was created but enemy did not work with first one.
 Creating multiple perception components which are parent classes of sight senses, was decided but enemy did not recognize second component.
 A suggested solution which is using an interface, was found in a forum webpage [8] and then a YouTube video [9] was watched for remembering interfaces.
-Last watched tutorial has watched previously in a playlist and 9 videos [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] of this playlist was watched again for learning better.
+Last watched tutorial had been watched previously in a playlist and 9 videos [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] of this playlist was watched again for learning better.
 A forum webpage [20] which has information about difference between casting and assigning, was read but it could not be understood completely.
 A webpage [21] was read for learning usage of "StartPlay()" function in Game Mode class and some log messages were used for testing "BeginPlay()" and "StartPlay()" functions.
 After the testing, functions run in this order: 1. Game Mode BeginPlay, 2. Player BeginPlay, 3. Game Mode StartPlay.

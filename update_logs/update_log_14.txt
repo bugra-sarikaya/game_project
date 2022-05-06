@@ -17,7 +17,7 @@ A method for getting sprite size from flipbook, was not found and adding a featu
 Deleting all default component and creating custom component for "paper_player" class, was tried but it was failed.
 It was decided that getting default components and change their details.
 A function which is something like "GetPaperFlipbookComponent()" could not found and instead that, "GetComponentByClass()" function was used by benefiting a GitHub code [6].
-Previously, adding physics features which are only gravity and blocking the player, has struggled and maintaining default components solved this issue.
+Previously, adding physics features which are only gravity and blocking the player, had been struggled and maintaining default components solved this issue.
 Some unused code lines were commented.
 [1] https://youtu.be/y7cgP71wJy4
 [2] https://www.unrealengine.com/en-US/eula/unreal

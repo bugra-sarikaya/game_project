@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 
 #include "enemy.h"
@@ -107,6 +107,7 @@ void Aenemy::on_end_overlap(UPrimitiveComponent* overlap_component, AActor* othe
 		if (paper_player) {
 			//UE_LOG(LogTemp, Warning, TEXT("End Overlapping player."))
 			change_flipbook(paper_component, enemy_chase_asset, true, 1.0f);
+			paper_player = nullptr;
 		}
 	}
 }

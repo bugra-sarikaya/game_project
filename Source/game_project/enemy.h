@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
+
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "Components/CapsuleComponent.h"
@@ -14,6 +15,7 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Damage.h"
+
 #include "enemy.generated.h"
 
 class Apaper_player;

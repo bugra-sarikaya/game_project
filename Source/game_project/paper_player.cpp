@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 #include "paper_player.h"
 #include "enemy.h"
@@ -29,16 +29,18 @@ Apaper_player::Apaper_player()
 	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
 	enemy_class = LoadClass<Aenemy>(GetWorld(), TEXT("/Script/game_project.enemy"));
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
+
 	pistol_fire_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
+
 }	
 
 // Called when the game starts or when spawned
 void Apaper_player::BeginPlay()
 {
 	Super::BeginPlay();
-	FActorSpawnParameters enemy_spawn_parameters;
-	enemy_spawn_parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
+	//FActorSpawnParameters enemy_spawn_parameters;
+	//enemy_spawn_parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	//GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
 
 }
 

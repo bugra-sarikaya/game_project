@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 
 #include "projectile.h"
@@ -13,8 +13,9 @@ Aprojectile::Aprojectile() {
 	collision_component->InitSphereRadius(collision_sphere_radius);
 	//collision_component->OnComponentBeginOverlap.AddDynamic(this, &Aprojectile::on_overlap);
 	collision_component->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
-	collision_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	//collision_component->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
 	collision_component->SetCollisionResponseToChannels(ECollisionResponse::ECR_Block);
+	collision_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	projectile_movement_component = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	check(projectile_movement_component != nullptr);
 	projectile_movement_component->SetUpdatedComponent(RootComponent);

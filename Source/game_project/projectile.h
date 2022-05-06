@@ -1,13 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Unreal® Engine, Copyright 1998 – 2022, Epic Games, Inc. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
+
 #include "projectile.generated.h"
 
 class Aenemy;

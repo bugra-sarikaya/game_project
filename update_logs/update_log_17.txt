@@ -1,0 +1,120 @@
+3 level designing videos [1] [2] [3] [4] were watched.
+An Unreal Engine tutorial [5] was watched.
+On ending overlap of the sphere collision of enemy, "paper_player" class pointer assigned to "nullptr" because of forgetting ovelapped actor.
+A video [6] about making retro materials, was watched but implementing could not be succeeded.
+From a webpage [7] of Unreal Engine forum, it was learned that sprites and flipbooks have unlit material whose name is "MaskedUnlitSpriteMaterial".
+Flipbooks material were not changed and a lighting actor was not added into new created empty level.
+A parent C++ class for paper planes, was created but while trying to use "LoadObject" function, Unreal Engine gave a lot of errors.
+A GitHub source [8] code was benefited for using "FString" class as a parameter in "LoadObject" function.
+"PaperSprite.h" header file was included by inspiring from a solution of Unreal Engine forum webpage [9].
+After struggling that "LoadObject" function problem, it was learned that an uninitialized string whose class is "FString", does not have "nullptr" value and its emptiness should be checked with "IsEmpty" function which was found in Unreal Engine documentation [10].
+To see details of an Unreal Engine crash, Visual Studio debugger was used and it was seen that a code line was forgotten to uncomment.
+Included "PaperSprite.h" header file could not be entered by pressing "CTRL + Left Mouse Click" and to solve this, Visual Studio was restarted.
+3 forum webpages [11] [12] [13] about Game Mode class, were read.
+A tutorial webpage [14] was read for learning Game Instance class.
+A Game Instance was created and and edited but it gave a lot of Unreal Engine crashes.
+Crashes could not be solved and but fortunately, project was restored from a backup.
+A Reddit webpage [15] about Unreal Engine, was read and it was understood that many tutorials are wrong.
+A class whose parent class is "UWorld" could not be created because it has "final" specifier.
+Some unused source files were deleted.
+Source files of paper plane class, was edited like an OOP design but after writing spawning function in another class, some code line were commented.
+A soil floor texture was drawn by refencing a soil floor artwork which was found on internet [16].
+A texture of stone floor, was drawn by referencing a stone floor artwork [17] which was found in a webpage [18].
+A marble floor artwork for texture, was drawn.
+A metal floor artwork was designed by refencing a metal floor artwork which was found on a webpage [19].
+33 wall and floor textures were drawn by referencing some textures from Viscerafest game.
+Three webpages [20] [21] [22] which have pixel art technics, was examined shortly.
+It was decided that Blender will not be used because it was thought that if a created Blender object is imported to game, it will has non-unlit material.
+Instead of using Unreal Engine editor, using only C++ codes, was decided for designing map.
+To spawn every actors from a Game Mode class, it was determined that using class pointers and storing their spawning info in an array.
+"TArray" array type of Unreal Engine can be usable but it may decrease performance in some circumstances because "TArray" is like C++ vectors.
+It's performance issue was read in a webpage [23] of Unreal Engine documentation an it was thought that using dynamically allocated C/C++ arrays, is faster method.
+It was learned that Unreal Engine provides garbage collection for variables with macros like "UPROPERTY()" according to a webpage [24] of Unreal Engine forum.
+A method which is using raw pointers and "TArray" arrays, was determined to try for storing and accesing multiple objects.
+Some smart pointer types of Unreal Engine, was found in a webpage [25] of the documentation but its implementation was failed on process of multiple pointer array.
+To using in a "for" loop, some useful "TArray" function was found in Unreal Engine documentation [26].
+A webpage [27] about memory management in Unreal Engine, was read shortly.
+A deleted C++ class was created again but it was not included in content browser and it was detected that problem was caused from an unsolved compiling error
+After commenting an incorrect code line, problem was solved.
+A tutorial [28] was watched shortly and overriding "Init" function which was learned from tutorial, in newly created Game Instance class, solved previous crash problem whose reason is using a custom Game Instance.
+But newly created Game Instance class was not used for checking level because it does not have a "Tick" function.
+"Tick" function was found in Game Mode class and it overrided in created Game Mode classes.
+While testing "Tick" functions and after pressing "ESC" button for closing play mode, Unreal Engine editor crashed spookily and after restarting editor, everything was worked normally.
+"Get Current Level Name" function which was found in a webpage [29] of Unreal Engine forum, was examined and it's inner functions and variables were benefited to check current level without including any header file.
+A Game User Settings class and an Input Setting class was created for storing game settings.
+In a YouTube tutorial [30], a destructor was seen and in a forum webpage [31], it was learned that general classes in a Unreal Engine project, does not need a destructor because of garbage collection.
+While trying to load a Game Mode class with "LoadClass" function, some errors occured and solution which is including the relevant header files, was found in a forum webpage [32].
+While trying to testing writed codes, after closing play mode, previous spooky error which says "Pure virtual function being called while application was running (gls running == 1)", came again and after restarting editor, everyting was worked normally as usual.
+It was thoght that changing value of "DefaultGameMode" variable for changing game mode, did not change anything and any solution could not be found in 4 Unreal Engine forum webpages [33] [34] [35] [36].
+While examining World Outliner window during play mode, it was noticed that adjusted Game Mode class was spawned instead of previous Game Mode class and with this, changing Game Mode via C++ codes, was succeeded.
+Some codes were added into created Game User Settings by benefiting one [28] of the previously watched video tutorials.
+A tutorial [37] about opening levels, was watched and its some codes were applied successfully for testing changing Game Mode classes but another.
+Some inner codes of "OpenLevel" function was used for not including "Kismet" libary and after another function for changing leveli was found in a webpage [38].
+Using "ServerTravel" function, was decided and difference between "TRAVEL_Absolute" and "TRAVEL_Relative" values of "ServerTravel" function, was learned by testing.
+If "TRAVEL_Absolute" is set, Unreal Engine runs default settings which was adjusted in editor.
+Artworks in local computer, was moved with previously deleted files, into folder of Unreal Engine project.
+There was an idea which is spawning every actor including floor and walls, after in "BeginPlay" function of Game Mode beacuse it was thought that added every actor by using "drag and drop" method, are converted Blueprints and avoiding Blueprints, has been determined.
+After making a comparison between Blueprint actor and a C++ actor in World Outliner windows, it was seen that added C++ actor has not been converted to a Blueprint actor and after this situation, designing map without spawning every object via C++ codes, was decided.
+While importing textures, it was learned that applying Paper2D texture settings to an imported texture png file, prevents disruption while scaling up.
+A video [39] about copying objects, was watched.
+A video [40] about moving objects, was watched.
+A video [41] about snapping objects, was watched.
+Firstly paper plane class was used to design level but it was noticed that behind these planes are not tranperent.
+Any solution could not be found on internet and creating a statich mesh plane which has a material, was tried.
+Material of created static mesh, was edited according to sprite material example [42] of Unreal Engine documentiation [43] and it worked.
+Using static mesh plane classes, was decided because it was thought these plane meshes which has only one surface is better than sprites which has two surfaces, for performance.
+Another method for creating an unlit material, was learned from a previously watched video [6] and it implemented successfully.
+Instead of using example material of Unreal Engine documentation, last method was used for created every materials because it was simple and also there was no any difference in visual.
+While trying to create a material C++ class, 2 error was occured.
+First one was solved by adding "RenderCore" value into "Build.cs" file and this solution was found in a forum webpage [44].
+Second one was solved by moving its own included header file line onto most top location in last created Game Mode file.
+Using created material C++ class, was failed and because it was thought that material are not classes, they are Unreal Engine objects.
+Also some useful codes for creating material objects, was found from 2 webpages [45] [46].
+A video about texture scaling, was watched [47].
+[1] https://youtu.be/EIJR3Qwm05A
+[2] https://youtu.be/asDkS_qDVpI
+[3] https://youtu.be/vYa7HyJ25qI
+[4] https://youtu.be/9U_U7Dx9Ce4
+[5] https://youtu.be/5-6iMEYr3B0
+[6] https://youtu.be/m8ccG_EEoPM
+[7] https://forums.unrealengine.com/t/sprite-lit-when-unlit/403088
+[8] https://github.com/leobelmontLu/MyProjects/blob/a27f45a838c28a8d5a58b08346b2524a2cf5d9d8/Engine/Source/Editor/UnrealEd/Private/Fbx/FbxMaterialImport.cpp
+[9] https://forums.unrealengine.com/t/4-25-cant-compile-function/145116/2
+[10] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Core/Containers/FString/IsEmpty/
+[11] https://forums.unrealengine.com/t/multiple-gamemode-game/89505/5
+[12] http://www.unrealengineturkiye.com/gamemode-degisikligi-konusu.html
+[13] https://stackoverflow.com/questions/44669962/change-gamemode-on-gamestart
+[14] https://couchlearn.com/how-to-use-the-game-instance-in-unreal-engine-4/
+[15] https://www.reddit.com/r/unrealengine/comments/73oxnq/question_game_mode_vs_game_state/
+[16] https://i.pinimg.com/736x/67/66/c5/6766c5ee47ad24b7e8a8c2a2e86eef1b.jpg
+[17] https://i1059.photobucket.com/albums/t432/Polynaut/block_02_zps240e4b5a.jpg
+[18] https://polycount.com/discussion/132252/hand-painted-sculpted-texture
+[19] https://www.pngwing.com/en/free-png-pikea
+[20] https://www.reddit.com/r/WatchandLearn/comments/cgeqqt/simple_method_for_drawing_vines_on_walls/eugpvge/
+[21] https://blog.studiominiboss.com/pixelart
+[22] https://medium.com/pixel-grimoire/how-to-start-making-pixel-art-2d1e31a5ceab
+[23] https://www.unrealengine.com/en-US/blog/optimizing-tarray-usage-for-performance
+[24] https://forums.unrealengine.com/t/raw-pointer-vs-smart-pointer/63605
+[25] https://docs.unrealengine.com/5.0/en-US/smart-pointers-in-unreal-engine/
+[26] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/TArrays/
+[27] https://unrealcommunity.wiki/garbage-collection-36d1da
+[28] https://youtu.be/FPCFWiuiGHc
+[29] https://forums.unrealengine.com/t/how-can-i-get-the-current-level-name/284429/10
+[30] https://youtu.be/dxgGpPTcF4k
+[31] https://forums.unrealengine.com/t/destructors-in-ue/2505/6
+[32] https://forums.unrealengine.com/t/error-use-of-undefined-type-aweapon/974
+[33] https://forums.unrealengine.com/t/changing-gamemode-at-runtime/81504/3
+[34] https://forums.unrealengine.com/t/game-mode-change-problem/490881/10
+[35] https://forums.unrealengine.com/t/change-a-map-game-mode/144690/5
+[36] https://forums.unrealengine.com/t/change-game-mode-in-menu/506841
+[37] https://youtu.be/Nw8VyjND_J4
+[38] https://forums.unrealengine.com/t/whats-the-different-between-absolute-travel-and-relative-travel/294112
+[39] https://youtu.be/qqDNOqJesAQ
+[40] https://youtu.be/wHJCv-Ph6zU
+[41] https://youtu.be/jSLz3LxVIWY
+[42] https://docs.unrealengine.com/4.26/Images/AnimatingObjects/Paper2D/Sprites/customMaterial.webp
+[43] https://docs.unrealengine.com/4.26/en-US/AnimatingObjects/Paper2D/Sprites/
+[44] https://forums.unrealengine.com/t/linker-error-when-inheriting-from-umaterialinstancedynamic/318051
+[45] https://isaratech.com/ue4-programmatically-create-a-new-material-and-inner-nodes/
+[46] https://forums.unrealengine.com/t/creating-a-new-material-in-c/357563/5
+[47] https://youtu.be/X4aXXm8km3w
