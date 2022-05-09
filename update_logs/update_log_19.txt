@@ -1,0 +1,26 @@
+3 sources were read shortly to learning object count limit for Unreal Engine and it was thought 2 million object count limit is enought for this game project.
+It was decided that game will have only one level and it will be arena level.
+For designing an arena map, 3 DOOM Eternal videos [4] [5] [6] were watched shortly.
+To build some stairs rotating planes, was tried but it could not be found that any triangle planes in Unreal Engine editor to fill sides.
+By benefiting 5 sources [7] [8] [9] [10] [11], some methods were found for making a triangle plane but they were able to set an angle to 30 degrees
+Blender program could be usable to adjust angles and from a video tutorial [12], exporting and importing processes between BLender and Unrel Engine, were learned.
+While strugling to find a method for creating a triangle plane on Blender, it was realized that triangle plane are proper for pixel art textures because hypotenuse edges will not be smooth.
+Scaling objects, was decided to implement for creating stairs.
+To create unique variable name for stair plane pointers, staircase terminology was researched and 3 terms which are riser, tread and stringer, were used by beneficted from a source [13]
+A video [14] watched shortly for learning a spawning paramater.
+In this update an algorithm for creating a stair, was completed but process took long time unexpectedly.
+Developing methods of this game, may change if processes are not be facilitated.
+[1] https://satisfactory.fandom.com/wiki/Tutorial:Unreal_Engine_Entity_Limit
+[2] https://www.reddit.com/r/SatisfactoryGame/comments/da0wg0/maximum_number_of_allowed_objects_is_far_too_low/
+[3] https://youtu.be/bk2ojhuil-g
+[4] https://youtu.be/r_B0kkpeGdI
+[5] https://youtu.be/sJDyXX4M1To
+[6] https://youtu.be/jNGNETnoE9E
+[7] https://forums.unrealengine.com/t/why-dont-i-have-the-edit-mode-toolbar-in-my-static-mesh-editor/460958
+[8] https://docs.unrealengine.com/5.0/en-US/modifying-static-mesh-geometry-in-unreal-engine/
+[9] https://forums.unrealengine.com/t/how-to-make-a-triangle-shape-floor/288571/9
+[10] https://youtu.be/oL9CfmbdYZ8
+[11] https://youtu.be/LGJe9K94e40
+[12] https://youtu.be/658Z_aD15kU
+[13] https://www.coastalstaircases.com.au/2016/08/staircases-terminology
+[14] https://youtu.be/4YeErXsNALg
