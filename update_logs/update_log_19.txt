@@ -7,7 +7,7 @@ Blender program could be usable to adjust angles and from a video tutorial [12],
 While strugling to find a method for creating a triangle plane on Blender, it was realized that triangle plane are proper for pixel art textures because hypotenuse edges will not be smooth.
 Scaling objects, was decided to implement for creating stairs.
 To create unique variable name for stair plane pointers, staircase terminology was researched and 3 terms which are riser, tread and stringer, were used by beneficted from a source [13]
-A video [14] watched shortly for learning a spawning paramater.
+A video [14] was watched shortly for learning a spawning paramater.
 In this update an algorithm for creating a stair, was completed but process took long time unexpectedly.
 Developing methods of this game, may change if processes are not be facilitated.
 [1] https://satisfactory.fandom.com/wiki/Tutorial:Unreal_Engine_Entity_Limit

@@ -1,0 +1,23 @@
+Using classic dynamic allocation methods was thought for passing arrays into functions because passing "TArray" vectors, are expensive for performance.
+A classic destructor function was written but it was realized that Unreal Engine calls constructors and destructors twice and this situtation was not good for using deallocations in destructor.
+"EndPlay" function which is called after destroying class, was found from Unreal Engine documentation [1] and its usage was learned from a video tutorial [2].
+Using classic dynamic allocation methods, was failed because Unreal Engine did not allow declaration of variables which has not "UPROPERTY" macros.
+Passing vectors situation was researched again and it was learned that passing by reference does not create a copy and it prevents overusing memory and time, from several sources [3] [4] [5] [6] [7] [8].
+A new struct source files was created for designing a 3 dimensional array.
+To facilitate spawning algorithms, "TArray" sizing and spawning algorithms were functionalizated by using pass by reference method.
+While trying to pass a "FActorSpawnParameter" variable, an error happened and to suspend this issue, the variable was not declared because any solution could not be found.
+For rotating spawned stair, some useful codes was found from a tutorial [9] but they were not added because it was thought that results of rotating calculations, will not be consistent.
+"Pure virtual function being called..." error occured several times and for trying to solve, "Shutdown" and "StartGameInstance" functions were added into Game Instance class by using an adviced solution from a webpage [10] of Unreal Engine forum.
+By benefiting a source [11], an enumaration system was added for direction of stair.
+In this update, written spawning algorithms were functionalized for using them multiple times with less code lines.
+[1] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/AActor/EndPlay/
+[2] https://youtu.be/lkorF6voAW4
+[3] https://www.unrealengine.com/en-US/blog/optimizing-tarray-usage-for-performance
+[4] https://www.geeksforgeeks.org/passing-vector-function-cpp/
+[5] https://www.ibm.com/docs/en/zos/2.4.0?topic=calls-pass-by-reference-c-only
+[6] https://www.educative.io/edpresso/pass-by-value-vs-pass-by-reference
+[7] https://www.delftstack.com/howto/cpp/pass-vector-by-reference-in-cpp/
+[8] https://courses.washington.edu/css342/zander/css332/passby.html
+[9] https://unrealcpp.com/rotate-actor-around-player-with-rotation/
+[10] https://forums.unrealengine.com/t/pig-of-a-crash-pure-virtual-function-being-called-while-application-was-running/155116/13
+[11] https://www.oreilly.com/library/view/unreal-engine-4/9781785885549/ch02s10.html
