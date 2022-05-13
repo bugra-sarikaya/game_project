@@ -1,0 +1,45 @@
+Using enum variables in "UClass", was learned from a source [1] and it was implemented.
+Adding ternary operators into "for" loops of cordinate incerementings, were tried for writing less code but it was failed because of less readability.
+Variable names of feclared plane arrays, was changed to distinguish them easily.
+One room, 9 floors, 8 pillars and 6 stairs were added into level by using written C++ codes.
+For adding a Player Start into game via C++ codes, classic "SpawnActor" function was used but game did not spawn player at spawned Player Start location.
+A research was done but any direct solution could not be found.
+Changing location of player at start, was thought but trying to find an advanced solution, was decided.
+It was observed that game spawns a PlayerStartPIE actor if there is not a Player Start in the scene.
+By using "CTRL + Shift + F" keyboard combination which was found a webpage of StackOverflow, "PlayerStart" and "PlayerStartPIE" words was searched in all project files but any useful result could not be obtained.
+By benefiting an advice which was found in a webpage [2] of Unreal Engine forum, "ChoosePlayerStart_Implementation" function was overridden and it return value was assigned to pointer of a new spawned Player State.
+While in play mode, it was noticed that there are two Player State actors in the scene and by using "GetActorOfClass" function which was found from a webpage [3] of Unreal Engine, first Player State was detected and destroyed in runtime.
+After obtained success, a method which is changing location of first Player Start, was thought for solving the problem with another way but changing it's Mobility value, did not work.
+Textures of Megaman X6 game, was examined by watching a YouTube video [4] and some screenshot captures were obtained.
+2 textures were drawn by inspiring from textures of Weapon Center stage [5].
+A video was watched for learning translucent materials.
+A method which is about replacing colors, was learned from a webpage [6] for Aseprite.
+First level of the DOOM Eternal was watched shortly via a YouTube video [7] for examining floor textures and three texture packages was drawn by inspiring them.
+A wooden picture [8] which was found a webpage [9], was referenced for coloring wooden pixel textures.
+Two wooden textures were drawn by inspiring from a wooden pixel art [10] picture which was found a webpage [11].
+Custom brush shortcut for Aseprite, was learned from a source [12].
+Drawen Old textures were packaged.
+Unfortunately, any texture cropping feature could not be found in Unreal Engine but an indirect way was learned from a YouTube tutorial [13].
+While changing name of previously created an material instance, an error occured and it's reason which is that material was set to a variable, was found in an Unreal Engine forum webpage [14].
+While trying to test material, it was noticed that Game User Settings were not applied and after struggling some new errors, Game User Settings were applied with "ApplySettings" function by benefiting an internet video [15] which is previously watched.
+Also deleting "PlayerStartPIE" gave an error and to fix this, an "if" statement was added to check its existentency.
+Changing UTilling and VTilling values to select pattern coordinates, did not work.
+Also some advices from internet and some trials were tried to solve noticed distorted textures and they were not work.
+To extract small images from big texture pack, a method which is importing as sheet and then exporting, was found from a webpage [16] about Aseprite.
+In this update structure of arena level was completed but its texture design was not completed because drawn textures were not liked.
+[1] https://forums.unrealengine.com/t/how-to-properly-insert-engine-default-enums-in-fstructs/436545
+[2] https://forums.unrealengine.com/t/how-can-i-create-a-playerstart-from-code/282189/4
+[3] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/Utilities/GetActorOfClass/
+[4] https://youtu.be/SlmxIjW-9A4
+[5] https://megaman.fandom.com/wiki/Weapon_Center
+[6] https://techstacker.com/replace-a-color-everywhere-aseprite/
+[7] https://youtu.be/4yHMVBO2HC8
+[8] https://cutewallpaper.org/21/wood-texture-background/Wood-Pattern-Vectors-Photos-and-PSD-files-Free-Download.jpg
+[9] https://cutewallpaper.org/download.php?file=/21/wood-texture-background/Wood-Pattern-Vectors-Photos-and-PSD-files-Free-Download.jpg
+[10] https://img.itch.zone/aW1nLzYyMDE1NDUucG5n/original/SQCHy%2B.png
+[11] https://itch.io/t/1452767/pixel-tutorial-wood-texture
+[12] https://steamcommunity.com/app/431730/discussions/0/152391246766316893/
+[13] https://youtu.be/sZm0dIusJdo
+[14] https://forums.unrealengine.com/t/attempting-to-use-array-which-comes-from-array-being-modified/118179
+[15] https://youtu.be/FPCFWiuiGHc
+[16] https://community.aseprite.org/t/how-do-i-export-seperate-letters-from-a-grid/8997
