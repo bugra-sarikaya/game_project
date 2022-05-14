@@ -1,0 +1,24 @@
+A video [1] was watched for creating a main menu and its Blueprint implementations was applied successfully to develop a pure C++ game, a few more video were butched.
+Any tutorial and any documentation could not be found for developing a main menu witch pure C++ codes.
+It was observed that tutorials usign widgets for main menus but it was thought that proper way to add a main menu, is creating a HUD for this game project.
+A basic implemention of main menu HUD, was read in a webpage of Unreal Engine forum.
+Blueprints of adding hit box feature, were examined on a video [3].
+"ReceiveHitBoxClick" function could not be used and instead of this function, "NotifyHitBoxClick" function was overrided by benefiting a webpage [14].
+While trying to add a HUD, a problem about switching Game Modes, was noticed.
+Game was not changing Game Modes after changing level and after a long research, the problem was solved by adding modified class reference of Game Mode into options of "OpenLevel" function according to an advice from Unreal Engine forum [5].
+Inserting text feature of Aseprite, was learned from a webpage [6].
+2 buttons were drawn on Aseprite and their font type was set to "Press Start" font which was found in local computer.
+A code line was found to quit game from another webpage of Unreal Engine [7].
+For a background color "FColor" struct was used instead of "FlinearColor" by benefiting a tutorial [8] and RGB code found from an image [9] of a webpage [10].
+Simple main menu HUD was completed.
+Name of some source file were changed.
+[1] https://youtu.be/lBhun7nuNmI
+[2] https://forums.unrealengine.com/t/how-can-i-create-a-simple-button-for-my-hud/289926/2
+[3] https://youtu.be/NOlrPhwSynQ
+[4] https://forums.unrealengine.com/t/receivehitboxclick-problem/380845
+[5] https://forums.unrealengine.com/t/game-mode-controller-on-open-level/84700/9
+[6] https://community.aseprite.org/t/how-to-insert-draw-text/23
+[7] https://forums.unrealengine.com/t/c-quit-game/39177/5
+[8] https://youtu.be/XPzkCafs1rU
+[9] https://cdn-images-1.medium.com/max/5760/1*REIGFIDNH176z5nuHYq0bw.png
+[10] https://blog.karenying.com/posts/50-shades-of-dark-mode-gray

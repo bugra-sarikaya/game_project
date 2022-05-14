@@ -2,6 +2,7 @@
 
 
 #include "combat_hud.h"
+
 Acombat_hud::Acombat_hud(){
 	static ConstructorHelpers::FObjectFinder<UTexture2D> crosshair_texture_object(TEXT("/Game/hud/crosshair_v1.crosshair_v1"));
 	crosshair_texture = crosshair_texture_object.Object;
@@ -15,4 +16,6 @@ void Acombat_hud::DrawHUD() {
 		TileItem.BlendMode = SE_BLEND_Translucent;
 		Canvas->DrawItem(TileItem);
 	}
+	//AddHitBox
+
 }
