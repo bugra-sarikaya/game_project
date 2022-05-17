@@ -16,11 +16,11 @@ But previously, there was a feature which is being destroyed after hit static me
 To get the lost feature, collision response settings were changed to block everything for projectile and after this adjustment "OnComponentHit()" function was usef for destroying projectile and enemy.
 In this update, Enemy AI was created but it has some problems.
 [1] https://youtu.be/4HoJIgyclZ4
-[2] https://forums.unrealengine.com/t/adddynamic-on-fpstutorial-sec-3-4-gives-error/369271/4
+[2] https://forums.unrealengine.com/t/adddynamic-on-fpstutorial-sec-3-4-gives-error/369271
 [3] https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/
-[4] https://community.gamedev.tv/t/when-do-we-need-to-apply-an-empty-uproperty-to-a-class-field/190584/4
+[4] https://community.gamedev.tv/t/when-do-we-need-to-apply-an-empty-uproperty-to-a-class-field/190584
 [5] https://stackoverflow.com/questions/52017047/why-the-uproperty-specifiers-visible-edit-are-used-together-with-blueprintread
 [6] https://forums.unrealengine.com/t/what-is-generated-h-header-file/346873
-[7] https://forums.unrealengine.com/t/how-do-you-guys-combat-circular-dependencies-in-your-file-heads/85220/10
+[7] https://forums.unrealengine.com/t/how-do-you-guys-combat-circular-dependencies-in-your-file-heads/85220
 [8] https://youtu.be/EIPrVRNf-yY
 [9] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/Components/USceneComponent/

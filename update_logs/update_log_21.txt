@@ -28,7 +28,7 @@ Also some advices from internet and some trials were tried to solve noticed dist
 To extract small images from big texture pack, a method which is importing as sheet and then exporting, was found from a webpage [16] about Aseprite.
 In this update structure of arena level was completed but its texture design was not completed because drawn textures were not be liked.
 [1] https://forums.unrealengine.com/t/how-to-properly-insert-engine-default-enums-in-fstructs/436545
-[2] https://forums.unrealengine.com/t/how-can-i-create-a-playerstart-from-code/282189/4
+[2] https://forums.unrealengine.com/t/how-can-i-create-a-playerstart-from-code/282189
 [3] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/Utilities/GetActorOfClass/
 [4] https://youtu.be/SlmxIjW-9A4
 [5] https://megaman.fandom.com/wiki/Weapon_Center

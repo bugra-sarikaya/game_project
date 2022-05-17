@@ -1,0 +1,51 @@
+A webpage [1] of Stack Overflow, was read shortly for learning dynamic widget texts.
+"SanitizeFloat" function which was found in a webpage of Unreal Engine, was used for converting a "float" type variable to "string" type.
+For trying to prevent some errors whose reasons are unknown, a line which has "ConstructorHelpers::FObjectFinder" function, was commented but this was not worked.
+Two sources [2] [3] were benefited for adding font.
+There was a problem which has been previously noticed and it was about unstable crosshair size.
+The problem was examined and it was realized that sizes are same in different screen resolutions but their distance from borders, are different.
+A feature of changing crosshair size dynamically, was determined to add.
+A research was done and any solutions could not be found except 2 solutions which was found 2 webpages of Unreal Engine forum but they could not be understood.
+"FCanvasTileItem" class could not be declared with "UPROPERTY" macro in a header file and an implementation which is not using "UPROPERTY" macro was found in a GitHub code [6] but it was not worked as expected in CPP file.
+Dividing canvas size by screen resolution for seting scale, was solved the problem and it was realized that solution is similar to an adviced solution which was found previously in a webpage [5].
+While texting solution, it was noticed that overrided "DrawHud" function works like "Tick" function.
+"GetTextSize" function, was found from Unreal Engine documentation [7] and it was thought that it is not usable because of returning nothing but it was learned that float type paremeters of the function, changes on every drawing, from a webpage [8] of Unreal Engine forum.
+"AsNumber" function which converts a "float" type value to "FText", was found in Unreal Engine source files, but it was not added.
+"FMath::FloorToInt" function for converting floor type value to "int32" value, was found in Unreal Engine forum [9].
+"FString::FromInt" function which converts "int32" type value to string value, was learned from Unreal Engine documentation [10].
+Creating a stopwatch, was decided.
+"UWorld::GetTimeSeconds" function was found in Unreal Engine source files after founding its correspondin Blueprint node from Unreal Engine documentation [11].
+An code part was written for converting returned time value to minutes, seconds and centiseceonds by inspiring from a Java code [12] which is a college documentation.
+Zero digits were added to output of time values by benefiting a webpage [13] of Unreal Engine documentation.
+Usage of "FString::Printf" function was learned from an Unreal Engine tutorial for implementing with "TEXT" macro and its parameters.
+"FSlateFontInfo" struct could not be used for changing font size dynamicaly and instead of this struct, font object was duplicated with another font size.
+"ClientSetHUD_Implementation" function was used for changing current HUD to ending HUD.
+Instead of checking player's death every frame with Game Mode's "Tick" function for changing HUD, death status of player, was checked in "EndPlay" function of the player class because this was thought as a low cost way but function of changig HUD, was declared in Game Mode class.
+A small research was done and it was determined that althought Player States are generally used in multiplayer games, they can be in standalone games.
+A Player State class was added for recording player's info to transfer HUD classes.
+For changing texture asset in functions other than "DrawHUD", "FCanvasTileItem" issue was tried again and it was failed again.
+Instead of declaring "FCanvasTileItem" in header file, pointers of "UTexture" were declared.
+Normal button textures were assigned to declared "UTexture" pointers in constructor and the pointers were assigned parameters of "FCanvasTileItem" variables in "DrawHUD" function.
+In "NotifyHitBoxBeginCursorOver" and "NotifyHitBoxEndCursorOver" functions, "UTexture" pointers values were changed and it worked for lighting button when cursor is over buttons.
+Any method for initalizing "FText" variable, could not be found and instead of this, "FString" to "FText" conversions were used.
+"ResetLevel" function was found in source files Unreal Engine by using an official Blueprint documentation [15] and it was called in restart button's pressing event but it could not worked as expected.
+Instead of "ResetLevel" function, "OpenLevel" function was used for restarting level and also this method was witnessed on answers of an Unreal Engine forum webpage [16].
+Start and end times were assigned in paper player class and they were transfered to player state class.
+Combat HUD class was set as getting player time from player state class.
+In this update HUDs were completed but score system is missing.
+[1] https://stackoverflow.com/questions/32930042/how-to-set-text-dynamically-in-unreal-engine
+[2] https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/UMG/UserGuide/Fonts/HowTo/ImportingFonts/
+[3] https://youtu.be/EK-fByHbt8M
+[4] https://forums.unrealengine.com/t/scaling-hud-elements/286018
+[5] https://forums.unrealengine.com/t/umg-world-to-screen-space-vs-resolution/307379
+[6] https://github.com/BriceVachez/Late-For-School---Code/blob/95065575074305e04c2cc03f11e39cac958cb450/FPS_test_5/InventoryHUD.h
+[7] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/HUD/GetTextSize/
+[8] https://forums.unrealengine.com/t/ahud-gettextsize-does-return-width-and-height-of-0/329059
+[9] https://forums.unrealengine.com/t/float-to-int32-conversion-in-c/357964
+[10] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Core/Containers/FString/FromInt/
+[11] https://docs.unrealengine.com/5.0/en-US/BlueprintAPI/Utilities/Time/GetGameTimeinSeconds
+[12] https://liveexample.pearsoncmg.com/liang/intro10e/html/ComputeChange.html
+[13] https://forums.unrealengine.com/t/hud-add-0s-to-unused-number-places/341001
+[14] https://unrealcommunity.wiki/
+[15] https://docs.unrealengine.com/4.27/en-US/BlueprintAPI/Game/ResetLevel/
+[16] https://forums.unrealengine.com/t/how-to-restart-level-when-player-dies/283235

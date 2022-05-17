@@ -22,6 +22,7 @@
 
 class Aprojectile;
 class Aenemy;
+class Aplayer_state;
 
 UCLASS()
 class GAME_PROJECT_API Apaper_player : public APaperCharacter
@@ -31,6 +32,7 @@ class GAME_PROJECT_API Apaper_player : public APaperCharacter
 public:
 	Apaper_player();
 	virtual void Tick(float delta_time) override;
+	virtual void EndPlay(EEndPlayReason::Type reason) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	UPROPERTY(VisibleAnywhere) float capsule_radius = 34.0f;
 	UPROPERTY(VisibleAnywhere) float capsule_half_height = 88.0f;;
@@ -66,13 +68,19 @@ public:
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_x_increment_rate = 0.05f;
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_y_increment_rate = 0.05f;
 	UPROPERTY(VisibleAnywhere) float oscillating_walking_z_increment_rate = 0.05f;
+	UPROPERTY() float time_start;
+	UPROPERTY() float time_end;
 	UPROPERTY() float health = 100.0f;
+	UPROPERTY() int score = 0;
+	UPROPERTY() UWorld* world;
 	UPROPERTY(VisibleAnywhere) UCameraComponent* camera_component;
 	UPROPERTY(VisibleDefaultsOnly) UCapsuleComponent* capsule_component;
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbookComponent* paper_component;
 	UPROPERTY(VisibleDefaultsOnly) UCharacterMovementComponent* movement_component;
 	UPROPERTY(VisibleDefaultsOnly) UArrowComponent* arrow_component;
 	UPROPERTY(VisibleAnywhere) UMatineeCameraShake* matinee_camera_shake;
+	UPROPERTY() APlayerState* player_state_pure;
+	UPROPERTY() Aplayer_state* player_state;
 	UPROPERTY(VisibleAnywhere) FVector MuzzleLocation;
 	UPROPERTY(VisibleAnywhere) FRotator MuzzleRotation;
 	UPROPERTY(VisibleAnywhere) FVector CameraLocation;

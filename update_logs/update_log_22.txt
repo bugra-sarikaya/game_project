@@ -13,10 +13,10 @@ For a background color "FColor" struct was used instead of "FlinearColor" by ben
 Simple main menu HUD was completed.
 Name of some source file were changed.
 [1] https://youtu.be/lBhun7nuNmI
-[2] https://forums.unrealengine.com/t/how-can-i-create-a-simple-button-for-my-hud/289926/2
+[2] https://forums.unrealengine.com/t/how-can-i-create-a-simple-button-for-my-hud/289926
 [3] https://youtu.be/NOlrPhwSynQ
 [4] https://forums.unrealengine.com/t/receivehitboxclick-problem/380845
-[5] https://forums.unrealengine.com/t/game-mode-controller-on-open-level/84700/9
+[5] https://forums.unrealengine.com/t/game-mode-controller-on-open-level/84700
 [6] https://community.aseprite.org/t/how-to-insert-draw-text/23
 [7] https://forums.unrealengine.com/t/c-quit-game/39177/5
 [8] https://youtu.be/XPzkCafs1rU

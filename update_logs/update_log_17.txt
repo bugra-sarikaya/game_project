@@ -79,9 +79,9 @@ A video about texture scaling, was watched [47].
 [6] https://youtu.be/m8ccG_EEoPM
 [7] https://forums.unrealengine.com/t/sprite-lit-when-unlit/403088
 [8] https://github.com/leobelmontLu/MyProjects/blob/a27f45a838c28a8d5a58b08346b2524a2cf5d9d8/Engine/Source/Editor/UnrealEd/Private/Fbx/FbxMaterialImport.cpp
-[9] https://forums.unrealengine.com/t/4-25-cant-compile-function/145116/2
+[9] https://forums.unrealengine.com/t/4-25-cant-compile-function/145116
 [10] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Core/Containers/FString/IsEmpty/
-[11] https://forums.unrealengine.com/t/multiple-gamemode-game/89505/5
+[11] https://forums.unrealengine.com/t/multiple-gamemode-game/89505
 [12] http://www.unrealengineturkiye.com/gamemode-degisikligi-konusu.html
 [13] https://stackoverflow.com/questions/44669962/change-gamemode-on-gamestart
 [14] https://couchlearn.com/how-to-use-the-game-instance-in-unreal-engine-4/
@@ -99,13 +99,13 @@ A video about texture scaling, was watched [47].
 [26] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/TArrays/
 [27] https://unrealcommunity.wiki/garbage-collection-36d1da
 [28] https://youtu.be/FPCFWiuiGHc
-[29] https://forums.unrealengine.com/t/how-can-i-get-the-current-level-name/284429/10
+[29] https://forums.unrealengine.com/t/how-can-i-get-the-current-level-name/284429
 [30] https://youtu.be/dxgGpPTcF4k
-[31] https://forums.unrealengine.com/t/destructors-in-ue/2505/6
+[31] https://forums.unrealengine.com/t/destructors-in-ue/2505
 [32] https://forums.unrealengine.com/t/error-use-of-undefined-type-aweapon/974
-[33] https://forums.unrealengine.com/t/changing-gamemode-at-runtime/81504/3
-[34] https://forums.unrealengine.com/t/game-mode-change-problem/490881/10
-[35] https://forums.unrealengine.com/t/change-a-map-game-mode/144690/5
+[33] https://forums.unrealengine.com/t/changing-gamemode-at-runtime/81504
+[34] https://forums.unrealengine.com/t/game-mode-change-problem/490881
+[35] https://forums.unrealengine.com/t/change-a-map-game-mode/144690
 [36] https://forums.unrealengine.com/t/change-game-mode-in-menu/506841
 [37] https://youtu.be/Nw8VyjND_J4
 [38] https://forums.unrealengine.com/t/whats-the-different-between-absolute-travel-and-relative-travel/294112
@@ -116,5 +116,5 @@ A video about texture scaling, was watched [47].
 [43] https://docs.unrealengine.com/4.26/en-US/AnimatingObjects/Paper2D/Sprites/
 [44] https://forums.unrealengine.com/t/linker-error-when-inheriting-from-umaterialinstancedynamic/318051
 [45] https://isaratech.com/ue4-programmatically-create-a-new-material-and-inner-nodes/
-[46] https://forums.unrealengine.com/t/creating-a-new-material-in-c/357563/5
+[46] https://forums.unrealengine.com/t/creating-a-new-material-in-c/357563
 [47] https://youtu.be/X4aXXm8km3w

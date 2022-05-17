@@ -22,6 +22,6 @@ Some unused code lines were commented.
 [1] https://youtu.be/y7cgP71wJy4
 [2] https://www.unrealengine.com/en-US/eula/unreal
 [3] https://github.com/moodyliu/BDemo/blob/a9d1470d2e0b74875d779d5ac4ae9cd501340717/Source/BDemo/Private/Attackable/Obstacle.cpp
-[4] https://forums.unrealengine.com/t/how-do-i-delete-an-arrow-component/332038/4
+[4] https://forums.unrealengine.com/t/how-do-i-delete-an-arrow-component/332038
 [5] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/Components/Flipbook/SetPlayRate/
 [6] https://github.com/lkunic/Virtusonic/blob/8d2d19840ffb5e1fce84b8b005f426b67b1a6059/Source/Virtusonic/Instrument/BassInstrument.cpp

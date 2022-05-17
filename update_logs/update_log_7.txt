@@ -30,10 +30,10 @@ After many tries for locating the pistol by using "F8" (TPS mode), "F11" (Fullsc
 [9] https://www.orfeasel.com/deleting-a-c-class/
 [10] https://youtu.be/ZEmFrlL_1t4
 [11] https://youtu.be/EPRTgWt-km0
-[12] https://forums.unrealengine.com/t/ue4-15-fobjectfinder-compile-error/385348/2
+[12] https://forums.unrealengine.com/t/ue4-15-fobjectfinder-compile-error/385348
 [13] https://forums.unrealengine.com/t/crash-report-cant-run-the-engine-via-code/319275
 [14] https://forums.unrealengine.com/t/how-to-simply-print-a-log/428859
-[15] https://forums.unrealengine.com/t/unrealengine-cpp-crash-xcode-debug/278640/3
-[16] https://forums.unrealengine.com/t/how-to-set-default-pawn-and-player-class-without-blueprints/123720/2
+[15] https://forums.unrealengine.com/t/unrealengine-cpp-crash-xcode-debug/278640
+[16] https://forums.unrealengine.com/t/how-to-set-default-pawn-and-player-class-without-blueprints/123720
 [17] https://forums.unrealengine.com/t/trouble-adding-blueprint-hud-to-c-project/294138
 [18] https://unrealcpp.com/health-bar-ui-hud/

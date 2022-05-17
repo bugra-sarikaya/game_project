@@ -18,7 +18,7 @@ Developing methods of this game, may change if processes are not be facilitated.
 [6] https://youtu.be/jNGNETnoE9E
 [7] https://forums.unrealengine.com/t/why-dont-i-have-the-edit-mode-toolbar-in-my-static-mesh-editor/460958
 [8] https://docs.unrealengine.com/5.0/en-US/modifying-static-mesh-geometry-in-unreal-engine/
-[9] https://forums.unrealengine.com/t/how-to-make-a-triangle-shape-floor/288571/9
+[9] https://forums.unrealengine.com/t/how-to-make-a-triangle-shape-floor/288571
 [10] https://youtu.be/oL9CfmbdYZ8
 [11] https://youtu.be/LGJe9K94e40
 [12] https://youtu.be/658Z_aD15kU

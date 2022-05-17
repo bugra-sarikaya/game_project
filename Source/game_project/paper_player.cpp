@@ -3,11 +3,10 @@
 #include "paper_player.h"
 #include "enemy.h"
 #include "projectile.h"
+#include "game_mode_base_level_arena.h"
+#include "player_state.h"
 
-
-// Sets default values
-Apaper_player::Apaper_player()
-{
+Apaper_player::Apaper_player(){
 	PrimaryActorTick.bCanEverTick = true;
 	RootComponent = capsule_component = GetCapsuleComponent();
 	capsule_component->InitCapsuleSize(capsule_radius, capsule_half_height);
@@ -18,7 +17,8 @@ Apaper_player::Apaper_player()
 	camera_component->bUsePawnControlRotation = true;
 	paper_component = (UPaperFlipbookComponent*)GetComponentByClass(UPaperFlipbookComponent::StaticClass());
 	check(paper_component != nullptr);
-	pistol_idle_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
+	world = GetWorld();
+	pistol_idle_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
 	paper_component->SetupAttachment(camera_component);
 	paper_component->SetFlipbook(pistol_idle_asset);
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
@@ -26,11 +26,11 @@ Apaper_player::Apaper_player()
 	paper_component->SetWorldScale3D(FVector(weapon_scale));
 	paper_component->SetOnlyOwnerSee(true);
 	paper_component->CastShadow = false;
-	projectile_class = LoadClass<Aprojectile>(GetWorld(), TEXT("/Script/game_project.projectile"));
-	enemy_class = LoadClass<Aenemy>(GetWorld(), TEXT("/Script/game_project.enemy"));
+	projectile_class = LoadClass<Aprojectile>(world, TEXT("/Script/game_project.projectile"));
+	enemy_class = LoadClass<Aenemy>(world, TEXT("/Script/game_project.enemy"));
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
 
-	pistol_fire_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
+	pistol_fire_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 
 }	
 
@@ -41,12 +41,19 @@ void Apaper_player::BeginPlay()
 	//FActorSpawnParameters enemy_spawn_parameters;
 	//enemy_spawn_parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	//GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
-
+	time_start = world->GetTimeSeconds();
+	player_state_pure = GetPlayerState();
+	player_state = Cast<Aplayer_state>(player_state_pure);
+	if (player_state) player_state->set_player_time_start(time_start);
 }
 
-void Apaper_player::Tick(float delta_time)
-{
+void Apaper_player::Tick(float delta_time){
 	Super::Tick(delta_time);
+	time_end = world->GetTimeSeconds();
+	if (player_state) {
+		player_state->set_player_time_end(time_end);
+		player_state->set_player_health(health);
+	}
 	slide_weapon();
 	oscillate_walking();
 	if (paper_component->GetFlipbook() == pistol_fire_asset && !paper_component->IsPlaying()) {
@@ -74,6 +81,14 @@ void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAxis("look_right", this, &Apaper_player::look_right);
 	PlayerInputComponent->BindAxis("look_up", this, &Apaper_player::look_up);
 
+}
+void Apaper_player::EndPlay(EEndPlayReason::Type reason) {
+	Super::EndPlay(reason);
+	if (reason == EEndPlayReason::Destroyed) {
+		AGameModeBase* game_mode_base = world->GetAuthGameMode();
+		Agame_mode_base_level_arena* game_mode_base_level_arena = Cast<Agame_mode_base_level_arena>(game_mode_base);
+		game_mode_base_level_arena->implement_hud_ending();
+	}
 }
 void Apaper_player::start_jump() {
 	bPressedJump = true;
@@ -111,12 +126,12 @@ void Apaper_player::move_left(float value) {
 }
 void Apaper_player::look_right(float value) {
 	if (value != 0.0f) {
-		AddControllerYawInput(value * look_right_rate * GetWorld()->GetDeltaSeconds());
+		AddControllerYawInput(value * look_right_rate * world->GetDeltaSeconds());
 	}
 }
 void Apaper_player::look_up(float value) {
 	if (value != 0.0f) {
-		AddControllerPitchInput(value * look_up_rate * GetWorld()->GetDeltaSeconds());
+		AddControllerPitchInput(value * look_up_rate * world->GetDeltaSeconds());
 	}
 }
 void Apaper_player::slide_weapon() {
@@ -248,12 +263,11 @@ void Apaper_player::fire() {
 		MuzzleOffset.Set(200.0f, 45.0f, -30.0f);
 		MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
 		MuzzleRotation = CameraRotation;
-		UWorld* World = GetWorld();
-		if (World) {
+		if (world) {
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
-			Aprojectile* projectile = World->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
+			Aprojectile* projectile = world->SpawnActor<Aprojectile>(projectile_class, MuzzleLocation, MuzzleRotation, SpawnParams);
 			if (projectile) {
 				paper_component->SetFlipbook(pistol_fire_asset);
 				paper_component->SetLooping(false);

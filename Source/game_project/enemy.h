@@ -15,17 +15,19 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Damage.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "enemy.generated.h"
 
 class Apaper_player;
+class Aplayer_state;
+
 UCLASS()
 class GAME_PROJECT_API Aenemy : public APaperCharacter
 {
 	GENERATED_BODY()
 public:
 	Aenemy();
-	virtual void Tick(float delta_time) override;
 	UPROPERTY(VisibleAnywhere) float capsule_radius = 105.0f;
 	UPROPERTY(VisibleAnywhere) float capsule_half_height = 130.0f;
 	UPROPERTY(VisibleAnywhere) float paper_location_x = 0.0f;
@@ -33,8 +35,10 @@ public:
 	UPROPERTY(VisibleAnywhere) float paper_location_z = 0.0f;
 	UPROPERTY(VisibleAnywhere) float paper_scale = 0.6f;
 	UPROPERTY(VisibleAnywhere) float play_rate;
+	UPROPERTY() int32 death_score = 10;
 	UPROPERTY() float health = 100.0;
 	UPROPERTY() float damage_value = 15.0f;
+	UPROPERTY() UWorld* world;
 	UPROPERTY(VisibleAnywhere) FRotator enemy_rotation;
 	UPROPERTY(VisibleAnywhere) FVector base_location;
 	UPROPERTY(VisibleAnywhere) FVector current_velocity;
@@ -60,6 +64,9 @@ public:
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbook* enemy_die_asset;
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbook* enemy_dead_asset;
 	UPROPERTY() Apaper_player* paper_player;
+	UPROPERTY() APlayerController* player_controller;
+	UPROPERTY() APlayerState* player_state_pure;
+	UPROPERTY() Aplayer_state* player_state;
 	UFUNCTION() void change_flipbook(UPaperFlipbookComponent* flipbook_component, UPaperFlipbook* flipbook_asset, bool looping_status, float new_play_rate);
 	UFUNCTION() void on_sight_sensed(const TArray<AActor*>& updated_actors);
 	UFUNCTION() void on_begin_overlap(UPrimitiveComponent* overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index, bool b_from_sweep, const FHitResult& hit);
@@ -68,5 +75,6 @@ public:
 	UFUNCTION() void attack(Apaper_player* attacked_player, float damage_amount);
 protected:
 	virtual void BeginPlay() override;
-
+	virtual void Tick(float delta_time) override;
+	virtual void EndPlay(EEndPlayReason::Type reason) override;
 };

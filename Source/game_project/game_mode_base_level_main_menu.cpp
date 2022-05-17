@@ -5,7 +5,7 @@
 
 Agame_mode_base_level_main_menu::Agame_mode_base_level_main_menu() {
     PrimaryActorTick.bCanEverTick = true;
-    hud_class = LoadClass<AHUD>(world, TEXT("/Script/game_project.main_menu_hud"));
+    hud_class = LoadClass<AHUD>(world, TEXT("/Script/game_project.hud_main_menu"));
     check(hud_class != nullptr);
     //static ConstructorHelpers::FClassFinder<APawn> pawn_class(TEXT("/Script/game_project.paper_player"));
     //if (pawn_class.Class != NULL) DefaultPawnClass = pawn_class.Class;

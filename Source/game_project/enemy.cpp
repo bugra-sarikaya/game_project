@@ -3,6 +3,7 @@
 
 #include "enemy.h"
 #include "paper_player.h"
+#include "player_state.h"
 
 Aenemy::Aenemy() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -28,7 +29,8 @@ Aenemy::Aenemy() {
 	paper_component = (UPaperFlipbookComponent*)GetComponentByClass(UPaperFlipbookComponent::StaticClass());
 	check(paper_component != nullptr);
 	paper_component->SetupAttachment(capsule_component);
-	enemy_idle_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_idle_v1.enemy_idle_v1"));
+	world = GetWorld();
+	enemy_idle_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_idle_v1.enemy_idle_v1"));
 	change_flipbook(paper_component, enemy_idle_asset, true, 0.5f);
 	paper_component->SetCastShadow(false);
 	paper_component->SetRelativeLocation(FVector(paper_location_x, paper_location_y, paper_location_z));
@@ -46,12 +48,12 @@ Aenemy::Aenemy() {
 	AI_perception_component->SetDominantSense(*AI_sense_sight_config->GetSenseImplementation());
 	AI_perception_component->OnPerceptionUpdated.AddDynamic(this, &Aenemy::on_sight_sensed);
 	current_velocity = FVector::ZeroVector;
-	enemy_ready_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_ready_v1.enemy_ready_v1"));
-	enemy_chase_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_chase_v1.enemy_chase_v1"));
-	enemy_attack_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_attack_v1.enemy_attack_v1"));
-	enemy_calm_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_calm_v1.enemy_calm_v1"));
-	enemy_die_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_die_v1.enemy_die_v1"));
-	enemy_dead_asset = LoadObject<UPaperFlipbook>(GetWorld(), TEXT("/Game/enemies/enemy_dead_v1.enemy_dead_v1"));
+	enemy_ready_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_ready_v1.enemy_ready_v1"));
+	enemy_chase_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_chase_v1.enemy_chase_v1"));
+	enemy_attack_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_attack_v1.enemy_attack_v1"));
+	enemy_calm_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_calm_v1.enemy_calm_v1"));
+	enemy_die_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_die_v1.enemy_die_v1"));
+	enemy_dead_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_dead_v1.enemy_dead_v1"));
 }
 void Aenemy::BeginPlay() {
 	Super::BeginPlay();
@@ -59,10 +61,28 @@ void Aenemy::BeginPlay() {
 }
 void Aenemy::Tick(float delta_time) {
 	Super::Tick(delta_time);
-	FRotator rotation = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
+	FRotator rotation = world->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
 	RootComponent->SetWorldRotation(FRotator(0.0f, rotation.Yaw + 90.0f, rotation.Pitch));
 	tick_AI(delta_time);
-	if (health <= 0.0f) Destroy();
+	if (health <= 0.0f) {
+		player_controller = UGameplayStatics::GetPlayerController(world, 0);
+		paper_player = Cast<Apaper_player>(player_controller->GetPawn());
+		if (paper_player) {
+			player_state_pure = paper_player->GetPlayerState();
+			if (player_state_pure) {
+				player_state = Cast<Aplayer_state>(player_state_pure);
+				player_state->set_player_score(player_state->get_player_score() + death_score);
+				//UE_LOG(LogTemp, Warning, TEXT("sdsd"))
+				//UE_LOG(LogTemp, Warning, TEXT("%d"), lol_2->test_variable);
+			}
+		}
+		Destroy();
+	}
+	//Aplayer_state* lol;
+	//lol->get_player_health();
+}
+void Aenemy::EndPlay(EEndPlayReason::Type reason) {
+	Super::EndPlay(reason);
 }
 void Aenemy::change_flipbook(UPaperFlipbookComponent* flipbook_component, UPaperFlipbook* flipbook_asset, bool looping_status, float new_play_rate) {
 	flipbook_component->SetFlipbook(flipbook_asset);
@@ -96,7 +116,6 @@ void Aenemy::on_begin_overlap(UPrimitiveComponent*  overlap_component, AActor* o
 	if (other_actor) {
 		paper_player = Cast<Apaper_player>(other_actor);
 		if (paper_player) {
-			//UE_LOG(LogTemp, Warning, TEXT("Begin Overlapping player."))
 			change_flipbook(paper_component, enemy_attack_asset, true, 0.8f);
 		}
 	}
@@ -105,7 +124,6 @@ void Aenemy::on_end_overlap(UPrimitiveComponent* overlap_component, AActor* othe
 	if (other_actor) {
 		paper_player = Cast<Apaper_player>(other_actor);
 		if (paper_player) {
-			//UE_LOG(LogTemp, Warning, TEXT("End Overlapping player."))
 			change_flipbook(paper_component, enemy_chase_asset, true, 1.0f);
 			paper_player = nullptr;
 		}

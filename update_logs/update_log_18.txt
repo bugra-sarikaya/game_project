@@ -18,7 +18,7 @@ Creating a box room via C++ codes, was completed, instead of using editor becaus
 [1] https://www.reddit.com/r/unrealengine/comments/4ldsp4/how_expensive_is_having_hundreds_of_objects_using/
 [2] https://forums.unrealengine.com/t/how-do-i-disconnect-cut-remove-blueprint-wires-lines/370820
 [3] https://forums.unrealengine.com/t/how-do-i-align-textures/326236
-[4] https://forums.unrealengine.com/t/uv-coordinate-offset/10182/2
+[4] https://forums.unrealengine.com/t/uv-coordinate-offset/10182
 [5] https://docs.unrealengine.com/5.0/en-US/coordinates-material-expressions-in-unreal-engine/#panner
 [6] https://youtu.be/24mfLY7aQFQ
 [7] https://youtu.be/_thf1Z3j73s
@@ -27,9 +27,9 @@ Creating a box room via C++ codes, was completed, instead of using editor becaus
 [10] http://www.cplusplus.com/forum/beginner/35454/
 [11] https://youtu.be/oqTwBmuw54Y
 [12] https://stackoverflow.com/questions/15889578/how-can-i-resize-a-2d-vector-of-objects-given-the-width-and-height
-[13] https://forums.unrealengine.com/t/two-dimensional-array/308643/3
+[13] https://forums.unrealengine.com/t/two-dimensional-array/308643
 [14] https://community.gamedev.tv/t/nested-array-crashing/142553
-[15] https://forums.unrealengine.com/t/problem-with-a-struct/157923/7
+[15] https://forums.unrealengine.com/t/problem-with-a-struct/157923
 [16] http://doc.aldebaran.com/2-5/_images/rollPitchYaw.png
-[17] https://forums.unrealengine.com/t/c-get-mesh-size/391638/3
+[17] https://forums.unrealengine.com/t/c-get-mesh-size/391638
 [18] https://forums.unrealengine.com/t/get-size-of-a-static-mesh-independent-from-rotation/89150

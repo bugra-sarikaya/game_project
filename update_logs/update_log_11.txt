@@ -21,9 +21,9 @@ Firing animation was added into C++ files by using "LoadObject()" function.
 Changing flipbook while firing, was succeeded but after firing, animation of paper gun, did not change to idle animation.
 Some solutions which are using timers with delegates, using "OnFinishedPlaying()" function and using "SetLooping()" function, were tried but they did not work.
 Solution was found in a website [12] and by using last frame position of playing flipbook, problem was solved.
-[1] https://forums.unrealengine.com/t/how-can-i-get-a-3d-object-to-always-face-player-camera/282682/7
+[1] https://forums.unrealengine.com/t/how-can-i-get-a-3d-object-to-always-face-player-camera/282682
 [2] https://d3kjluh73b9h9o.cloudfront.net/original/4X/3/6/e/36eb9182334ac8c5384eeded30b9f3104481486e.png
-[3] https://forums.unrealengine.com/t/sprite-face-camera/306492/4
+[3] https://forums.unrealengine.com/t/sprite-face-camera/306492
 [4] https://www.mariowiki.com/Angry_Sun
 [5] https://youtu.be/5FdnEzTXzkw
 [6] https://youtu.be/N4Z4MdZ1KWY

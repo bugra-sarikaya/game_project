@@ -24,10 +24,10 @@ After spending some time in play mode that display corruption was noticed again 
 Oscillation walking feature which is similar to walking animation of Project Warlock, was added successfully for camera and weapon.
 [1] https://unrealcpp.com/camera-shake/
 [2] https://youtu.be/6TEiRI2B0xA
-[3] https://forums.unrealengine.com/t/load-a-tsubclassof-at-runtime/459125/2
+[3] https://forums.unrealengine.com/t/load-a-tsubclassof-at-runtime/459125
 [4] https://github.com/SkyStich/SpaceWar/blob/8d633bde6d945066b37a140dd1c38c0dadf42ca0/Source/SpaceWar/CameraManager/MatchPlayerCameraManager.cpp
 [5] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/AI/Components/NavMovement/IsMovingonGround/
-[6] https://forums.unrealengine.com/t/how-to-check-whether-character-is-on-ground/395981/6
+[6] https://forums.unrealengine.com/t/how-to-check-whether-character-is-on-ground/395981
 [7] https://forums.unrealengine.com/t/how-to-check-if-acharacter-is-moving/124841
 [8] https://forums.epicgames.com/udk/udk-development/udk-programming-and-unrealscript/226930-playcamerashake
 [9] https://youtu.be/1_Zsl0GClu4

@@ -38,4 +38,4 @@ Instead of weapon shaking feature, weapon sliding feature which is moving weapon
 [7] https://github.com/Kuzgaroth/ProjectRevival/blob/5ef4c3554c177b717fadbe83c49761169d010dc3/Source/ProjectRevival/Private/AbilitySystem/Abilities/FlipAbility.cpp
 [8] https://forums.unrealengine.com/t/how-can-i-rotate-a-vector-in-c/308095
 [9] https://forums.unrealengine.com/t/uproperty-and-consts/17880/6
-[10] https://forums.unrealengine.com/t/my-player-stops-moving-when-looking-down-need-help/289302/3
+[10] https://forums.unrealengine.com/t/my-player-stops-moving-when-looking-down-need-help/289302

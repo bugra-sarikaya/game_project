@@ -29,13 +29,13 @@ Code lines of changing flipbook, were moved into a new function whose name is "c
 Decreasing health functions were edited.
 In this update simple enemy AI was completed.
 [1] https://youtu.be/4HoJIgyclZ4
-[2] https://forums.unrealengine.com/t/overlapped-melee-collision-not-firing-paper2d/413786/3
-[3] https://forums.unrealengine.com/t/collision-box-visibility-in-play-mode/311069/6
+[2] https://forums.unrealengine.com/t/overlapped-melee-collision-not-firing-paper2d/413786
+[3] https://forums.unrealengine.com/t/collision-box-visibility-in-play-mode/311069
 [4] https://docs.unrealengine.com/4.27/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Damage/
 [5] https://youtu.be/g8rz7aZyDMs
 [6] https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/AIPerception/
 [7] https://youtu.be/QcaHEW9M6K8
-[8] https://forums.unrealengine.com/t/ai-perception-more-sight-sources-on-one-actor/378587/6
+[8] https://forums.unrealengine.com/t/ai-perception-more-sight-sources-on-one-actor/378587
 [9] https://youtu.be/GBomlczTRW0
 [10] https://youtu.be/shGzP5B9TBE
 [11] https://youtu.be/x5n_vS4hTaQ
@@ -47,13 +47,13 @@ In this update simple enemy AI was completed.
 [17] https://youtu.be/BGnvE11semo
 [18] https://youtu.be/gkprbgwthO0
 [19] https://youtu.be/4YeErXsNALg
-[20] https://forums.unrealengine.com/t/casting-vs-class-equal-to/128027/20
+[20] https://forums.unrealengine.com/t/casting-vs-class-equal-to/128027
 [21] https://forums.unrealengine.com/t/gamemode-beginplay-vs-startplay/361006
 [22] https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/AGameModeBase/StartPlay/
 [23] https://youtu.be/_fQi5T_sTv8
-[24] https://forums.unrealengine.com/t/circular-dependency-again/50280/16
+[24] https://forums.unrealengine.com/t/circular-dependency-again/50280
 [25] https://stackoverflow.com/questions/625799/resolve-build-errors-due-to-circular-dependency-amongst-classes
-[26] https://forums.unrealengine.com/t/difference-between-casting-and-assigning-to-a-class/148925/3
+[26] https://forums.unrealengine.com/t/difference-between-casting-and-assigning-to-a-class/148925
 [27] https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/
 [28] https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/GameplayArchitecture/Properties/
 [29] https://www.quora.com/Do-all-programmers-follow-coding-standards

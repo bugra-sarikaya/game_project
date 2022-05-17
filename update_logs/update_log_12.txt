@@ -16,5 +16,5 @@ Some parameters of projectile were declared in "projectile.h" and various values
 Impulse feature of the projectile was removed but codes were commented.
 [1] https://youtu.be/cPDhTjZTL6w
 [2] https://youtu.be/2_-TUq_zUnI
-[3] https://forums.unrealengine.com/t/keep-shooting-while-left-mouse-button-is-pressed/342186/7
+[3] https://forums.unrealengine.com/t/keep-shooting-while-left-mouse-button-is-pressed/342186
 [4] https://forums.unrealengine.com/t/while-loop-crashing-editor/436990
