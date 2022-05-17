@@ -43,17 +43,17 @@ void Apaper_player::BeginPlay()
 	//GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
 	time_start = world->GetTimeSeconds();
 	player_state_pure = GetPlayerState();
-	player_state = Cast<Aplayer_state>(player_state_pure);
-	if (player_state) player_state->set_player_time_start(time_start);
+	//player_state = Cast<Aplayer_state>(player_state_pure);
+	//if (player_state) player_state->set_player_time_start(time_start);
 }
 
 void Apaper_player::Tick(float delta_time){
 	Super::Tick(delta_time);
 	time_end = world->GetTimeSeconds();
-	if (player_state) {
-		player_state->set_player_time_end(time_end);
-		player_state->set_player_health(health);
-	}
+	//if (player_state) {
+	//	player_state->set_player_time_end(time_end);
+	//	player_state->set_player_health(health);
+	//}
 	slide_weapon();
 	oscillate_walking();
 	if (paper_component->GetFlipbook() == pistol_fire_asset && !paper_component->IsPlaying()) {
@@ -84,11 +84,11 @@ void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 }
 void Apaper_player::EndPlay(EEndPlayReason::Type reason) {
 	Super::EndPlay(reason);
-	if (reason == EEndPlayReason::Destroyed) {
-		AGameModeBase* game_mode_base = world->GetAuthGameMode();
-		Agame_mode_base_level_arena* game_mode_base_level_arena = Cast<Agame_mode_base_level_arena>(game_mode_base);
-		game_mode_base_level_arena->implement_hud_ending();
-	}
+	//if (reason == EEndPlayReason::Destroyed) {
+	//	AGameModeBase* game_mode_base = world->GetAuthGameMode();
+	//	Agame_mode_base_level_arena* game_mode_base_level_arena = Cast<Agame_mode_base_level_arena>(game_mode_base);
+	//	game_mode_base_level_arena->implement_hud_ending();
+	//}
 }
 void Apaper_player::start_jump() {
 	bPressedJump = true;

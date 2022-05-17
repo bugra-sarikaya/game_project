@@ -12,7 +12,7 @@ Ahud_combat::Ahud_combat(){
 	//crosshair_texture = crosshair_texture_object.Object;
 	crosshair_texture_asset = LoadObject<UTexture2D>(world, TEXT("/Game/hud/crosshair_v1.crosshair_v1"));
 	stand_player_health_texture_asset = LoadObject<UTexture>(world, TEXT("/Game/hud/hud_health_v1.hud_health_v1"));
-	font = LoadObject<UFont>(world, TEXT("/Game/fonts/PressStart2P_Font.PressStart2P_Font"));
+	font_30 = LoadObject<UFont>(world, TEXT("/Game/fonts/PressStart2P_Font_30.PressStart2P_Font_30"));
 	font_20 = LoadObject<UFont>(world, TEXT("/Game/fonts/PressStart2P_Font_20.PressStart2P_Font_20"));
 	game_user_settings = const_cast<UGameUserSettings*>(GetDefault<UGameUserSettings>());
 }
@@ -46,11 +46,11 @@ void Ahud_combat::DrawHUD() {
 			//player_health_text = FText::AsNumber(player_health;
 		}
 	}
-	GetTextSize(string_player_health, text_player_health_out_width, text_player_health_out_height, font, 1);
+	GetTextSize(string_player_health, text_player_health_out_width, text_player_health_out_height, font_30, 1);
 	text_player_health_position = FVector2D(stand_player_health_center.X - text_player_health_out_width * scale.X * 0.5f, stand_player_health_center.Y - text_player_health_out_height * scale.Y * 0.5f);
 	//health_text_position = FVector2D((Canvas->ClipX / distance_rate), Canvas->ClipY - (Canvas->ClipY / distance_rate) - (health_text_out_height * scale.Y));
 	//UE_LOG(LogTemp, Warning, TEXT("%f %f"), text_out_width, text_out_height);
-	FCanvasTextItem text_health_item(text_player_health_position, FText::FromString(string_player_health), font, FColor(196, 4, 4));
+	FCanvasTextItem text_health_item(text_player_health_position, FText::FromString(string_player_health), font_30, FColor(196, 4, 4));
 	text_health_item.Scale = scale;
 	Canvas->DrawItem(text_health_item);
 	//player_controller = UGameplayStatics::GetPlayerController(world, 0);
@@ -75,13 +75,7 @@ void Ahud_combat::DrawHUD() {
 			//UE_LOG(LogTemp, Warning, TEXT("%f"), player_time);
 		}
 	}
-	remaining_time = FMath::FloorToInt(player_time * 100.0f);
-	minutes = remaining_time / 6000;
-	remaining_time = remaining_time % 6000;
-	seconds = remaining_time / 100;
-	remaining_time = remaining_time % 100;
-	centiseceonds = remaining_time;
-	string_time = FString::Printf(TEXT("%02d:%02d:%02d"), minutes, seconds, centiseceonds);
+	string_time = calculate_time(player_time);
 	GetTextSize(string_time, text_time_out_width, text_time_out_height, font_20, 1);
 	text_time_position = FVector2D(Canvas->ClipX -  distance * scale.X - text_time_out_width * scale.X, distance * scale.Y);
 	//InFontInfo.FontObject = font;
@@ -90,12 +84,20 @@ void Ahud_combat::DrawHUD() {
 	Canvas->DrawItem(time_text_item);
 	//int32 centiseceonds = FMath::FloorToInt(elapsed_time / 600.0f);
 	//UE_LOG(LogTemp, Warning, TEXT("%02d:%02d:%02d"), minutes, seconds, centiseceonds);
-
-
 }
 void Ahud_combat::Tick(float delta_time) {
 	Super::Tick(delta_time);
 }
 void Ahud_combat::BeginPlay() {
 	Super::BeginPlay();
+}
+FString Ahud_combat::calculate_time(float time) {
+	int remaining_time, minutes, seconds, centiseceonds;
+	remaining_time = FMath::FloorToInt(time * 100.0f);
+	minutes = remaining_time / 6000;
+	remaining_time = remaining_time % 6000;
+	seconds = remaining_time / 100;
+	remaining_time = remaining_time % 100;
+	centiseceonds = remaining_time;
+	return FString::Printf(TEXT("%02d:%02d:%02d"), minutes, seconds, centiseceonds);
 }

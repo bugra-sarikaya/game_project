@@ -1,0 +1,25 @@
+In main menu and ending HUD's, "BeginPlay" functions were overrided for adjusting player controller settings and also it was noticed that these settings could not be implemented in constructor because Unreal Engine editor gave error.
+A YouTube video tutorial [1] was watched shortly for learning saving scores.
+A Save Game class was created for recording high score.
+A Game State class was created for determining high score.
+While examining World Outliner window, it was noticed that "PlayerController" actor is destroyed after destroying player.
+Names of some newly created variables and functions, was written as inverted for reminding their main idea.
+Also some new created classes were written with OOP style for making them organized.
+Game Mode Base class was set to adjust Player State and Game State Base classes only in constructor.
+"GetGameState" was used in Player State class by benefiting a Blueprint documentation [2].
+It was set that supplying player data from paper player class to Player State class and obtaining player data from Player State class to Game State Base class, without intervention of Game Mode Base class.
+Destroying player state, was set after player's death.
+With "EndPlay" function of Player State, player data was transfered to Game State Base class.
+For learning better saving system, a webpage [3] of Unreal Engine, was read shortly.
+A string appending method which is using "+=", was learned in Unreal Engine forum [4].
+"calculate_time" function which returns elapsed time as "FString" format, was written for calculating elapsed time, more than one time.
+Saving systems functions was implemented in Game State Base class.
+It was witnessed that saving system cannot be work without slot name and user index parameters.
+Button positions in HUD's, were edited.
+Font object in Unreal Engine editor, was duplicated with different sizes.
+It was set that ending HUD, supplies player data from Game State Base class instead of Player State class because after player's death, Player State actor was destroyed.
+In this update, scoring and saving systems were added.
+[1] https://youtu.be/jkfbzt8etws
+[2] https://docs.unrealengine.com/4.26/en-US/BlueprintAPI/Game/GetGameState/
+[3] https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/SaveGame/
+[4] https://forums.unrealengine.com/t/fstring-append-not-working-in-one-instance/144520

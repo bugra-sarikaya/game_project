@@ -21,14 +21,14 @@ UCLASS()
 class GAME_PROJECT_API Ahud_combat : public AHUD
 {
 	GENERATED_BODY()
-	
 public:
 	Ahud_combat();
 	virtual void DrawHUD() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float delta_time) override;
 protected:
-	UPROPERTY(EditDefaultsOnly) UTexture2D* crosshair_texture_asset;
+	UFUNCTION() FString calculate_time(float time);
+	UPROPERTY() UTexture2D* crosshair_texture_asset;
 	UPROPERTY() UWorld* world;
 	UPROPERTY() Apaper_player* paper_player;
 	UPROPERTY() UGameUserSettings* game_user_settings;
@@ -36,7 +36,7 @@ protected:
 	UPROPERTY() APlayerController* player_controller;
 	UPROPERTY() APlayerState* player_state_pure;
 	UPROPERTY() Aplayer_state* player_state;
-	UPROPERTY() UFont* font;
+	UPROPERTY() UFont* font_30;
 	UPROPERTY() UFont* font_20;
 	UPROPERTY() FVector2D canvas_center;
 	UPROPERTY() FVector2D stand_player_health_center;
@@ -60,8 +60,4 @@ protected:
 	UPROPERTY() float text_time_out_height;
 	UPROPERTY() float distance = 40.0f;
 	UPROPERTY() float player_time;
-	UPROPERTY() int32 remaining_time;
-	UPROPERTY() int32 minutes;
-	UPROPERTY() int32 seconds;
-	UPROPERTY() int32 centiseceonds;
 };
