@@ -1,0 +1,24 @@
+A texture pack was drawn by inspring a column from Viscerafest.
+It was noticed that asset changes cannot be saved without pressing "Save All" button of Unreal Engine editor before quitting.
+A function was written for painting pillars.
+A folder whose name is "meshes" was created in Unreal Engine editor and default plane mesh was copied into this folder.
+Border thicknessesof pillar textures were changed and by using "Reimport" feature of Unreal Engine editor, they were updated without any difficulties.
+Two floor textures were drawn.
+A "struct" system was written for decreasing function parameter count.
+Because of scaling side planes, side textures were narrow and this problem could not be fixed by changing tilling parameters.
+Instead of changing material parameters, narrow textures were drawn.
+A function was written for painting floors.
+Spawning details of last floor was changed.
+Arena level was re-construct beceause new floor were added.
+There was a problem about stair spawning direction and while re-construction, it was fixed by making changes of spawning stair function.
+Pillar sizes were increased.
+Designing algorithms were re-arranged for accessing all faces of spawned prisms and used double nested ternary operators were used inside them.
+Images [1] [2] of battery item from Half-Life 2, was found 2 [3] [4] sources for coloring textures but colored textures were not be used.
+2 function were written for assigning materials to prism face planes with less code.
+An algorithm was written for designing stairs.
+Some textures were not be liked but because of lack of work days of this project, they will not be changed.
+In this update designing of level, was completed.
+[1] https://half-life.fandom.com/wiki/Battery?file=HEV+battery.jpg
+[2] https://developer.valvesoftware.com/wiki/Item_battery#/media/File:Item_battery.png
+[3] https://half-life.fandom.com/wiki/Battery
+[4] https://developer.valvesoftware.com/wiki/Item_battery
