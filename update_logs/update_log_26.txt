@@ -1,0 +1,29 @@
+5 videos [1] [2] [3] [4] [5] were watched shortly for learning AI navigation system.
+While trying  to implement AI navigation system, it was noticed that gravity does not affect enemy and to solve this, "SpawnDefaultController" function was added according to an Unreal Engine forum webpage [6] for adding a controller.
+Spawning a "Nav Mesh Bound Volume" which builds possible path in level, different method was tried.
+In project settings, "Runtime Generation" was set to "Dynamic" for building "Navigation Mesh" in runtime, according to a forum advice whose source is forgotten
+This project settings could not be set via C++ and spawned "Nav Mesh Bound Volume" did not work.
+Reason of failure is lack of documentation and tutorial but it was learned that spawned "Nav Mesh Bound Volume" cannot be work because it's actor type it's different according to an answer in a webpage [7] of Unreal Engine forum.
+But it was observed that a created "Nav Mesh Bound Volume" with using drag-drop method, works as expected.
+Instead of a navigation AI, speed of enemy was increased.
+Modulo operator could not be used to calculate float type times and also this problem was read on a webpage [8] of Stack Overflow.
+A static variable could not be declared with "UPROPERTY" macro because Unreal Engine did not allow and also this situation was read in a webpage [9] of Unreal Engine forum.
+Instead of "SpawnDefaultController" function, auto possessing was enabled with "AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned" line for setting gravity to affect enemy, by benefiting Unreal Engine forum [10].
+Instead of using "Timer" functions, a primitive algorithm which calls spawning function every specific seconds, was written for spawning system.
+An "UE_LOG" function which was learned from a tutorial webpage [11], was used for testing sensed actor's class name.
+Enemies have been attacking themselves and this problem was solved by checking sensed actor for paper player.
+"FActorSpawnParameters" could not be used with "UPROPERTY" macro because Unreal Engine did not allow.
+A video [12] was watched again for remembering spawn parameters.
+In this update spawning system was added but there are some issues.
+[1] https://youtu.be/R5VuTwT2gv4
+[2] https://youtu.be/UyxxQunXZVk
+[3] https://youtu.be/YxKV5_Edto8
+[4] https://youtu.be/2frMzQ-M_IY
+[5] https://youtu.be/ls4dI9209y8
+[6] https://forums.unrealengine.com/t/spawned-enemy-actors-not-moving-and-not-affected-by-gravity/407799
+[7] https://forums.unrealengine.com/t/spawn-a-navmesh-volume-with-blueprint/302146
+[8] https://stackoverflow.com/questions/6102948/why-does-modulus-division-only-work-with-integers
+[9] https://forums.unrealengine.com/t/static-variables-in-a-uobject/350302
+[10] https://forums.unrealengine.com/t/question-c-ai-spawning/275689
+[11] https://unreal.blog/how-to-print-strings-to-console-or-screen-in-unreal-engine-c-at-runtime
+[12] https://youtu.be/4YeErXsNALg

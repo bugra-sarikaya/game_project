@@ -43,11 +43,15 @@ public:
 	UPROPERTY(VisibleAnywhere) FVector base_location;
 	UPROPERTY(VisibleAnywhere) FVector current_velocity;
 	UPROPERTY(VisibleAnywhere) FVector temp_velocity;
-	UPROPERTY(VisibleAnywhere) float movement_speed = 375.0f;
+	UPROPERTY(VisibleAnywhere) float movement_speed = 600.0f; //375.0f;
+	UPROPERTY(VisibleAnywhere) float AI_sense_sight_radius_value = 2250.0f; //1250.0f;
+	UPROPERTY(VisibleAnywhere) float AI_sense_sight_lose_sight_radius_value = 2280.0f; //1280.0f;
+	UPROPERTY(VisibleAnywhere) float AI_sense_sight_peripheral_vision_angle_degrees_value = 360.0f;
 	UPROPERTY(VisibleAnywhere) bool back_to_base_location;
 	UPROPERTY(VisibleAnywhere) FVector new_location;
 	UPROPERTY(VisibleAnywhere) float distance_squared = BIG_NUMBER;
 	UPROPERTY() bool did_attack = false;
+	UPROPERTY() bool dead = false;
 	UPROPERTY(VisibleDefaultsOnly) UPaperFlipbookComponent* paper_component;
 	UPROPERTY(VisibleDefaultsOnly) UCapsuleComponent* capsule_component;
 	UPROPERTY(VisibleDefaultsOnly) USphereComponent* attack_sphere_component;
@@ -67,6 +71,7 @@ public:
 	UPROPERTY() APlayerController* player_controller;
 	UPROPERTY() APlayerState* player_state_pure;
 	UPROPERTY() Aplayer_state* player_state;
+	UPROPERTY() TSubclassOf<Apaper_player> paper_player_class;
 	UFUNCTION() void change_flipbook(UPaperFlipbookComponent* flipbook_component, UPaperFlipbook* flipbook_asset, bool looping_status, float new_play_rate);
 	UFUNCTION() void on_sight_sensed(const TArray<AActor*>& updated_actors);
 	UFUNCTION() void on_begin_overlap(UPrimitiveComponent* overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index, bool b_from_sweep, const FHitResult& hit);

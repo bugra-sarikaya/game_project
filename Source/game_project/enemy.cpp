@@ -12,13 +12,16 @@ Aenemy::Aenemy() {
 	capsule_component->InitCapsuleSize(capsule_radius, capsule_half_height);
 	capsule_component->SetEnableGravity(true);
 	//capsule_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	//capsule_component->SetCollisionResponseToChannels(ECollisionResponse::ECR_Block);
 	capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+	capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 	attack_sphere_component = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Box Component"));
 	check(attack_sphere_component != nullptr);
 	attack_sphere_component->SetupAttachment(RootComponent);
 	//attack_sphere_component->SetRelativeLocation(FVector(120.0f, 0.0f, 0.0f));
 	attack_sphere_component->SetSphereRadius(130.0f);
-	attack_sphere_component->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
+	attack_sphere_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	//attack_sphere_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	//attack_sphere_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	attack_sphere_component->OnComponentBeginOverlap.AddDynamic(this, &Aenemy::on_begin_overlap);
@@ -37,9 +40,9 @@ Aenemy::Aenemy() {
 	paper_component->SetWorldScale3D(FVector(paper_scale));
 	AI_perception_component = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AI Perception Component"));
 	AI_sense_sight_config = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AI Sense Sight Config"));
-	AI_sense_sight_config->SightRadius = 1250.0f;
-	AI_sense_sight_config->LoseSightRadius = 1280.0f;
-	AI_sense_sight_config->PeripheralVisionAngleDegrees = 360.0f;
+	AI_sense_sight_config->SightRadius = AI_sense_sight_radius_value;
+	AI_sense_sight_config->LoseSightRadius = AI_sense_sight_lose_sight_radius_value;
+	AI_sense_sight_config->PeripheralVisionAngleDegrees = AI_sense_sight_peripheral_vision_angle_degrees_value;
 	AI_sense_sight_config->DetectionByAffiliation.bDetectEnemies = true;
 	AI_sense_sight_config->DetectionByAffiliation.bDetectFriendlies = true;
 	AI_sense_sight_config->DetectionByAffiliation.bDetectNeutrals = true;
@@ -54,17 +57,21 @@ Aenemy::Aenemy() {
 	enemy_calm_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_calm_v1.enemy_calm_v1"));
 	enemy_die_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_die_v1.enemy_die_v1"));
 	enemy_dead_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/enemies/enemy_dead_v1.enemy_dead_v1"));
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	paper_player_class = LoadClass<Apaper_player>(world, TEXT("/Script/game_project.paper_player"));
+	check(paper_player_class != nullptr);
 }
 void Aenemy::BeginPlay() {
 	Super::BeginPlay();
 	base_location = GetActorLocation();
+	//SpawnDefaultController();
 }
 void Aenemy::Tick(float delta_time) {
 	Super::Tick(delta_time);
 	FRotator rotation = world->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
 	RootComponent->SetWorldRotation(FRotator(0.0f, rotation.Yaw + 90.0f, rotation.Pitch));
-	tick_AI(delta_time);
-	if (health <= 0.0f) {
+	if(!dead) tick_AI(delta_time);
+	if (!dead && health <= 0.0f) {
 		player_controller = UGameplayStatics::GetPlayerController(world, 0);
 		paper_player = Cast<Apaper_player>(player_controller->GetPawn());
 		if (paper_player) {
@@ -76,10 +83,12 @@ void Aenemy::Tick(float delta_time) {
 				//UE_LOG(LogTemp, Warning, TEXT("%d"), lol_2->test_variable);
 			}
 		}
-		Destroy();
+		//Destroy();
+		change_flipbook(paper_component, enemy_die_asset, false, 1.0f);
+		capsule_component->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+		dead = true;
 	}
-	//Aplayer_state* lol;
-	//lol->get_player_health();
+	if(paper_component->GetFlipbook() == enemy_die_asset && !paper_component->IsPlaying()) change_flipbook(paper_component, enemy_dead_asset, false, 1.0f);
 }
 void Aenemy::EndPlay(EEndPlayReason::Type reason) {
 	Super::EndPlay(reason);
@@ -91,29 +100,31 @@ void Aenemy::change_flipbook(UPaperFlipbookComponent* flipbook_component, UPaper
 	flipbook_component->Play();
 }
 void Aenemy::on_sight_sensed(const TArray<AActor*>& updated_actors) {
-	for (int i = 0; i < updated_actors.Num(); i++) {
-		FActorPerceptionBlueprintInfo info_0;
-		AI_perception_component->GetActorsPerception(updated_actors[i], info_0);
-		if (info_0.LastSensedStimuli[0].WasSuccessfullySensed() && paper_component->GetFlipbook() != enemy_attack_asset) {
-			FVector direction = updated_actors[i]->GetActorLocation() - GetActorLocation();
-			direction.Z = 0.0f;
-			current_velocity = direction.GetSafeNormal() * movement_speed;
-		}
-		else if (!info_0.LastSensedStimuli[0].WasSuccessfullySensed() && paper_component->GetFlipbook() != enemy_attack_asset) {
-			FVector direction = base_location - GetActorLocation();
-			direction.Z = 0.0f;
-			if (direction.SizeSquared2D() > 1.0f) {
+	if (!dead) {
+		for (int i = 0; i < updated_actors.Num(); i++) {
+			FActorPerceptionBlueprintInfo info_0;
+			AI_perception_component->GetActorsPerception(updated_actors[i], info_0);
+			if (info_0.LastSensedStimuli[0].WasSuccessfullySensed() && updated_actors[i]->GetClass() == paper_player_class && paper_component->GetFlipbook() != enemy_attack_asset) {
+				FVector direction = updated_actors[i]->GetActorLocation() - GetActorLocation();
+				direction.Z = 0.0f;
 				current_velocity = direction.GetSafeNormal() * movement_speed;
-				back_to_base_location = true;
 			}
-		}
-		else if (info_0.LastSensedStimuli[0].WasSuccessfullySensed() && paper_component->GetFlipbook() == enemy_attack_asset) {
-			current_velocity = FVector::ZeroVector;
+			else if (!info_0.LastSensedStimuli[0].WasSuccessfullySensed() && paper_component->GetFlipbook() != enemy_attack_asset) {
+				FVector direction = base_location - GetActorLocation();
+				direction.Z = 0.0f;
+				if (direction.SizeSquared2D() > 1.0f) {
+					current_velocity = direction.GetSafeNormal() * movement_speed;
+					back_to_base_location = true;
+				}
+			}
+			else if (info_0.LastSensedStimuli[0].WasSuccessfullySensed() && paper_component->GetFlipbook() == enemy_attack_asset) {
+				current_velocity = FVector::ZeroVector;
+			}
 		}
 	}
 }
 void Aenemy::on_begin_overlap(UPrimitiveComponent*  overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index, bool b_from_sweep, const FHitResult& hit){
-	if (other_actor) {
+	if (other_actor && !dead) {
 		paper_player = Cast<Apaper_player>(other_actor);
 		if (paper_player) {
 			change_flipbook(paper_component, enemy_attack_asset, true, 0.8f);
@@ -121,7 +132,7 @@ void Aenemy::on_begin_overlap(UPrimitiveComponent*  overlap_component, AActor* o
 	}
 }
 void Aenemy::on_end_overlap(UPrimitiveComponent* overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index) {
-	if (other_actor) {
+	if (other_actor && !dead) {
 		paper_player = Cast<Apaper_player>(other_actor);
 		if (paper_player) {
 			change_flipbook(paper_component, enemy_chase_asset, true, 1.0f);

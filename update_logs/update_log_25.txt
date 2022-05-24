@@ -16,7 +16,7 @@ Designing algorithms were re-arranged for accessing all faces of spawned prisms 
 Images [1] [2] of battery item from Half-Life 2, was found 2 [3] [4] sources for coloring textures but colored textures were not be used.
 2 function were written for assigning materials to prism face planes with less code.
 An algorithm was written for designing stairs.
-Some textures were not be liked but because of lack of work days of this project, they will not be changed.
+Some textures were not be liked but because of lack of remaining work days of this project, they will not be changed.
 In this update designing of level, was completed.
 [1] https://half-life.fandom.com/wiki/Battery?file=HEV+battery.jpg
 [2] https://developer.valvesoftware.com/wiki/Item_battery#/media/File:Item_battery.png
