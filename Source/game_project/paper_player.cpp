@@ -18,7 +18,13 @@ Apaper_player::Apaper_player(){
 	paper_component = (UPaperFlipbookComponent*)GetComponentByClass(UPaperFlipbookComponent::StaticClass());
 	check(paper_component != nullptr);
 	world = GetWorld();
+	projectile_class = LoadClass<Aprojectile>(world, TEXT("/Script/game_project.projectile"));
+	check(projectile_class != nullptr);
+	enemy_class = LoadClass<Aenemy>(world, TEXT("/Script/game_project.enemy"));
+	check(enemy_class != nullptr);
+	pistol_fire_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 	pistol_idle_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/weapons/pistol_idle_v1.pistol_idle_v1"));
+	sound_asset_pistol_fire = LoadObject<USoundBase>(world, TEXT("/Game/sounds/plasma_defender_fire.plasma_defender_fire"));
 	paper_component->SetupAttachment(camera_component);
 	paper_component->SetFlipbook(pistol_idle_asset);
 	paper_component->SetRelativeLocation(FVector(weapon_location_x, weapon_location_y, weapon_location_z));
@@ -26,11 +32,7 @@ Apaper_player::Apaper_player(){
 	paper_component->SetWorldScale3D(FVector(weapon_scale));
 	paper_component->SetOnlyOwnerSee(true);
 	paper_component->CastShadow = false;
-	projectile_class = LoadClass<Aprojectile>(world, TEXT("/Script/game_project.projectile"));
-	enemy_class = LoadClass<Aenemy>(world, TEXT("/Script/game_project.enemy"));
 	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
-
-	pistol_fire_asset = LoadObject<UPaperFlipbook>(world, TEXT("/Game/weapons/pistol_fire_v1.pistol_fire_v1"));
 
 }	
 
@@ -50,10 +52,6 @@ void Apaper_player::BeginPlay()
 void Apaper_player::Tick(float delta_time){
 	Super::Tick(delta_time);
 	time_end = world->GetTimeSeconds();
-	//if (player_state) {
-	//	player_state->set_player_time_end(time_end);
-	//	player_state->set_player_health(health);
-	//}
 	slide_weapon();
 	oscillate_walking();
 	if (paper_component->GetFlipbook() == pistol_fire_asset && !paper_component->IsPlaying()) {
@@ -73,7 +71,7 @@ void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Apaper_player::start_jump);
 	PlayerInputComponent->BindAction("jump", IE_Released, this, &Apaper_player::stop_jump);
 	PlayerInputComponent->BindAction("fire", IE_Pressed, this, &Apaper_player::fire);
-	//PlayerInputComponent->BindAction("fire", IE_Released, this, &Apaper_player::OnReleaseFire);
+	PlayerInputComponent->BindAction("quit", IE_Pressed, this, &Apaper_player::quit);
 	PlayerInputComponent->BindAxis("move_forward", this, &Apaper_player::move_forward);
 	PlayerInputComponent->BindAxis("move_backward", this, &Apaper_player::move_backward);
 	PlayerInputComponent->BindAxis("move_right", this, &Apaper_player::move_right);
@@ -274,7 +272,11 @@ void Apaper_player::fire() {
 				paper_component->Play();
 				FVector LaunchDirection = MuzzleRotation.Vector();
 				projectile->FireInDirection(LaunchDirection);
+				audio_component_pistol_fire = UGameplayStatics::SpawnSound2D(world, sound_asset_pistol_fire, volume_multiplier_value_pistol_sound);
 			}
 		}
 	}
+}
+void Apaper_player::quit() {
+	Destroy();
 }

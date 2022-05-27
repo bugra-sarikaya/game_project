@@ -1,0 +1,78 @@
+Escape button was added as a keyboard input which destroys player for opening end game menu and keyboard shortcut of stopping simulationg was changet to "Shift + Escape" from "Escape", by benefiting an answer from Unreal Engine forum [1].
+A sound pack was downloaded a webpage [2] of GameBanana for adding button sounds.
+It was learned that Unreal Engine supports WAV sound files from documentation [3] and sound project extracted as WAV file on Audacity program after cropping sound pack.
+Another sound pack of Half-Life 2 was found in a Reddit webpage [4] and it was downloaded from MediaFire [5].
+A Blueprint function which plays a sound, was found in Unreal Engine documentation [6] and an implementation of a C++ function which similar this Blueprint function, was watched shorlty in a YouTube tutorial [7].
+Instead of edited sound, in downloaded Half-Life 2 sound pack, "buttonrollover.wav" sound file was used on event of cursor over button.
+"buttonclickrelease.wav" sound file was selected for clicking button sound.
+While clicking a button, playing sound failed because clicking button events, open a level or quit the game.
+Some retro style games which are DOOM 64 and Project Warlock, was examined and it was noticed that they have multiple menu buttons for opening another menus and they start and quit buttons do not play a sound.
+But hearing a clicking sound, a delay was added with "SetTimer" function after watching a YouTube tutorial [8] again and for setting delaying duration, "GetDuration" function was learned from a webpage [9] of Unreal Engine forum.
+Disabling "bEnableMouseOverEvents" did not work to prevent cursor over event after clicking and locking cursor solved this issue by using "GetMousePosition" function, "SetMousePosition" function and a bool variable.
+A function of Player Controller could not be used after player's death and to solve this and it was noticed that this problem occured afer moving "player_controller = UGameplayStatics::GetPlayerController(world, 0);" code lines into constructors.
+To solve Player Controller error "player_controller = UGameplayStatics::GetPlayerController(world, 0);" code line was written into related scope of "game_mode_base_level_arena.cpp" file.
+A bug which changes view angle of player after starting, was noticed but it was delayed.
+For a combat sound, Usuper Gore music was selected from DOOM Eternal game.
+The combat sound file was found in a webpage [10] of SoundCloud and it was downloaded by using a downloader website which is ScloudDownloader [11].
+By using Audacity program, downloaded MP3 file was converted to a WAV file without editing sound.
+Combat sound volume was decreased by changing volume multiplier value of "PlaySound2D" function.
+Instead of "PlaySound2D", functions of "UAudioComponent" class, were used because it was learned that functions or variables of "UGameplayStatics" class, is not able to stop sounds according to a webpage [12] of Unreal Engine forum.
+In "UAudioComponent" and "USoundBase" classes, any feauture for looping sound could not be found.
+Method of creating and setting a sound cue, was found in a YouTube video [13] and it was implemented successfully but then it was removed because of avoiding Blueprint methods.
+Instead of using sound cues, playing music was controlled in "Tick" function.
+For a end game sound, End of Level music was selected from DOOM Eternal game and it was found in a webpage [14] of SoundCloud.
+After downloading end game sound, it was converted to a WAV file on Audacity.
+For main menu music, "Karl Casey - Broken" was choosen.
+"Karl Casey - Broken" song, was found in a webpage [15] of BandCamp, and it was downloaded by using a downloadeder website whose name is Locoloader [16].
+For a gun fire sound, a sound from Halo Infinite, was found in a YouTube video [17] and it was downloaded from a link [18] which has been added in the video description.
+Fire sound was added successfuly but searching for better sounds, was decided.
+Fire sound of Plasma Defender from Fallout: New Vegas game, was found in a webpage [19] of Fandom but it could not be downloaded.
+A downloading method was learned in another [20] webpage of Fandom and the sound was downloaded successfully by using sound link [21].
+Sound of some energy weapons from Borderlands 2 game, was decided to be examined for adding the game project but in local computer and on internet, weapon sounds could not be found.
+In an archieved webpage [22], packed audio file name and its location were learned.
+An extracting method which is using Wwise Unpacker program, was learned from an internet video [23].
+"Audio_Streaming.pck" file was extracted and exported over 5 hundreds of files were examined but any energy weapon sound could not be found.
+"Audio_Banks.pck" file was tried to be extracted but extraction was cancleded before its completion becaue it took too long.
+However, over 18 thousonds of file exported after canceling but they could not be examined completely.
+Randomly some sounds were examined and by chance, 5 useful weapon sounds were found from the 11243rd audio file.
+Instead of 11247th sound file of Borderlands 2, plasma defender sound was preferred.
+It was thought that there is no need to add footstep sounds because examined retro style games were not have them.
+Low health alert sound of DOOM (2016) was added into game project and the sound was found from in local computer.
+Then reference of sound was found in a webpage [24] of GameBanana.
+4 sounds from downloaded Half-Life 2 sound pack, was added into enemy class.
+"UGameplayStatics::SpawnSoundAtLocation" function did not work as 3D sound and reason which is not adding a sound attenuation object, was found in a YouTube video [25].
+Object was created but after loading a compiling warning which is about null object was noticed and it was thought that loading was failed.
+It was tried to declare and edit an "USoundAttenuation" class but it was failed because there was no constructor for class of "USoundAttenuation".
+A long research was done but a method for creating a "USoundAttenuation" object via C++, could not be found.
+In Unreal Engine forum webpage [25], a method for overriding sound attenuation settings was learned and a relatively large code was written after examining source does of the engine and examining created sound attenuation object on editor.
+The relativeley large code worked but while testing it was noticed that previous compiler warning was from another problem whose reason is unknown.
+However, the code lines was not commented.
+Solving of the compiler was delayed.
+Chase sound was shortened bu there was an issue which is sond is not moving and it was also delayed.
+Claw miss sound was removed because it could not be implemented properly.
+In this update audio system was added.
+[1] https://forums.unrealengine.com/t/how-to-disable-esc-key-in-pie-mode/43049
+[2] https://gamebanana.com/sounds/48700
+[3] https://docs.unrealengine.com/4.27/en-US/WorkingWithAudio/Overview/
+[4] https://www.reddit.com/r/HalfLife/comments/e15qj4/need_all_halflife_2_sounds/
+[5] http://www.mediafire.com/file/5muwquovyvhi0u2/hl2sound.zip/file
+[6] https://docs.unrealengine.com/4.27/en-US/BlueprintAPI/Audio/PlaySound2D/
+[7] https://youtu.be/49cbl-gmjfI
+[8] https://youtu.be/8VeFx71M_-8
+[9] https://forums.unrealengine.com/t/getting-duration-of-audio-component-4-7/308302
+[10] https://soundcloud.com/doom-slayer-1/usuper-gore?in=doom-slayer-1/sets/doom-eternal-ost-2020
+[11] https://sclouddownloader.net/
+[12] https://forums.unrealengine.com/t/playing-monitoring-stopping-sounds-c/425224
+[13] https://youtu.be/EWNG2LInVWU
+[14] https://soundcloud.com/doom-slayer-868995838/end-of-level?in=doom-slayer-1/sets/doom-eternal-ost-2020
+[15] https://karlcasey.bandcamp.com/track/broken
+[16] https://www.locoloader.com/
+[17] https://youtu.be/dnkNPRaqzWk
+[18] https://drive.google.com/drive/folders/1dKqfKlSQIi-F3k0cwa65E5BixIprnUUQ
+[19] https://fallout.fandom.com/wiki/Plasma_Defender_(GRA)
+[20] https://love-live.fandom.com/f/p/4400000000000058100
+[21] https://static.wikia.nocookie.net/fallout/images/f/f3/Wpn_plasmadefender_GRA_fire_2d.ogg/revision/latest?cb=20181004135435
+[22] https://web.archive.org/web/20121016010912/https://forums.gearboxsoftware.com/showthread.php?t=152307
+[23] https://youtu.be/5Lj2gfM30Mw
+[24] https://gamebanana.com/sounds/36226
+[25] https://forums.unrealengine.com/t/how-to-setup-c-audiocomp-innerradius/416602
