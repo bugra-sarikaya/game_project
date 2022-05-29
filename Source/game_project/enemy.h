@@ -19,6 +19,7 @@
 #include "AIController.h"
 #include "Components/AudioComponent.h"
 #include "AudioDevice.h"
+#include "Sound/SoundCue.h"
 
 #include "enemy.generated.h"
 
@@ -26,8 +27,7 @@ class Apaper_player;
 class Aplayer_state;
 
 UCLASS()
-class GAME_PROJECT_API Aenemy : public APaperCharacter
-{
+class GAME_PROJECT_API Aenemy : public APaperCharacter {
 	GENERATED_BODY()
 public:
 	Aenemy();
@@ -38,26 +38,34 @@ public:
 	UFUNCTION() void on_sight_sensed(const TArray<AActor*>& updated_actors);
 	UFUNCTION() void on_begin_overlap(UPrimitiveComponent* overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index, bool b_from_sweep, const FHitResult& hit);
 	UFUNCTION() void on_end_overlap(UPrimitiveComponent* overlap_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 other_body_index);
-	UFUNCTION() void tick_AI(float delta_time);
 	UFUNCTION() void attack(Apaper_player* attacked_player, float damage_amount);
-	UPROPERTY() UWorld* world;
+	UFUNCTION() void chase(AActor* chased_actor);
+	UFUNCTION() void destroy_component(USceneComponent* component);
+	UFUNCTION() void play_sound_pain();
+	UPROPERTY() AActor* sensed_actor;
+	UPROPERTY() AAIController* AI_controller;
+	UPROPERTY() APlayerController* player_controller;
+	UPROPERTY() APlayerState* player_state_pure;
+	UPROPERTY() Aplayer_state* player_state;
+	UPROPERTY() Apaper_player* paper_player;
 	UPROPERTY() FRotator enemy_rotation;
-	UPROPERTY() FVector base_location;
-	UPROPERTY() FVector current_velocity;
-	UPROPERTY() FVector temp_velocity;
-	UPROPERTY() FVector new_location;
-	UPROPERTY() FVector attenuation_shape_extents_audio_angry = FVector(900.0f, 0.0f, 0.0f);
-	UPROPERTY() FVector attenuation_shape_extents_audio_growl = FVector(900.0f, 0.0f, 0.0f);
-	UPROPERTY() FVector attenuation_shape_extents_audio_claw_strike = FVector(900.0f, 0.0f, 0.0f);
-	UPROPERTY() UPaperFlipbookComponent* paper_component;
-	UPROPERTY() UCapsuleComponent* capsule_component;
-	UPROPERTY() USphereComponent* attack_sphere_component;
-	UPROPERTY() UArrowComponent* arrow_component;
-	UPROPERTY() UCharacterMovementComponent* movement_component;
+	UPROPERTY() FTimerHandle timer_handle_chase;
+	UPROPERTY() FTimerHandle timer_handle_idle;
+	UPROPERTY() FTimerHandle timer_handle_destroy_audio_component_die;
+	UPROPERTY() TSubclassOf<Apaper_player> paper_player_class;
+	UPROPERTY() UWorld* world;
 	UPROPERTY() UAIPerceptionComponent* AI_perception_component;
 	UPROPERTY() UAISenseConfig_Sight* AI_sense_sight_config;
 	UPROPERTY() UAISenseConfig_Sight* AI_sense_attack_sight_config;
-	UPROPERTY() AAIController* AI_controller;
+	UPROPERTY() UArrowComponent* arrow_component;
+	UPROPERTY() UAudioComponent* audio_component_idle;
+	UPROPERTY() UAudioComponent* audio_component_ready;
+	UPROPERTY() UAudioComponent* audio_component_chase;
+	UPROPERTY() UAudioComponent* audio_component_pain;
+	UPROPERTY() UAudioComponent* audio_component_claw_strike;
+	UPROPERTY() UAudioComponent* audio_component_die;
+	UPROPERTY() UCapsuleComponent* capsule_component;
+	UPROPERTY() UCharacterMovementComponent* movement_component;
 	UPROPERTY() UPaperFlipbook* enemy_idle_asset;
 	UPROPERTY() UPaperFlipbook* enemy_ready_asset;
 	UPROPERTY() UPaperFlipbook* enemy_chase_asset;
@@ -65,23 +73,19 @@ public:
 	UPROPERTY() UPaperFlipbook* enemy_calm_asset;
 	UPROPERTY() UPaperFlipbook* enemy_die_asset;
 	UPROPERTY() UPaperFlipbook* enemy_dead_asset;
-	UPROPERTY() USoundBase* sound_asset_angry;
-	UPROPERTY() USoundBase* sound_asset_growl;
-	UPROPERTY() USoundBase* sound_asset_claw_strike;
-	UPROPERTY() UAudioComponent* audio_component_angry;
-	UPROPERTY() UAudioComponent* audio_component_growl;
-	UPROPERTY() UAudioComponent* audio_component_claw_strike;
-	UPROPERTY() Apaper_player* paper_player;
-	UPROPERTY() APlayerController* player_controller;
-	UPROPERTY() APlayerState* player_state_pure;
-	UPROPERTY() Aplayer_state* player_state;
-	UPROPERTY() TSubclassOf<Apaper_player> paper_player_class;
+	UPROPERTY() UPaperFlipbookComponent* paper_component;
+	UPROPERTY() USoundCue* sound_cue_asset_idle;
+	UPROPERTY() USoundCue* sound_cue_asset_ready;
+	UPROPERTY() USoundCue* sound_cue_asset_chase;
+	UPROPERTY() USoundCue* sound_cue_asset_pain;
+	UPROPERTY() USoundCue* sound_cue_asset_claw_strike;
+	UPROPERTY() USoundCue* sound_cue_asset_die;
+	UPROPERTY() USphereComponent* attack_sphere_component;
 	UPROPERTY() int32 death_score = 10;
-	UPROPERTY() float movement_speed = 650.0f; //375.0f;
-	UPROPERTY() float AI_sense_sight_radius_value = 2250.0f; //1250.0f;
-	UPROPERTY() float AI_sense_sight_lose_sight_radius_value = 2280.0f; //1280.0f;
+	UPROPERTY() float movement_speed = 630.0f; // 600;
+	UPROPERTY() float AI_sense_sight_radius_value = 4250.0f; //1250.0f;
+	UPROPERTY() float AI_sense_sight_lose_sight_radius_value = 4280.0f; //1280.0f;
 	UPROPERTY() float AI_sense_sight_peripheral_vision_angle_degrees_value = 360.0f;
-	UPROPERTY() float distance_squared = BIG_NUMBER;
 	UPROPERTY() float capsule_radius = 105.0f;
 	UPROPERTY() float capsule_half_height = 130.0f;
 	UPROPERTY() float paper_location_x = 0.0f;
@@ -90,57 +94,18 @@ public:
 	UPROPERTY() float paper_scale = 0.6f;
 	UPROPERTY() float play_rate;
 	UPROPERTY() float health = 100.0;
-	UPROPERTY() float damage_value = 15.0f;
-	UPROPERTY() float volume_multiplier_value_angry_sound = 0.5f;
-	UPROPERTY() float volume_multiplier_value_growl_sound = 0.5f;
-	UPROPERTY() float volume_multiplier_value_claw_miss_sound = 0.5f;
-	UPROPERTY() float volume_multiplier_value_claw_strike_sound = 0.5f;
-	UPROPERTY() float pitch_multiplier_value_audio_angry = 1.0f;
-	UPROPERTY() float pitch_multiplier_value_audio_growl = 1.0f;
-	UPROPERTY() float pitch_multiplier_value_audio_claw_strike = 1.0f;
-	UPROPERTY() float attenuation_falloff_distance_audio_angry = 3000.0f;
-	UPROPERTY() float attenuation_falloff_distance_audio_growl = 3000.0f;
-	UPROPERTY() float attenuation_falloff_distance_audio_claw_strike = 3000.0f;
-	UPROPERTY() float attenuation_binaural_radius_audio_angry = 0.0f;
-	UPROPERTY() float attenuation_binaural_radius_audio_growl = 0.0f;
-	UPROPERTY() float attenuation_binaural_radius_audio_claw_strike = 0.0f;
-	UPROPERTY() float attenuation_omni_radius_audio_angry = 0.0f;
-	UPROPERTY() float attenuation_omni_radius_audio_growl = 0.0f;
-	UPROPERTY() float attenuation_omni_radius_audio_claw_strike = 0.0f;
-	UPROPERTY() float attenuation_stereo_spread_audio_angry = 200.0f;
-	UPROPERTY() float attenuation_stereo_spread_audio_growl = 200.0f;
-	UPROPERTY() float attenuation_stereo_spread_audio_claw_strike = 200.0f;
-	UPROPERTY() float attenuation_reverb_wet_level_min_audio_angry = 0.3f;
-	UPROPERTY() float attenuation_reverb_wet_level_min_audio_growl = 0.3f;
-	UPROPERTY() float attenuation_reverb_wet_level_min_audio_claw_strike = 0.3f;
-	UPROPERTY() float attenuation_reverb_wet_level_max_audio_angry = 0.95f;
-	UPROPERTY() float attenuation_reverb_wet_level_max_audio_growl = 0.95f;
-	UPROPERTY() float attenuation_reverb_wet_level_max_audio_claw_strike = 0.95f;
-	UPROPERTY() float attenuation_reverb_distance_min_audio_angry = 400.0f;
-	UPROPERTY() float attenuation_reverb_distance_min_audio_growl = 400.0f;
-	UPROPERTY() float attenuation_reverb_distance_min_audio_claw_strike = 400.0f;
-	UPROPERTY() float attenuation_reverb_distance_max_audio_angry = 4000.0f;
-	UPROPERTY() float attenuation_reverb_distance_max_audio_growl = 4000.0f;
-	UPROPERTY() float attenuation_reverb_distance_max_audio_claw_strike = 4000.0f;
+	UPROPERTY() float damage_value = 5.0f;
+	UPROPERTY() float volume_multiplier_idle = 0.5f;
+	UPROPERTY() float volume_multiplier_ready = 0.5f;
+	UPROPERTY() float volume_multiplier_chase = 0.225f;
+	UPROPERTY() float volume_multiplier_pain = 0.5f;
+	UPROPERTY() float volume_multiplier_claw_strike = 0.5f;
+	UPROPERTY() float volume_multiplier_die = 1.8f;
 	UPROPERTY() bool back_to_base_location;
 	UPROPERTY() bool did_attack = false;
 	UPROPERTY() bool dead = false;
-	UPROPERTY() bool attenuation_override_attenuation_audio_angry = true;
-	UPROPERTY() bool attenuation_override_attenuation_audio_growl = true;
-	UPROPERTY() bool attenuation_override_attenuation_audio_claw_strike = true;
-	UPROPERTY() bool attenuation_attenuate_audio_angry = true;
-	UPROPERTY() bool attenuation_attenuate_audio_growl = true;
-	UPROPERTY() bool attenuation_attenuate_audio_claw_strike = true;
-	UPROPERTY() bool attenuation_spatialize_audio_angry = true;
-	UPROPERTY() bool attenuation_spatialize_audio_growl = true;
-	UPROPERTY() bool attenuation_spatialize_audio_claw_strike = true;
-	UPROPERTY() bool attenuation_enable_reverb_send_audio_angry = true;
-	UPROPERTY() bool attenuation_enable_reverb_send_audio_growl = true;
-	UPROPERTY() bool attenuation_enable_reverb_send_audio_claw_strike = true;
-	UPROPERTY() EAttenuationDistanceModel attenuation_distance_algorithm_audio_angry = EAttenuationDistanceModel::Linear;
-	UPROPERTY() EAttenuationDistanceModel attenuation_distance_algorithm_audio_growl = EAttenuationDistanceModel::Linear;
-	UPROPERTY() EAttenuationDistanceModel attenuation_distance_algorithm_audio_claw_strike = EAttenuationDistanceModel::Linear;
-	UPROPERTY() EReverbSendMethod attenuation_reverb_send_method_audio_angry = EReverbSendMethod::Linear;
-	UPROPERTY() EReverbSendMethod attenuation_reverb_send_method_audio_growl = EReverbSendMethod::Linear;
-	UPROPERTY() EReverbSendMethod attenuation_reverb_send_method_audio_claw_strike = EReverbSendMethod::Linear;
+	UPROPERTY() bool sensed = false;
+	FTimerDelegate timer_delegate_chase;
+	FTimerDelegate timer_delegate_idle;
+	FTimerDelegate timer_delegate_destroy_audio_component_die;
 };

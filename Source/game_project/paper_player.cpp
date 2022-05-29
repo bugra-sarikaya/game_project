@@ -32,23 +32,15 @@ Apaper_player::Apaper_player(){
 	paper_component->SetWorldScale3D(FVector(weapon_scale));
 	paper_component->SetOnlyOwnerSee(true);
 	paper_component->CastShadow = false;
-	//UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(GetMovementComponent()->GetName()));
-
 }	
-
-// Called when the game starts or when spawned
-void Apaper_player::BeginPlay()
-{
+void Apaper_player::BeginPlay(){
 	Super::BeginPlay();
-	//FActorSpawnParameters enemy_spawn_parameters;
-	//enemy_spawn_parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	//GetWorld()->SpawnActor<Aenemy>(enemy_class, FVector(1540.f, -450.0f, 150.0f), FRotator(0), enemy_spawn_parameters);
+	player_controller = UGameplayStatics::GetPlayerController(world, 0);
 	time_start = world->GetTimeSeconds();
 	player_state_pure = GetPlayerState();
-	//player_state = Cast<Aplayer_state>(player_state_pure);
-	//if (player_state) player_state->set_player_time_start(time_start);
+	DisableInput(player_controller);
+	GetWorldTimerManager().SetTimer(timer_handle_chase, this, &Apaper_player::enable_input, delay_enabling_inputs, false);
 }
-
 void Apaper_player::Tick(float delta_time){
 	Super::Tick(delta_time);
 	time_end = world->GetTimeSeconds();
@@ -63,8 +55,6 @@ void Apaper_player::Tick(float delta_time){
 	if (controller->IsInputKeyDown(FKey(TEXT("LeftMouseButton")))) fire();
 	if (health <= 0.0f) Destroy();
 }
-
-// Called to bind functionality to input
 void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -78,15 +68,9 @@ void Apaper_player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAxis("move_left", this, &Apaper_player::move_left);
 	PlayerInputComponent->BindAxis("look_right", this, &Apaper_player::look_right);
 	PlayerInputComponent->BindAxis("look_up", this, &Apaper_player::look_up);
-
 }
 void Apaper_player::EndPlay(EEndPlayReason::Type reason) {
 	Super::EndPlay(reason);
-	//if (reason == EEndPlayReason::Destroyed) {
-	//	AGameModeBase* game_mode_base = world->GetAuthGameMode();
-	//	Agame_mode_base_level_arena* game_mode_base_level_arena = Cast<Agame_mode_base_level_arena>(game_mode_base);
-	//	game_mode_base_level_arena->implement_hud_ending();
-	//}
 }
 void Apaper_player::start_jump() {
 	bPressedJump = true;
@@ -252,10 +236,8 @@ void Apaper_player::oscillate_walking() {
 			reached_negative_oscillating_walking_y_increment_limit = false;
 		}
 	}
-
 }
 void Apaper_player::fire() {
-	//GetWorldTimerManager().SetTimer(MyHandle, this, &Apaper_player::fire, 0.5f, true);
 	if (projectile_class && paper_component->GetFlipbook() == pistol_idle_asset) {
 		GetActorEyesViewPoint(CameraLocation, CameraRotation);
 		MuzzleOffset.Set(200.0f, 45.0f, -30.0f);
@@ -272,11 +254,14 @@ void Apaper_player::fire() {
 				paper_component->Play();
 				FVector LaunchDirection = MuzzleRotation.Vector();
 				projectile->FireInDirection(LaunchDirection);
-				audio_component_pistol_fire = UGameplayStatics::SpawnSound2D(world, sound_asset_pistol_fire, volume_multiplier_value_pistol_sound);
+				audio_component_pistol_fire = UGameplayStatics::SpawnSound2D(world, sound_asset_pistol_fire, volume_multiplier_pistol_fire);
 			}
 		}
 	}
 }
 void Apaper_player::quit() {
 	Destroy();
+}
+void Apaper_player::enable_input() {
+	EnableInput(player_controller);
 }

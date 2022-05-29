@@ -1,0 +1,82 @@
+Reason of previous compile warnings, was found and it was the use of "player_controller = UGameplayStatics::GetPlayerController(world, 0);" line only in constructor.
+"LogScript: Warning: Script Msg: A null object was passed as a world context object to UEngine::GetWorldFromContextObject()" warnings were disappeared after moving "player_controller = UGameplayStatics::GetPlayerController(world, 0);" line into "BeginPlay" functions of related class files.
+For solving chasing bug which is enemies sometimes cannot chase player as expected, moving enemies via their AI controller was thought and a Nav Mesh Bounds Volme actor was added by drag and drop method.
+2 sources [1] [2] were examined again and Nav Mesh Bounds Volume actor's location and scaling details was changed dynamically via C++.
+A YouTube video [3] was watched again and enemy was moved to actor without getting stuck, via C++ but it was noticed that after falling from a high ground, enemy stopped following.
+In a webpage of Unreal Engine forum, a solution which is adding supported agents with a high Z axis value into navigation system, was found for moving stopped enemy and it applied via editor.
+Problem was solved but it was observed that enemy choose an indirect path instead of jumping from high ground.
+A feature for applying Nav Mesh Bounds Volume into air, could not be found but a solution which is adding jumping points to Navmesh map, was found in Unreal Engine documentation [5].
+2 videos [6] [7] about Nav Link Proxy, were watched and applying jumping point method, was thought as an exhausting solution.
+A simple code which checks player movement on air and status of AI controller to move enemy without using paths, was written and it worked.
+From a webpage [8] of Unreal Engine forum, it was learned that adding more arguments into "AddDynamic" function, is not possible without indirect methods.
+A solution for adding more parameters to "SetTimer" function, was found in a webpage [9] of Unreal Engine and it was applied.
+Previous written long audio code was shorthened by loading attenuation settings object from editor.
+"FTimerDelegate" struct could not be declared with "UPROPERTY()" macro.
+While testing, an output log warning which is "LogCharacterMovement: Warning: GetSimulationTimeStep() - Max iterations 8 hit while remaining time 0.070422 > MaxSimulationTimeStep (0.050) for 'enemy_0', movement 'Walking'", was occurred and it was fixed after increasing Z axis value of spawning location.
+While testing, it was observed that path following result changes with every move of actor.
+A kernel error was occured after using "AddDynamic" function for binding path following result function to AI controller in sight sense function and problem was solved by commenting code line which has related "AddDynamic" function.
+Inner codes of "tick_AI" function, was moved into "Tick" function of enemy class.
+Spawned enemy count was not controlled by manually because enemy spawning paramaters was set as "ESpawnActorCollisionHandlingMethod::DontSpawnIfColliding" which allows that maximum spawned enemy count is near to spawning location count and spawning location count is 13.
+Also spawning system was not set to stop after death of player because alive enemy count in the level, is not unlimited and memory consumption of this issue, was thought as a trivial detail.
+Also in other some games, NPCs still continue their movements after death of player and because of this, not stopping current game status, was decided.
+Speed of enemy was increased by benefiting an Unreal Engine forum webpage [10].
+Damage value of enemies, was decreased to 5 and damage value of projectile was increased to 34, for making game easier.
+Problems which are that enemies cannot see through dead enemies and also projectile cannot move through dead enemies, was noticed and they were solved by changing collision setting of dead enemy.
+Another stucking enemy problem was noticed and it could not be solved after changing supported agent settings according to an advice [11] of Unreal Engine forum.
+First frame of enemy attack asset was removed and specific flipbook positions about dealing damage, were regressed.
+Instead of stopping enemy while attacking, movement speed was decreased for providing enemy to catch player.
+A bug was noticed and it was stucking enemy in chase flipbook after it's death.
+Bug was solved by moving "dead = true;" next to "if" condition of dying; however, an extra "if" condition was added to prevent unforeseen bugs.
+It was observerd that actor can move in idle status of following path and because of this, calm animation could not be written and code lines of calm animation, were commented.
+After founding "Square" Blueprint function in Unreal Engine documentation [12], its C++ equivalent which is "FMath::Square" function, was found in "KitmestMathLibrary.inl" file and it was appiled.
+A code was written for spawning enemy at next location if player is near and disallowed spawning distance was set to "1200.0f" which is length of 12 plane meshes.
+There was a problem which is spawned player with different looking rotation, and it was solved with disabling and re-enabling input functions by benefiting a source [13].
+It was learned that moving sounds, is possible with doppler feauture, from a YouTube video [14], but doppler codes which was found in source files of engine, could not be used.
+Doppler effect is in sound cue details on editor but in source codes of sound cue, any doppler word could not be found.
+By benefiting 2 sources [15] [16], moving sound problem was fixed via C++ and editor.
+A video [17] about DOOM sounds, was watched shortly and a link [18] which has sound pack, was obtoined from description of video.
+Sound pack was WAD file format and method of opening WAD files was learned from a webpage [19] of Reddit.
+WAD file editor whose name is "SLADE" was download its official webpage [20].
+But downloaded DOOM sounds were not be liked.
+Duration of chasing sound was increased by reimporting as its original version.
+Games in local computer, were examined for searching some useful sounds and 2 sound were obtained from "Sang-Froid - Tales of Werewolves".
+An idle sound was added from Half-Life 2 sound pack.
+Chase sound could not be paused instead of stopping because any useful function for pausing, could not be found.
+Stair textures were changed after drawing more textures.
+Playing method of music was changed to playing from sound cue which has a looping node and it was become that no need to check music in "Tick" function.
+Heavy version of combat sound was selected in a webpage [21] of SoundCloud and it was set to play while player health is below its half.
+An output log warning occured after adding audio component to hud classes and it was about undefined "RootComponent".
+To solve the warning, an scene component was created and it was set to as "RootComponent" by insipring a webpage [22] of Unreal Engine.
+Stucking enemy problem was observed as a negligible issue because sometimes also player was stucking.
+Inner radius of attenuation, sphere was increased to "1500.0f" for hearing farther.
+Declarations in header was sorted.
+Unnecessary commented code lines were deleted.
+Unused source files were deleted.
+Colors of score and time texts, were changed to an orange color which was found in a webpage [23]
+Colors of red texts in ending hud, were changed to  "FColor(220, 0, 0)".
+It was noticed that button texts are blurry and after increasing font size, it became sharper but this font size changing, was not applied for solving because this solution needs changing button sizes.
+Shading models of materials, were changed to unlit from "Default Lit" and it closed shadowing.
+In this update bugs were fixed, except corrupted textures and blurry texts problems.
+[1] https://youtu.be/ls4dI9209y8
+[2] https://forums.unrealengine.com/t/spawn-a-navmesh-volume-with-blueprint/302146
+[3] https://youtu.be/2frMzQ-M_IY
+[4] https://forums.unrealengine.com/t/ai-move-to-stopping-when-character-is-in-air/465863
+[5] https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/NavigationSystem/ModifyingTheNavigationMesh/ModifyingtheNavigationSystem/
+[6] https://youtu.be/ECys4U2fOKs
+[7] https://youtu.be/wW4t5QxOQaE
+[8] https://forums.unrealengine.com/t/function-arguments-within-adddynamic-call/384580
+[9] https://forums.unrealengine.com/t/using-settimer-on-a-function-with-parameters/305335
+[10] https://forums.unrealengine.com/t/ai-movement-speed/27537
+[11] https://forums.unrealengine.com/t/characters-randomly-stop-navigating/295125
+[12] https://docs.unrealengine.com/4.27/en-US/BlueprintAPI/Math/Float/Square/
+[13] https://forums.unrealengine.com/t/disable-input-player-controller-not-working/477445
+[14] https://youtu.be/hrIbZf3ppgo
+[15] https://forums.unrealengine.com/t/sound-moving-with-mesh/414734
+[16] http://bendemott.blogspot.com/2016/10/unreal-4-playing-sound-from-c-with.html
+[17] https://youtu.be/9bgFpss0YFE
+[18] http://www.perkristian.net/game_doom-sfx.shtml
+[19] https://www.reddit.com/r/Doom/comments/5paonk/what_software_should_i_use_to_open_wad_files/
+[20] http://slade.mancubus.net/index.php?page=downloads
+[21] https://soundcloud.com/doom-slayer-1/the-super-gore-nest?in=doom-slayer-1/sets/doom-eternal-ost-2020
+[22] https://forums.unrealengine.com/t/warning-none-of-them-were-set-as-the-actors-rootcomponent/366781
+[23] https://www.color-name.com/fire-orange.color

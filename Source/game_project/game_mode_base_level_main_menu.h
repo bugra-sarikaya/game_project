@@ -10,10 +10,8 @@
 
 #include "game_mode_base_level_main_menu.generated.h"
 
-
 UCLASS()
-class GAME_PROJECT_API Agame_mode_base_level_main_menu : public AGameModeBase
-{
+class GAME_PROJECT_API Agame_mode_base_level_main_menu : public AGameModeBase {
 	GENERATED_BODY()
 public:
 	Agame_mode_base_level_main_menu();

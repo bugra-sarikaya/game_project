@@ -26,15 +26,52 @@ class Aenemy;
 class Aplayer_state;
 
 UCLASS()
-class GAME_PROJECT_API Apaper_player : public APaperCharacter
-{
+class GAME_PROJECT_API Apaper_player : public APaperCharacter {
 	GENERATED_BODY()
 
 public:
 	Apaper_player();
+	virtual void BeginPlay() override;
 	virtual void Tick(float delta_time) override;
 	virtual void EndPlay(EEndPlayReason::Type reason) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION() void start_jump();
+	UFUNCTION() void stop_jump();
+	UFUNCTION() void move_forward(float value);
+	UFUNCTION() void move_backward(float value);
+	UFUNCTION()	void move_right(float value);
+	UFUNCTION() void move_left(float value);
+	UFUNCTION() void look_right(float value);
+	UFUNCTION() void look_up(float value);
+	UFUNCTION() void slide_weapon();
+	UFUNCTION() void oscillate_walking();
+	UFUNCTION() void fire();
+	UFUNCTION() void quit();
+	UFUNCTION() void enable_input();
+	UPROPERTY() APlayerController* player_controller;
+	UPROPERTY() APlayerState* player_state_pure;
+	UPROPERTY() Aplayer_state* player_state;
+	UPROPERTY() FRotator MuzzleRotation;
+	UPROPERTY() FRotator CameraRotation;
+	UPROPERTY() FTimerHandle timer_handle_chase;
+	UPROPERTY() FVector MuzzleLocation;
+	UPROPERTY() FVector CameraLocation;
+	UPROPERTY() FVector MuzzleOffset;
+	UPROPERTY() TSubclassOf<UMatineeCameraShake> camera_shake_walking;
+	UPROPERTY() TSubclassOf<Aprojectile> projectile_class;
+	UPROPERTY() TSubclassOf<Aenemy> enemy_class;
+	UPROPERTY() UArrowComponent* arrow_component;
+	UPROPERTY() UAudioComponent* audio_component_pistol_fire;
+	UPROPERTY() UCameraComponent* camera_component;
+	UPROPERTY() UCapsuleComponent* capsule_component;
+	UPROPERTY() UCharacterMovementComponent* movement_component;
+	UPROPERTY() UMatineeCameraShake* matinee_camera_shake;
+	UPROPERTY() UPaperFlipbook* pistol_fire_asset;
+	UPROPERTY() UPaperFlipbook* pistol_idle_asset;
+	UPROPERTY() UPaperFlipbookComponent* paper_component;
+	UPROPERTY() USoundBase* sound_asset_pistol_fire;
+	UPROPERTY() UWorld* world;
+	UPROPERTY() int32 score = 0;
 	UPROPERTY() float capsule_radius = 34.0f;
 	UPROPERTY() float capsule_half_height = 88.0f;;
 	UPROPERTY() float look_right_rate = 45.f;
@@ -57,10 +94,6 @@ public:
 	UPROPERTY() float sliding_weapon_x_increment_rate = 0.05f;
 	UPROPERTY() float sliding_weapon_y_increment_rate = 0.05f;
 	UPROPERTY() float sliding_weapon_z_increment_rate = 0.05f;
-	UPROPERTY() bool reached_positive_oscillating_walking_y_increment_limit = false;
-	UPROPERTY() bool reached_negative_oscillating_walking_y_increment_limit = false;
-	UPROPERTY() bool reached_positive_walking_z_increment_limit = false;
-	UPROPERTY() bool reached_negative_walking_z_increment_limit = false;
 	UPROPERTY() float oscillating_walking_y_increment_limit = 0.6f;
 	UPROPERTY() float oscillating_walking_z_increment_limit = 0.6f;
 	UPROPERTY() float oscillating_walking_x_increment = 0.0f;
@@ -72,41 +105,10 @@ public:
 	UPROPERTY() float time_start;
 	UPROPERTY() float time_end;
 	UPROPERTY() float health = 100.0f;
-	UPROPERTY() float volume_multiplier_value_pistol_sound = 0.5f;
-	UPROPERTY() int score = 0;
-	UPROPERTY() UWorld* world;
-	UPROPERTY() UCameraComponent* camera_component;
-	UPROPERTY() UCapsuleComponent* capsule_component;
-	UPROPERTY() UPaperFlipbookComponent* paper_component;
-	UPROPERTY() UCharacterMovementComponent* movement_component;
-	UPROPERTY() UArrowComponent* arrow_component;
-	UPROPERTY() UMatineeCameraShake* matinee_camera_shake;
-	UPROPERTY() APlayerState* player_state_pure;
-	UPROPERTY() Aplayer_state* player_state;
-	UPROPERTY() FVector MuzzleLocation;
-	UPROPERTY() UPaperFlipbook* pistol_fire_asset;
-	UPROPERTY() UPaperFlipbook* pistol_idle_asset;
-	UPROPERTY() USoundBase* sound_asset_pistol_fire;
-	UPROPERTY() UAudioComponent* audio_component_pistol_fire;
-	UPROPERTY() FRotator MuzzleRotation;
-	UPROPERTY() FVector CameraLocation;
-	UPROPERTY() FRotator CameraRotation;
-	UPROPERTY() FVector MuzzleOffset;
-	UPROPERTY() TSubclassOf<UMatineeCameraShake> camera_shake_walking;
-	UPROPERTY() TSubclassOf<Aprojectile> projectile_class;
-	UPROPERTY() TSubclassOf<Aenemy> enemy_class;
-	UFUNCTION() void start_jump();
-	UFUNCTION() void stop_jump();
-	UFUNCTION() void move_forward(float value);
-	UFUNCTION() void move_backward(float value);
-	UFUNCTION()	void move_right(float value);
-	UFUNCTION() void move_left(float value);
-	UFUNCTION() void look_right(float value);
-	UFUNCTION() void look_up(float value);
-	UFUNCTION() void slide_weapon();
-	UFUNCTION() void oscillate_walking();
-	UFUNCTION() void fire();
-	UFUNCTION() void quit();
-protected:
-	virtual void BeginPlay() override;
+	UPROPERTY() float volume_multiplier_pistol_fire = 0.3f;
+	UPROPERTY() float delay_enabling_inputs = 0.01f;
+	UPROPERTY() bool reached_positive_oscillating_walking_y_increment_limit = false;
+	UPROPERTY() bool reached_negative_oscillating_walking_y_increment_limit = false;
+	UPROPERTY() bool reached_positive_walking_z_increment_limit = false;
+	UPROPERTY() bool reached_negative_walking_z_increment_limit = false;
 };
