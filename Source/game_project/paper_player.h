@@ -107,6 +107,7 @@ public:
 	UPROPERTY() float health = 100.0f;
 	UPROPERTY() float volume_multiplier_pistol_fire = 0.3f;
 	UPROPERTY() float delay_enabling_inputs = 0.01f;
+	UPROPERTY() float fire_rate_pistol = 1.1f;
 	UPROPERTY() bool reached_positive_oscillating_walking_y_increment_limit = false;
 	UPROPERTY() bool reached_negative_oscillating_walking_y_increment_limit = false;
 	UPROPERTY() bool reached_positive_walking_z_increment_limit = false;

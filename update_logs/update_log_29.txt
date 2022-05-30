@@ -1,0 +1,19 @@
+A video [1] about exporting game, was watched and instructions of video were applied but result was a black screen.
+Another video [2] about exporting, was watched and its instructions was applied for changin exporting details but it did not work.
+A long was research was done and all advices from internet, except creating a new project, was tried but success could not be obtained.
+While examining logs, warnings about uninitialized members of defined material structs, were noticed and to solve this, values of "nullptr" were assigned to uninitialized material pointers.
+Also new source files were created for struct fields.
+Game was playable on editor but still it was not playable on desktop and changing default Game Mode, to Game Mode of main menu was fixed this issue.
+But somehow it was noticed that alert sound was played beginning of the arena level and this problem was never occurring in play mode of editor.
+To solve untimely alert sound, health variable of player state, was initialized as "100.0f".
+Some unused contents were deleted.
+From 3 sources, advices about changing content of "DefaultEngine.ini" file, were learned but advices were nort work for solving black screen problem with default Game Mode.
+Fire rate was increased to "1.1f" from "1.0f".
+Some sound multiplier values were changed.
+Projectile speed was increased but its damage value was decreased.
+Finally game was exported successfully and a playthrough video was recorded.
+[1] https://youtu.be/ABdprZnUZMY
+[2] https://youtu.be/MatkFIvCKMY
+[3] https://forums.unrealengine.com/t/casting-to-game-instance-always-fails-when-packaging-the-game/392414
+[4] https://forums.unrealengine.com/t/packaged-game-ignoring-default-gamemode-setting/380606
+[5] https://www.reddit.com/r/unrealengine/comments/j9u7ch/help_my_unreal_engine_is_showing_black_screen/

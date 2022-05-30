@@ -30,12 +30,12 @@ public:
 	UPROPERTY() UProjectileMovementComponent* projectile_movement_component;
 	UPROPERTY() USphereComponent* collision_component;
 	UPROPERTY() float collision_sphere_radius = 10.0f;
-	UPROPERTY() float initial_speed = 4000.0f;
-	UPROPERTY() float max_speed = 4000.0f;
+	UPROPERTY() float initial_speed = 4500.0f;
+	UPROPERTY() float max_speed = 4500.0f;
 	UPROPERTY() float world_scale = 0.6f;
 	UPROPERTY() float life_span = 4.0f;
 	UPROPERTY() float gravity_scale = 0.0f;
-	UPROPERTY() float damage_value = 34.0f;
+	UPROPERTY() float damage_value = 25.0f;
 	UPROPERTY() bool bouncing = false;
 	UPROPERTY() bool following_velocity = true;
 };

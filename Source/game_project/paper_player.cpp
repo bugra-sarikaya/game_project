@@ -49,6 +49,7 @@ void Apaper_player::Tick(float delta_time){
 	if (paper_component->GetFlipbook() == pistol_fire_asset && !paper_component->IsPlaying()) {
 		paper_component->SetFlipbook(pistol_idle_asset);
 		paper_component->SetLooping(true);
+		paper_component->SetPlayRate(1.0f);
 		paper_component->Play();
 	}
 	const APlayerController* controller = Cast<APlayerController>(GetController());
@@ -251,6 +252,7 @@ void Apaper_player::fire() {
 			if (projectile) {
 				paper_component->SetFlipbook(pistol_fire_asset);
 				paper_component->SetLooping(false);
+				paper_component->SetPlayRate(fire_rate_pistol);
 				paper_component->Play();
 				FVector LaunchDirection = MuzzleRotation.Vector();
 				projectile->FireInDirection(LaunchDirection);

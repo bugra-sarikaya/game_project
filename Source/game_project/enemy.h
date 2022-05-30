@@ -95,12 +95,12 @@ public:
 	UPROPERTY() float play_rate;
 	UPROPERTY() float health = 100.0;
 	UPROPERTY() float damage_value = 5.0f;
-	UPROPERTY() float volume_multiplier_idle = 0.5f;
-	UPROPERTY() float volume_multiplier_ready = 0.5f;
-	UPROPERTY() float volume_multiplier_chase = 0.225f;
-	UPROPERTY() float volume_multiplier_pain = 0.5f;
+	UPROPERTY() float volume_multiplier_idle = 0.3f;
+	UPROPERTY() float volume_multiplier_ready = 0.48f;
+	UPROPERTY() float volume_multiplier_chase = 0.19f;
+	UPROPERTY() float volume_multiplier_pain = 0.45f;
 	UPROPERTY() float volume_multiplier_claw_strike = 0.5f;
-	UPROPERTY() float volume_multiplier_die = 1.8f;
+	UPROPERTY() float volume_multiplier_die = 1.6f;
 	UPROPERTY() bool back_to_base_location;
 	UPROPERTY() bool did_attack = false;
 	UPROPERTY() bool dead = false;
