@@ -1,0 +1,26 @@
+Volumes of combat sounds, were increased.
+Fire rate increased.
+Movement speed of enemy, was increased.
+A distance limitation was added for disabling pathfinding while jumping from a high ground.
+A bug was noticed and it was creating an infinite "while" loop if there are not any allowed spawning locaitons.
+Bug was fixed by adding a "break" keyboard after checking all spawning locations.
+A distance calculation error was fixed by just removing "FMath::Square" function.
+If there is a wall corner on path, enemies were following player by touching corners and this issue was decreasing their speed.
+For solving the issue, a research was done and "Nav Agent Radius" was increased to "180.0f" by benefiting an advice from an Unreal Engine forum webpage [1].
+While cooking game, a warning line which is "LogCook: Warning: Unable to find package for cooking /Game/materials/plane_material_inst_type_3_part_4_scalin_30", was noticed but it could not be removed.
+Also location of saved game file, was learned from previous source [2].
+After packaging (exporting) game project, it was noticed that high score from previous exported game, still appears and this issue was solved by deleting save file manually in user files of operating system by benefiting a webpage [2] of Unreal Engine forum.
+There was a problem which is that enemy slides around projectile like projectile occurs an impulse and this problem was not be solved because it was thought as an unimportant problem.
+Definitions in header files, were sorted again.
+Projectile was affecting navigation system problematicaly and navigation was disabled via C++ by benefiting 2 sources [3] [4].
+In editor, objects of "hud" folder, were moved to "textures" folder and "hud" folder was deleted.
+"animations" and "blueprints" folders were deleted.
+Unused material Blueprint nodes were deleted.
+"allowed_distance_without_pathfinding" value was increased to 700.
+Report was written.
+Game project was exported again.
+A playthrough video was recorded again.
+[1] https://forums.unrealengine.com/t/ai-having-problems-navigating-near-corners/286642
+[2] https://forums.unrealengine.com/t/where-are-the-save-slots-in-packaged-projects-on-windows/299603
+[3] https://forums.unrealengine.com/t/how-to-have-a-static-mesh-be-ignored-by-a-navmesh/284485
+[4] https://www.reddit.com/r/unrealengine/comments/fqpddc/can_affect_navigation_c_to_blueprint/

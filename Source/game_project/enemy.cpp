@@ -224,7 +224,7 @@ void Aenemy::chase(AActor* chased_actor) {
 		AI_controller->MoveToActor(chased_actor);
 		paper_player = Cast<Apaper_player>(chased_actor);
 		if (AI_controller->GetMoveStatus() == EPathFollowingStatus::Moving && paper_player->GetCharacterMovement()->IsMovingOnGround()) AI_controller->MoveToActor(chased_actor, -1.0f, false, true);
-		else if (AI_controller->GetMoveStatus() == EPathFollowingStatus::Moving && !paper_player->GetCharacterMovement()->IsMovingOnGround()) AI_controller->MoveToActor(chased_actor, -1.0f, false, false);
+		else if (AI_controller->GetMoveStatus() == EPathFollowingStatus::Moving && !paper_player->GetCharacterMovement()->IsMovingOnGround() && (paper_player->GetActorLocation() - GetActorLocation()).Size() <= allowed_distance_without_pathfinding) AI_controller->MoveToActor(chased_actor, -1.0f, false, false);
 		change_flipbook(paper_component, enemy_chase_asset, true, 1.0f);
 		if (!audio_component_chase->IsActive()) {
 			if (audio_component_idle->IsActive()) audio_component_idle->Stop();

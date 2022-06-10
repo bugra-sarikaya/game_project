@@ -10,6 +10,7 @@ Aprojectile::Aprojectile() {
 	collision_component->InitSphereRadius(collision_sphere_radius);
 	collision_component->OnComponentHit.AddDynamic(this, &Aprojectile::on_hit);
 	collision_component->SetCollisionResponseToChannels(ECollisionResponse::ECR_Block);
+	collision_component->SetCanEverAffectNavigation(false);
 	collision_component->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	projectile_movement_component = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	check(projectile_movement_component != nullptr);

@@ -6,7 +6,7 @@ An error occured while trying to initialize two different types in a for loop an
 A material tutorial [11] was watched.
 A method for sizing 2D vector, was learned form a Stack Overflow webpage [12].
 While trying to declare an 2D "TArray", a problem was occured and it was learned that Unreal Engine does not support multidimensional array for its variable types like "TArray".
-For providing multidimensional arrays, a method which is using structs was found in a webpage 13] of Unreal Engine forum.
+For providing multidimensional arrays, a method which is using structs was found in a webpage [13] of Unreal Engine forum.
 Instead of using classic C/C++ arrays, using "TArray" arrays was important because Unrel Engine provides garbage collection for its own types with have macros like "UPROPERTY".
 A long research was done and using struct for 2D arrays, was succeeded by benefiting 2 sources [14] [15].
 To set rotation of planes, an image [16] about rotating axis was used.

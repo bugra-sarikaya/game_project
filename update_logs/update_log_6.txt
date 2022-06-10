@@ -3,16 +3,16 @@ Also, thanks to the video playlist, it was learned that the names of C++ functio
 Two video guides about converting Blueprints to C++ nodes, were watched [2] [3] but they didn't give new ideas.
 Two tutorials about paper character, were watched [4] [5].
 A YouTube video about comparison of Blueprints and C++, was watched [6].
-A method for converting Blueprints to C++ codes node by node, was found in a discussion webpage [6].
-But the method of clicking "Goto Defitinion", did not work and the solution which is downloading editor symbols for debugging, was found in a forum page [7].
-An internet video about making PS1 graphics, was watched [8] but its instructions could not find in Unreal Engine.
-A method for building unlit material was found to make the project a simple style [9].
-A Blueprint tutorial about retro FPS game developing, was watched [10].
-An Unreal Engine C++ video tutorial was watched [11].
-Four video playlists about Unreal Engine tutorial, were watched [12] [13] [14] [15].
-A video playlist about Blender tutorial, was watched [16].
+A method for converting Blueprints to C++ codes node by node, was found in a discussion webpage [7].
+But the method of clicking "Goto Defitinion", did not work and the solution which is downloading editor symbols for debugging, was found in a forum page [8].
+An internet video about making PS1 graphics, was watched [9] but its instructions could not find in Unreal Engine.
+A method for building unlit material was found to make the project a simple style [10].
+A Blueprint tutorial about retro FPS game developing, was watched [11].
+An Unreal Engine C++ video tutorial was watched [12].
+Four video playlists about Unreal Engine tutorial, were watched [13] [14] [15] [16].
+A video playlist about Blender tutorial, was watched [17].
 Totaly 37 hours, 26 minutes and 14 seconds of content was watched.
-A solution of viewing output log was found in a forum webpage [17] and any error was not found in that after compiling for analyzing previous Unreal Engine crash.
+A solution of viewing output log was found in a forum webpage [18] and any error was not found in that after compiling for analyzing previous Unreal Engine crash.
 [1] https://www.youtube.com/playlist?list=PLn58Z8DIFBQrk8sfV-DhIFQtE3bNWSu9R
 [2] https://youtu.be/8KFl5jDJ8no
 [3] https://youtu.be/Lnn8sXDQ7CM
@@ -20,14 +20,14 @@ A solution of viewing output log was found in a forum webpage [17] and any error
 [5] https://youtu.be/r41W7O22zgo
 [6] https://youtu.be/ueOqcwlFfMc
 [7] https://www.reddit.com/r/unrealengine/comments/9sg4pj/how_do_i_convert_blueprint_to_c/
-[7] https://forums.unrealengine.com/t/goto-defintion-option-for-bp-nodes-does-nothing/433659
-[8] https://youtu.be/ESXAxtdEkzY
-[9] https://youtu.be/m8ccG_EEoPM
-[10] https://www.youtube.com/playlist?list=PL7VxpjcexX-DoAUjolMpJDL5kCgj40Ow_
-[11] https://youtu.be/4HoJIgyclZ4
-[12] https://www.youtube.com/playlist?list=PL3gCaTLUSAUsHG2BzsAs-HIeP08DyWtHh
-[13] https://www.youtube.com/playlist?list=PL3gCaTLUSAUvr3mPkZUtnI_iwf6xS_7ID
-[14] https://www.youtube.com/playlist?list=PL3gCaTLUSAUvi_XbOXOZic20quqAWuY-q
-[15] https://www.youtube.com/playlist?list=PL3gCaTLUSAUs6I21Kh_SStwDZuWF87kp6
-[16] https://www.youtube.com/playlist?list=PLCmEFn0e7sbuILbfN9_GCsAXRzVF9nPxC
-[17] https://forums.unrealengine.com/t/how-do-i-view-logging-output/283700
+[8] https://forums.unrealengine.com/t/goto-defintion-option-for-bp-nodes-does-nothing/433659
+[9] https://youtu.be/ESXAxtdEkzY
+[10] https://youtu.be/m8ccG_EEoPM
+[11] https://www.youtube.com/playlist?list=PL7VxpjcexX-DoAUjolMpJDL5kCgj40Ow_
+[12] https://youtu.be/4HoJIgyclZ4
+[13] https://www.youtube.com/playlist?list=PL3gCaTLUSAUsHG2BzsAs-HIeP08DyWtHh
+[14] https://www.youtube.com/playlist?list=PL3gCaTLUSAUvr3mPkZUtnI_iwf6xS_7ID
+[15] https://www.youtube.com/playlist?list=PL3gCaTLUSAUvi_XbOXOZic20quqAWuY-q
+[16] https://www.youtube.com/playlist?list=PL3gCaTLUSAUs6I21Kh_SStwDZuWF87kp6
+[17] https://www.youtube.com/playlist?list=PLCmEFn0e7sbuILbfN9_GCsAXRzVF9nPxC
+[18] https://forums.unrealengine.com/t/how-do-i-view-logging-output/283700

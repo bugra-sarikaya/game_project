@@ -21,8 +21,8 @@ Ahud_combat::Ahud_combat() {
 	check(audio_component_alert_low_health != nullptr);
 	audio_component_alert_low_health->bAutoActivate = false;
 	audio_component_alert_low_health->SetupAttachment(RootComponent);
-	crosshair_texture_asset = LoadObject<UTexture2D>(world, TEXT("/Game/hud/crosshair_v1.crosshair_v1"));
-	stand_player_health_texture_asset = LoadObject<UTexture>(world, TEXT("/Game/hud/hud_health_v1.hud_health_v1"));
+	crosshair_texture_asset = LoadObject<UTexture2D>(world, TEXT("/Game/textures/crosshair_v1.crosshair_v1"));
+	stand_player_health_texture_asset = LoadObject<UTexture>(world, TEXT("/Game/textures/hud_health_v1.hud_health_v1"));
 	font_30 = LoadObject<UFont>(world, TEXT("/Game/fonts/PressStart2P_Font_30.PressStart2P_Font_30"));
 	font_20 = LoadObject<UFont>(world, TEXT("/Game/fonts/PressStart2P_Font_20.PressStart2P_Font_20"));
 	sound_cue_asset_combat = LoadObject<USoundCue>(world, TEXT("/Game/sounds/sound_cue_combat.sound_cue_combat"));
